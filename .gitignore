@@ -40,4 +40,18 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma
 /app/generated/prisma
+/src/lib/generated/prisma
+
+# logs
+*.log
+next-server*.txt
+lint_*.txt
+
+# ide/tools
+.agents/
+.codex/
+.zed/
+Microsoft/
+zed-settings-updated.json

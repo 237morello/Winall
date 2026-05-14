@@ -1,35 +1,59 @@
-# Directives du Projet Winall Tech SARL
+# 📐 Directives de Développement Winall Tech Sarl — V3.0.0
 
-Ce fichier définit les standards de développement, la stack technique et les règles d'interaction pour le projet Winall. Toutes les interactions avec l'IA doivent respecter ces directives.
+> **Philosophie** : Un code performant (Next.js 15), sécurisé et maintenable, avec une documentation pédagogique en Français.
 
-## 1. Contexte & Objectifs
-- **Entreprise** : Winall Tech SARL (Spécialiste en électricité : courants forts et faibles).
-- **But de l'application** : Promouvoir l'entreprise à l'international, fournir des dashboards dédiés pour les clients et l'administration.
-- **Fonctionnalités principales** :
-    - Dashboards (Client/Admin).
-    - Suivi de projets pour les clients.
-    - Formulaires de contact et système de notifications.
-    - Gestion complète des contenus par l'administrateur.
+---
 
-## 2. Stack Technique
-- **Frontend** : Next.js 15 (App Router), React 19.
-- **Backend/API** : Server Components & Server Actions (par défaut).
-- **Base de données** : Supabase (PostgreSQL) avec l'ORM **Prisma**.
-- **Authentification** : **Better Auth** (Google, GitHub, Magic Link).
-- **Stylisation** : Tailwind CSS v4, Radix UI (via Shadcn/UI).
-- **Icônes** : Lucide React.
-- **Validation** : Zod + React Hook Form.
+## 1. Contexte & Identité Produit
+Winall Tech Sarl est l'expert camerounais des infrastructures critiques : Réseaux, Sécurité électronique, Téléphonie IP et BTP.
+**Objectif** : Une plateforme "Premium" qui inspire confiance et expertise.
 
-## 3. Standards de Développement
-- **Langue** : Toute la communication et la documentation technique (commentaires, logs) doivent être en **Français**.
-- **Composants** : Utiliser des composants fonctionnels avec des fonctions fléchées (`const MyComponent = () => {}`).
-- **Mission** : Chaque fichier (nouveau ou modifié) doit impérativement commencer par un commentaire décrivant sa "Mission" (ex: `/** Mission : Composant de gestion des... */`).
-- **Typage** : TypeScript strict. Éviter `any`. Utiliser les interfaces et types explicites.
-- **Architecture** : Privilégier les Server Components. Structure modulaire basée sur les fonctionnalités.
-- **Gestionnaire de paquets** : Utiliser exclusivement `pnpm`.
+---
 
-## 4. Règles d'Interaction Gemini
-- Répondre systématiquement en français.
-- Être concis et direct, en privilégiant le code de haute qualité.
-- Toujours vérifier les fichiers de tests existants avant de proposer des modifications.
-- Proposer des tests (Vitest/Playwright) pour chaque nouvelle fonctionnalité majeure.
+## 2. Architecture & Structure (Règle d'Or)
+Le projet utilise la structure `src/` pour tout le code source.
+- **`src/app/`** : Uniquement le routage, les layouts et les pages (App Router).
+- **`src/components/`** : 
+  - `ui/` : Composants atomiques (Shadcn/UI).
+  - `features/` : Composants complexes par domaine métier.
+  - `layout/` : Éléments de structure (Header, Footer).
+- **`src/actions/`** : Server Actions (logique de mutation).
+- **`src/services/`** : Logique métier pure, appels DB (Prisma), intégrations tierces.
+- **`src/lib/`** : Configurations (Auth, Prisma, Supabase, Utils).
+- **`src/hooks/`** : Hooks React personnalisés.
+
+---
+
+## 3. Conventions de Nommage & Langue
+Pour maximiser la compatibilité avec l'écosystème (libs, LLMs, outils de scan) :
+- **Symboles (Code)** : **ANGLAIS** impératif pour les variables, fonctions, classes, types, fichiers et dossiers (ex: `updateUserProfile`, `UserCard`, `useAuth`).
+- **Contenu & Documentation** : **FRANÇAIS** pour les commentaires JSDoc, les messages d'erreur destinés aux utilisateurs, les logs de console informatifs et les noms de variables locales très spécifiques au métier camerounais si nécessaire.
+
+---
+
+## 4. Standards Next.js 15 & React 19
+- **Async APIs** : Toujours `await` les `params`, `searchParams`, `headers()` et `cookies()`.
+- **Server Actions** :
+  - Toujours utiliser `"use server"`.
+  - Retourner un objet standard : `{ success: boolean, data?: T, error?: string }`.
+  - Validation systématique avec **Zod**.
+- **Formulaires** : Priorité à `useActionState` et `useFormStatus` de React 19.
+- **Transitions & Animations** : 
+  - Utiliser Tailwind CSS v4 pour les états simples.
+  - Utiliser `motion/react` (Framer Motion) pour les interactions complexes et le "Premium feel", sans en abuser.
+- **Composants UI** : Si un composant Shadcn/UI manque : `pnpm dlx shadcn@latest add <nom>`.
+
+---
+
+## 5. Qualité du Code & Production
+- **Simplicité** : Préférer les fonctions et les Hooks aux classes pour la logique UI.
+- **Type Safety** : Pas de `any`. Utiliser les interfaces TypeScript pour tout contrat de données.
+- **Performance** : Optimiser les images (`next/image`) et utiliser les Server Components par défaut.
+- **Erreurs** : Utiliser des Error Boundaries (`error.tsx`) et des Loading States (`loading.tsx`) granulaires.
+
+---
+
+## 6. Base de Données & Auth
+- **Prisma** : Ne jamais importer `prisma` directement dans les composants ; passer par les `services`.
+- **Better Auth** : Utiliser `auth.api.getSession({ headers: await headers() })` pour les vérifications côté serveur.
+- **Supabase** : Utiliser les politiques RLS pour la sécurité au niveau de la ligne.

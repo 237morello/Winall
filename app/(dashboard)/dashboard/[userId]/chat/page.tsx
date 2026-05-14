@@ -1,13 +1,36 @@
-import { Typography } from "@/components/ui/typography";
+import { getConversations, getMessages, getSupportAdminId } from "@/actions/message.actions";
+import { auth } from "@/lib/auth";
+import { ChatView } from "@/components/features/dashboard";
+import { headers } from "next/headers";
 
-export default function ChatPage() {
+export default async function ChatPage({
+  params,
+  searchParams,
+}: {
+  params: Promise<{ userId: string }>;
+  searchParams: Promise<{ with?: string }>;
+}) {
+  const { userId } = await params;
+  const { with: otherUserId } = await searchParams;
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const role =
+    ((session?.user as { role?: string })?.role?.toLowerCase() as "client" | "admin") || "client";
+  const conversations = role === "admin" ? await getConversations() : [];
+  const initialActiveConversationId = role === "admin" ? otherUserId ?? conversations[0]?.id : undefined;
+  const messages = await getMessages(initialActiveConversationId);
+  const adminId = await getSupportAdminId();
+
   return (
-    <div className="flex flex-col gap-4 p-6">
-      <Typography variant="h1">Messagerie</Typography>
-      <Typography variant="p" className="text-muted-foreground">
-        Le système de messagerie pour discuter avec vos chargés de projets sera
-        bientôt disponible.
-      </Typography>
-    </div>
+    <ChatView
+      currentUserId={userId}
+      role={role}
+      initialMessages={messages}
+      conversations={conversations}
+      adminId={adminId}
+      initialActiveConversationId={initialActiveConversationId}
+    />
   );
 }

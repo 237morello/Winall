@@ -13,8 +13,11 @@ export function generateSeo({
     title,
     description,
     keywords,
-    image,
-    author: [{name: "Morel"}]
-
+    openGraph: {
+      title,
+      description,
+      images: image ? [{ url: image }] : [],
+    },
+    authors: [{name: "Morel"}]
   }
 }

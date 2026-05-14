@@ -5,19 +5,34 @@ import { cn } from "@/lib/utils"
 
 type Variant = "h1" | "h2"|"h3" | "h4" | "h5" | "p" | "div" | "span" | "muted" | "small" | "lead" | "code"
 
-interface TypographyProps {
+export interface TypographyProps {
   variant?: Variant;
-  className: string ;
+  className?: string;
   children: React.ReactNode
 }
 
-export function Typography( {
+export function Typography({
   variant = "p",
-  className= "" ,
+  className = "",
   children
-}:Typography) {
-  const Component = variant
-  
+}: TypographyProps) {
+  const tagByVariant: Record<Variant, keyof React.JSX.IntrinsicElements> = {
+    h1: "h1",
+    h2: "h2",
+    h3: "h3",
+    h4: "h4",
+    h5: "h5",
+    p: "p",
+    div: "div",
+    span: "span",
+    muted: "p",
+    small: "small",
+    lead: "p",
+    code: "code",
+  };
+
+  const Component = tagByVariant[variant];
+
   const styles = {
     h1: "font-noteSansJp text-4xl md:text-5xl font-semibold tracking-tight leading-tight",
     h2: "font-noteSansJp text-3xl md:text-4xl font-semibold tracking-tight leading-snug",
@@ -38,5 +53,4 @@ export function Typography( {
       {children}
     </Component>
   )
-  
 }

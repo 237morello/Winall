@@ -13,9 +13,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   return (
     <NextThemesProvider
       attribute="class"
-      defaultTheme="system"
-      enableSystem
+      defaultTheme="light"
       disableTransitionOnChange
+      enableSystem={false}
+      storageKey="winall-theme"
+      themes={["light", "dark"]}
     >
       {children}
     </NextThemesProvider>
