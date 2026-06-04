@@ -31,10 +31,13 @@ export function MobileMenuSheet() {
   const cheminActuel = usePathname();
   const { data: session } = useSession();
 
-  // Définition de l'action mobile selon l'état de connexion
-  const actionMobile = session?.user 
-    ? { libelle: "Tableau de Bord", href: "/dashboard" }
-    : ACTION_PRINCIPALE_HEADER;
+  // Définition des actions mobiles selon l'état de connexion
+  const actionsMobiles = session?.user 
+    ? [{ id: 99, libelle: "Tableau de Bord", href: "/dashboard", variant: "default" as const }]
+    : ACTION_PRINCIPALE_HEADER.map((a, i) => ({ 
+        ...a, 
+        variant: (i === 0 ? "outline" : "default") as "outline" | "default" 
+      }));
 
   return (
     <motion.div
@@ -76,14 +79,15 @@ export function MobileMenuSheet() {
         </SheetTrigger>
         <SheetContent
           side="right"
-          className="w-[86vw] max-w-sm border-l border-border/60 px-0"
+          className="w-[86vw] max-w-sm border-l border-border/60 px-0 flex flex-col"
         >
           <motion.div
             initial={{ opacity: 0, x: 100 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.3, ease: "easeOut" }}
+            className="flex flex-col h-full"
           >
-            <SheetHeader className="border-b border-border/60">
+            <SheetHeader className="border-b border-border/60 px-4">
               <SheetTitle className="text-left">Navigation Winall</SheetTitle>
               <SheetDescription className="text-left">
                 Accédez rapidement aux expertises et aux points de contact de
@@ -91,7 +95,7 @@ export function MobileMenuSheet() {
               </SheetDescription>
             </SheetHeader>
 
-            <div className="flex flex-1 flex-col gap-8 px-4 py-6">
+            <div className="flex-1 overflow-y-auto px-4 py-6">
               <nav className="flex flex-col gap-2">
                 <AnimatePresence>
                   {LIENS_NAVIGATION_HEADER.map((lien, index) => (
@@ -105,8 +109,6 @@ export function MobileMenuSheet() {
                         delay: index * 0.1,
                         ease: "easeOut",
                       }}
-                      whileHover={{ scale: 1.02 }}
-                      whileTap={{ scale: 0.98 }}
                     >
                       <SheetClose asChild>
                         <Link
@@ -117,27 +119,7 @@ export function MobileMenuSheet() {
                               ? "border-foreground bg-foreground text-background"
                               : "border-border/70 bg-background text-foreground hover:bg-muted",
                           )}
-                          aria-current={
-                            EnTeteLogique.estLienActif(cheminActuel, lien.href)
-                              ? "page"
-                              : undefined
-                          }
                         >
-                          {EnTeteLogique.estLienActif(
-                            cheminActuel,
-                            lien.href,
-                          ) && (
-                            <motion.div
-                              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12"
-                              initial={{ x: "-100%" }}
-                              animate={{ x: "100%" }}
-                              transition={{
-                                duration: 1.5,
-                                repeat: Infinity,
-                                ease: "linear",
-                              }}
-                            />
-                          )}
                           <span className="relative z-10">{lien.libelle}</span>
                         </Link>
                       </SheetClose>
@@ -148,36 +130,34 @@ export function MobileMenuSheet() {
             </div>
 
             <motion.div
-              className="border-t border-border/60 px-4 py-4"
+              className="border-t border-border/60 px-4 py-6 mt-auto flex flex-col gap-3"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: 0.5, ease: "easeOut" }}
             >
-              <motion.div
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-              >
-                <SheetClose asChild>
-                  <Link
-                    href={actionMobile.href}
-                    className={buttonVariants({
-                      className:
-                        "h-11 w-full rounded-full transition-all duration-300 relative overflow-hidden group",
-                    })}
-                  >
-                    <motion.div
-                      className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -skew-x-12"
-                      initial={{ x: "-100%" }}
-                      whileHover={{ x: "100%" }}
-                      transition={{ duration: 0.6, ease: "easeInOut" }}
-                    />
-                    <span className="relative z-10 font-bold">
-                      {actionMobile.libelle}
-                    </span>
-                  </Link>
-                </SheetClose>
-              </motion.div>
+              {actionsMobiles.map((action) => (
+                <motion.div
+                  key={action.id}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  transition={{ duration: 0.2, ease: "easeInOut" }}
+                >
+                  <SheetClose asChild>
+                    <Link
+                      href={action.href}
+                      className={buttonVariants({
+                        variant: action.variant,
+                        className:
+                          "h-11 w-full rounded-full transition-all duration-300 relative overflow-hidden group",
+                      })}
+                    >
+                      <span className="relative z-10 font-bold">
+                        {action.libelle}
+                      </span>
+                    </Link>
+                  </SheetClose>
+                </motion.div>
+              ))}
             </motion.div>
           </motion.div>
         </SheetContent>

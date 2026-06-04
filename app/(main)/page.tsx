@@ -1,9 +1,8 @@
 import { SectionHero } from "@/components/features/accueil/Hero/Hero";
-import { SectionMission } from "@/components/features/Mission/SectionMission";
-import { Timeline } from "@/components/features/Timeline/Timeline";
-import { ContactAction } from "@/components/features/ContactAction/ContactAction";
 import { Services } from "@/components/features/accueil/Services/Services";
 import { Projets } from "@/components/features/accueil/Projets/Projets";
+import { PartnersScroll } from "@/components/features/accueil/PartnersScroll";
+import { TestimonialsSection } from "@/components/features/accueil/TestimonialsSection";
 import { generateSeo } from "@/components/seo/seo";
 import { MotDirecteur } from "@/components/features/accueil/MotDirecteur";
 import { SkillSection } from "@/components/features/accueil/skills/skill-section";
@@ -38,14 +37,18 @@ export default function Home() {
       {/* 3. Mot du directeur */}
       <MotDirecteur />
 
-      {/* 4. Action Directe Technicienne */}
-      <ContactAction />
 
       {/* 5. Nos Services (Existant mais à vérifier) */}
       <Services />
 
       {/* 6. Nos Projets (Existant) */}
       <Projets />
+
+      {/* 7. Nos Partenaires Technologiques (Nouveau) */}
+      <PartnersScroll />
+
+      {/* 8. Avis Clients (Nouveau) */}
+      <TestimonialsSection />
 
 
     </main>

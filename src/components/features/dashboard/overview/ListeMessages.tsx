@@ -20,7 +20,7 @@ export function ListeMessages({ messages }: ListeMessagesProps) {
   const params = useParams<{ userId: string }>();
 
   return (
-    <Card className="border-border/50 bg-card/40 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden">
+    <Card className="border-border/50 bg-card/40 backdrop-blur-sm rounded-2xl overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between border-b border-border/20 py-4">
         <CardTitle className="text-base font-bold">Messages récents</CardTitle>
         <Link
@@ -40,7 +40,7 @@ export function ListeMessages({ messages }: ListeMessagesProps) {
             )}
             style={{ animationDelay: `${index * 50}ms` }}
           >
-            <Avatar className="h-10 w-10 border-2 border-background shadow-sm">
+            <Avatar className="h-10 w-10 border-2 border-background">
               <AvatarFallback className="bg-p/10 text-p font-bold text-xs">
                 {msg.avatar}
               </AvatarFallback>

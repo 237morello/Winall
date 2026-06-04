@@ -50,18 +50,22 @@ app/
 │   ├── about/page.tsx
 │   └── _components/          # Header, Hero
 │
-├── (dashboard)/              # Zone authentifiée (protégée)
+├── (admin)/                   # Zone Admin (Pilotage Business)
+│   └── admin/
+│       ├── layout.tsx        # AdminLayout (Fixed Sidebar 52px)
+│       ├── page.tsx          # Dashboard Admin (KPIs)
+│       ├── projects/         # Gestion chantiers
+│       ├── requests/         # Formulaires entrants
+│       └── users/            # Gestion utilisateurs
+│
+├── (client)/                  # Zone Client (Expérience Hybride)
 │   └── dashboard/[userId]/
-│       ├── layout.tsx        # Sidebar + Navbar
-│       ├── page.tsx          # Dashboard principal
-│       ├── clients/page.tsx  # Liste clients
-│       ├── quotes/page.tsx   # Devis
-│       ├── invoices/page.tsx # Factures
-│       ├── chat/page.tsx     # Messages
-│       ├── notifications/page.tsx  # Notifications
-│       ├── settings/page.tsx # Paramètres
-│       ├── project/page.tsx  # Détails projet
-│       └── _components/      # Widgets dashboard
+│       ├── layout.tsx        # ClientLayout (Fixed Sidebar 52px)
+│       ├── page.tsx          # Dashboard Client (Suivi)
+│       ├── projects/         # Mes Projets
+│       ├── chat/             # Messagerie direct
+│       ├── notifications/    # Alertes
+│       └── settings/         # Configuration
 │
 ├── api/
 │   └── auth/[...all]/route.ts  # Better Auth routes

@@ -4,8 +4,9 @@ import Link from "next/link";
 import { EnTeteLogique } from "../Header";
 import type { LienNavigationHeader } from "../Header.types";
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
-import { Card, CardContent, CardTitle, CardDescription } from "@/components/ui/card";
+import { cn } from "@/lib/utils";
 import { motion } from "motion/react";
+import { Typography } from "@/components/ui/typography";
 
 /**
  * @description Affiche un lien de navigation stylisé de manière cohérente.
@@ -41,33 +42,49 @@ export function LienNavigation({
     ];
 
     return (
-      <HoverCard>
-        <HoverCardTrigger>
+      <HoverCard openDelay={100} closeDelay={100}>
+        <HoverCardTrigger asChild>
           <span
-            className={EnTeteLogique.obtenirClassesLien(estActif)}
+            className={cn(EnTeteLogique.obtenirClassesLien(estActif), "cursor-pointer")}
             aria-current={estActif ? "page" : undefined}
           >
             {lien.libelle}
           </span>
         </HoverCardTrigger>
 
-        <HoverCardContent side="bottom" align="start" sideOffset={8} className="!w-auto p-2">
+        <HoverCardContent side="bottom" align="start" sideOffset={12} className="w-[700px] p-2 bg-background/95 backdrop-blur-xl border-border/60 shadow-2xl rounded-2xl">
           <motion.div
-            initial={{ opacity: 0, y: -6 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.2 }}
-            className="grid grid-cols-3 gap-3"
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="grid grid-cols-3 gap-2"
           >
             {services.map((s) => (
-              <Card key={s.href} className="w-64 hover:shadow-lg transition-shadow">
-                <CardContent className="px-4 py-3">
-                  <CardTitle className="font-semibold text-sm">{s.title}</CardTitle>
-                  <CardDescription className="text-xs mt-1">{s.desc}</CardDescription>
-                  <Link href={s.href} className="mt-3 inline-block text-sm text-foreground underline">
-                    Voir
-                  </Link>
-                </CardContent>
-              </Card>
+              <Link 
+                key={s.href} 
+                href={s.href}
+                className="group relative flex flex-col justify-between rounded-xl p-4 transition-all duration-300 hover:bg-muted/50 border border-transparent hover:border-border/50"
+              >
+                <div className="space-y-2">
+                  <Typography variant="h4" className="font-bold text-sm group-hover:text-primary transition-colors">
+                    {s.title}
+                  </Typography>
+                  <Typography variant="p" className="text-xs text-muted-foreground leading-relaxed line-clamp-2">
+                    {s.desc}
+                  </Typography>
+                </div>
+                
+                <div className="mt-4 flex items-center text-xs font-semibold text-primary opacity-0 -translate-x-2 transition-all duration-300 group-hover:opacity-100 group-hover:translate-x-0">
+                  En savoir plus
+                  <motion.span
+                    className="ml-1"
+                    animate={{ x: [0, 4, 0] }}
+                    transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                  >
+                    →
+                  </motion.span>
+                </div>
+              </Link>
             ))}
           </motion.div>
         </HoverCardContent>

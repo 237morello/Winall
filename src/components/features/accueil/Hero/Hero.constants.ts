@@ -5,7 +5,7 @@ import type { BadgeTechnique, LigneHeadline, BoutonAction } from "./Hero.types";
  * @description Badge technique affiché en haut du hero avec animation pulse.
  */
 export const BADGE_TECHNIQUE: BadgeTechnique = {
-  texte: "Expert certifié · Support 24/7",
+  texte: "Welcome to Winall-tech",
   avecPulse: true,
 };
 

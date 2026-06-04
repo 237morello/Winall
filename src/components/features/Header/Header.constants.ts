@@ -16,10 +16,19 @@ export const LIENS_NAVIGATION_HEADER: ReadonlyArray<LienNavigationHeader> = [
 /**
  * @description Action commerciale ou espace client mise en avant dans l'en-tête.
  */
-export const ACTION_PRINCIPALE_HEADER: ActionHeader = {
-  libelle: "Espace Client",
-  href: "/log-in",
-};
+export const ACTION_PRINCIPALE_HEADER: ActionHeader[] = [
+  {
+    id: 0,
+    libelle: "Connexion",
+    href: "/log-in",
+  },
+  {
+    id: 1,
+    libelle: "Nous Rejoindre",
+    href: "/sign-up",
+  },
+];
+
 
 
 

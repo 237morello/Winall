@@ -7,12 +7,14 @@ export interface LienNavigationHeader {
 }
 
 /**
- * @description D�finit la structure d'une action principale affich�e dans l'en-t�te.
+ * @description Définit la structure d'une action principale affichée dans l'en-tête.
  */
 export interface ActionHeader {
+  id: number;
   libelle: string;
   href: string;
 }
+
 
 
 

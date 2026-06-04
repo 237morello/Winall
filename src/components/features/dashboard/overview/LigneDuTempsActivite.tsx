@@ -19,7 +19,7 @@ export function LigneDuTempsActivite({ activites }: LigneDuTempsActiviteProps) {
   const params = useParams<{ userId: string }>();
 
   return (
-    <Card className="border-border/50 bg-card/40 backdrop-blur-sm shadow-xl rounded-2xl overflow-hidden">
+    <Card className="border-border/50 bg-card/40 backdrop-blur-sm rounded-2xl overflow-hidden">
       <CardHeader className="flex flex-row items-center justify-between border-b border-border/20 py-4">
         <CardTitle className="text-base font-bold">Activités récentes</CardTitle>
         <Link

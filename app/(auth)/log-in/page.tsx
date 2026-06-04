@@ -39,7 +39,7 @@ export default function LogInPage() {
         </div>
       </div>
 
-      <AuthForm />
+      <AuthForm intent="login" />
 
       <p className="text-center text-xs text-muted-foreground lg:text-left">
         Besoin d&apos;aide ?{" "}

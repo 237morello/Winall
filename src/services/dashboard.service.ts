@@ -1,7 +1,6 @@
 import {
   Bell,
   BriefcaseBusiness,
-  CheckCheck,
   FileSpreadsheet,
   FolderKanban,
   LayoutDashboard,
@@ -135,6 +134,7 @@ export class DashboardService {
     const liens: LienNavigationTableauDeBord[] = [
       { identifiant: "dashboard", libelle: "Accueil", href: `/dashboard`, description: "Vue d'ensemble", raccourci: "G", icone: LayoutDashboard, categorie: "principal", shortcut: "⌘+D" },
       { identifiant: "projects", libelle: "Mes Projets", href: `/dashboard/projects`, description: "Suivi des chantiers", raccourci: "P", icone: FolderKanban, categorie: "metier", shortcut: "⌘+P" },
+      { identifiant: "client-support", libelle: "Support / Devis", href: `/dashboard/support`, description: "Nouvelle demande", raccourci: "S", icone: FileSpreadsheet, categorie: "client", shortcut: "⌘+S" },
     ];
 
     if (estAdmin) {
@@ -143,14 +143,10 @@ export class DashboardService {
         { identifiant: "admin-projects", libelle: "Gestion Projets", href: `/admin/projects`, description: "Administration", raccourci: "A", icone: BriefcaseBusiness, categorie: "admin", shortcut: "⌘+A" },
         { identifiant: "admin-users", libelle: "Utilisateurs", href: `/admin/users`, description: "Droits d'accès", raccourci: "U", icone: Users, categorie: "admin", shortcut: "⌘+U" }
       );
-    } else {
-      liens.push(
-        { identifiant: "client-support", libelle: "Support / Devis", href: `/dashboard/support`, description: "Nouvelle demande", raccourci: "S", icone: FileSpreadsheet, categorie: "client", shortcut: "⌘+S" }
-      );
     }
 
     liens.push(
-      { identifiant: "chat", libelle: "Messages", href: `/dashboard/chat`, description: "Messagerie directe", raccourci: "M", icone: MessageSquareDot, categorie: "communication", shortcut: "⌘+M" },
+      { identifiant: "chat", libelle: "Messages", href: estAdmin ? `/admin/chat` : `/dashboard/chat`, description: "Messagerie directe", raccourci: "M", icone: MessageSquareDot, categorie: "communication", shortcut: "⌘+M" },
       { identifiant: "notifications", libelle: "Notifications", href: `/dashboard/notifications`, description: "Alertes", raccourci: "N", icone: Bell, categorie: "communication", shortcut: "⌘+N" },
       { identifiant: "settings", libelle: "Parametres", href: `/dashboard/settings`, description: "Configuration", raccourci: "S", icone: Settings, categorie: "systeme", shortcut: "⌘+," }
     );

@@ -227,7 +227,7 @@ export const SectionHero = ({ className }: ProprietesHero) => {
                   key={button.id} 
                   asChild 
                   size="lg" 
-                  variant={index === 0 ? "default" : "ghost"}
+                  variant={index === 0 ? "p" : "ghost"}
                   className={`
                      sm:w-auto px-5 py-6 text-base font-bold transition-all duration-300 rounded-xl
                     ${index === 0 

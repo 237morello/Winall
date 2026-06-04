@@ -37,7 +37,7 @@ export function CartesStatistiques({ cartes }: CartesStatistiquesProps) {
             className="animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out"
             style={{ animationDelay: `${index * 50}ms` }}
           >
-            <Card className="h-full border-border/50 bg-card/50 backdrop-blur-sm transition-all hover:border-p/30 hover:shadow-lg group">
+            <Card className="h-full border border-border/50 bg-card/50 backdrop-blur-sm transition-all hover:border-p/30 group">
               <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                 <CardTitle className="text-sm font-medium text-muted-foreground">
                   {carte.libelle}
@@ -51,7 +51,7 @@ export function CartesStatistiques({ cartes }: CartesStatistiquesProps) {
                   <span className="text-3xl font-bold tracking-tight text-foreground">
                     {carte.valeur}
                   </span>
-                  <Badge className={cn("rounded-lg px-2 py-0.5 text-[10px] font-bold border-none", classesTendance)}>
+                  <Badge className={cn("rounded-lg px-2 py-0.5 text-[10px] font-bold border border-current/20", classesTendance)}>
                     {carte.evolution}
                   </Badge>
                 </div>

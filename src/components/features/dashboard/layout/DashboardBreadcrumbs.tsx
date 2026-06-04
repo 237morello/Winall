@@ -1,8 +1,9 @@
+"use client";
+
 /**
  * MISSION : Composant Dashboard — DashboardBreadcrumbs gère le fil d'Ariane.
  */
-"use client"
-
+import React from "react"
 import { usePathname } from "next/navigation"
 import { 
   Breadcrumb, 
@@ -15,7 +16,10 @@ import {
 
 const breadcrumbMap: Record<string, string> = {
   dashboard: "Dashboard",
-  project: "Projets",
+  admin: "Administration",
+  projects: "Projets",
+  requests: "Demandes",
+  users: "Utilisateurs",
   clients: "Clients",
   quotes: "Devis",
   invoices: "Factures",
@@ -29,7 +33,7 @@ export function DashboardBreadcrumbs() {
   
   // Extraire les segments et ignorer l'ID utilisateur pour le fil d'ariane
   const segments = pathname.split("/").filter(Boolean)
-  const items = []
+  const items: { label: string; href: string; isLast: boolean }[] = []
 
   let currentPath = ""
   segments.forEach((segment, index) => {
@@ -75,5 +79,3 @@ export function DashboardBreadcrumbs() {
     </Breadcrumb>
   )
 }
-
-import React from "react"

@@ -8,9 +8,9 @@ export interface ProjetWinall {
   categorie: string;
   description: string;
   imageSrc: string;
-  duree: string;
-  budget: string;
-  resultats: string;
+  duree?: string;
+  budget?: string;
+  resultats?: string;
 }
 
 /**

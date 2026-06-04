@@ -40,7 +40,7 @@ export function RichTooltip({
       <TooltipContent 
         side={side} 
         align={align}
-        className="max-w-xs p-0 border-border/50 bg-card/95 backdrop-blur shadow-xl"
+        className="max-w-xs p-0 border border-border/50 bg-card/95 backdrop-blur"
       >
         <div className="space-y-2 p-3">
           <div className="font-bold text-sm text-foreground">

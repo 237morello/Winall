@@ -24,7 +24,7 @@ export function SettingsList({ initialSettings }: SettingsListProps) {
   }
 
   return (
-    <Card className="border-border/50 bg-card/50 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden">
+    <Card className="border-border/50 bg-card/50 backdrop-blur-sm rounded-2xl overflow-hidden">
       <CardHeader className="border-b border-border/20 py-6">
         <CardTitle className="flex items-center gap-3 text-xl font-bold">
           <SettingsIcon className="h-6 w-6 text-p" />

@@ -16,6 +16,20 @@ export type BusinessStatus =
   | "warning"
   | "critical";
 
+export interface DashboardProject {
+  id: string;
+  titre: string;
+  description?: string | null;
+  domaine?: string | null;
+  imageUrl?: string | null;
+}
+
+export interface DashboardStats {
+  myProjects: number;
+  myUnreadMessages: number;
+  myPendingQuotes: number;
+}
+
 // --- Entités Métier (Model) ---
 
 export interface ClientEntity {

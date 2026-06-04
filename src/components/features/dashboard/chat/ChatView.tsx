@@ -250,7 +250,7 @@ export function ChatView({
     setActiveConversation(conversationId);
 
     if (role === "admin") {
-      router.push(`/dashboard/${currentUserId}/chat?with=${conversationId}`);
+      router.push(`/admin/chat?with=${conversationId}`);
     }
   }
 
@@ -271,7 +271,7 @@ export function ChatView({
     setInput("");
 
     try {
-      await sendMessage({ receiverId: activeConversation, contenu: trimmedInput });
+      await sendMessage({ receiverId: activeConversation, content: trimmedInput });
     } catch (error) {
       console.error("Échec de l'envoi du message", error);
       setMessages((currentMessages) => currentMessages.filter((message) => message.id !== temporaryId));
@@ -295,7 +295,7 @@ export function ChatView({
       <div className="space-y-4 p-4">
         <Button
           type="button"
-          className="h-12 w-full justify-start gap-3 rounded-2xl bg-p text-white shadow-lg shadow-p/20 hover:bg-p/90"
+          className="h-12 w-full justify-start gap-3 rounded-2xl bg-p text-white hover:bg-p/90"
           onClick={() => activeConversation && handleSelectConversation(activeConversation)}
         >
           <Plus className="size-4" />
@@ -335,7 +335,7 @@ export function ChatView({
                 className={cn(
                   "group w-full rounded-2xl border p-3 text-left transition-all",
                   isActive
-                    ? "border-p/40 bg-p/10 shadow-sm shadow-p/10"
+                    ? "border-p/40 bg-p/10"
                     : "border-transparent hover:border-border/70 hover:bg-muted/50"
                 )}
               >
@@ -388,12 +388,12 @@ export function ChatView({
   );
 
   return (
-    <div className="h-[calc(100vh-9rem)] overflow-hidden rounded-3xl border border-border/50 bg-card/40 shadow-2xl shadow-p/5 backdrop-blur-sm animate-in fade-in duration-500">
+    <div className="h-full min-h-[640px] overflow-hidden bg-background animate-in fade-in duration-500">
       <div className="grid h-full grid-cols-1 lg:grid-cols-[320px_minmax(0,1fr)]">
         <aside className="hidden min-h-0 border-r border-border/40 lg:block">{conversationList}</aside>
 
-        <section className="flex min-h-0 flex-col bg-background/40">
-          <header className="flex min-h-20 items-center justify-between gap-4 border-b border-border/40 bg-card/55 px-4 py-4 backdrop-blur-xl md:px-6">
+        <section className="flex min-h-0 flex-col bg-background">
+          <header className="flex min-h-20 items-center justify-between gap-4 border-b border-border/60 bg-background px-4 py-4 md:px-6">
             <div className="flex min-w-0 items-center gap-3">
               <Sheet>
                 <SheetTrigger asChild>
@@ -405,7 +405,7 @@ export function ChatView({
                 <SheetContent side="left" className="w-[88vw] max-w-sm gap-0 p-0" showCloseButton={false}>
                   <SheetHeader className="border-b border-border/40 p-4">
                     <SheetTitle>Messagerie</SheetTitle>
-                    <SheetDescription>Vos conversations avec l'équipe Winall Tech.</SheetDescription>
+                    <SheetDescription>Vos conversations avec l&apos;équipe Winall Tech.</SheetDescription>
                   </SheetHeader>
                   {conversationList}
                 </SheetContent>
@@ -440,14 +440,14 @@ export function ChatView({
               </Badge>
               <Button variant="ghost" size="icon" className="rounded-2xl hover:bg-p/10 hover:text-p">
                 <MoreHorizontal className="size-5" />
-                <span className="sr-only">Plus d'options</span>
+                <span className="sr-only">Plus d&apos;options</span>
               </Button>
             </div>
           </header>
 
           <div className="flex-1 overflow-y-auto px-4 py-6 md:px-8">
             <div className="mx-auto flex max-w-3xl flex-col gap-6">
-              <Card className="border-border/50 bg-card/60 p-5 shadow-sm">
+              <Card className="rounded-lg border-border/70 bg-muted/20 p-5 shadow-none">
                 <div className="flex gap-4">
                   <div className="flex size-11 shrink-0 items-center justify-center rounded-2xl bg-p/10 text-p">
                     <Headphones className="size-5" />
@@ -460,20 +460,20 @@ export function ChatView({
                       </Badge>
                     </div>
                     <p className="text-sm leading-relaxed text-muted-foreground">
-                      Échangez avec l'équipe sur vos devis, projets, interventions et documents. Aucun assistant IA ici : vos messages sont traités par nos équipes.
+                      Échangez avec l&apos;équipe sur vos devis, projets, interventions et documents. Aucun assistant IA ici : vos messages sont traités par nos équipes.
                     </p>
                   </div>
                 </div>
               </Card>
 
               {messages.length === 0 ? (
-                <div className="flex min-h-65 flex-col items-center justify-center rounded-3xl border border-dashed border-border/70 bg-muted/20 p-8 text-center">
-                  <div className="mb-4 flex size-16 items-center justify-center rounded-3xl bg-p/10 text-p">
+                <div className="flex min-h-65 flex-col items-center justify-center rounded-lg border border-dashed border-border/70 bg-muted/20 p-8 text-center">
+                  <div className="mb-4 flex size-14 items-center justify-center rounded-lg bg-p/10 text-p">
                     <MessageCircle className="size-8" />
                   </div>
                   <h2 className="text-xl font-black">Commencez la discussion</h2>
                   <p className="mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-                    Posez votre question ou demandez un suivi. Un membre de l'équipe Winall Tech vous répondra dans cet espace.
+                    Posez votre question ou demandez un suivi. Un membre de l&apos;équipe Winall Tech vous répondra dans cet espace.
                   </p>
                 </div>
               ) : (
@@ -494,9 +494,9 @@ export function ChatView({
                       <div className={cn("flex max-w-[85%] flex-col gap-1 md:max-w-[72%]", isCurrentUser ? "items-end" : "items-start")}>
                         <div
                           className={cn(
-                            "rounded-3xl px-4 py-3 text-sm leading-relaxed shadow-sm",
+                            "rounded-3xl px-4 py-3 text-sm leading-relaxed",
                             isCurrentUser
-                              ? "rounded-br-md bg-p text-white shadow-p/20"
+                              ? "rounded-br-md bg-p text-white"
                               : "rounded-bl-md border border-border/60 bg-card text-foreground"
                           )}
                         >
@@ -524,9 +524,9 @@ export function ChatView({
             </div>
           </div>
 
-          <footer className="border-t border-border/40 bg-card/55 p-4 backdrop-blur-xl md:p-6">
+          <footer className="border-t border-border/60 bg-background p-4 md:p-6">
             <form onSubmit={handleSubmit} className="mx-auto max-w-3xl">
-              <div className="rounded-3xl border border-border/60 bg-background/85 p-2 shadow-xl shadow-p/5 focus-within:border-p/40 focus-within:ring-4 focus-within:ring-p/10">
+              <div className="rounded-lg border border-border/60 bg-background p-2 focus-within:border-p/40 focus-within:ring-4 focus-within:ring-p/10">
                 <div className="flex items-end gap-2">
                   <Button
                     type="button"
@@ -550,7 +550,7 @@ export function ChatView({
                   <Button
                     type="submit"
                     disabled={!input.trim() || !activeConversation}
-                    className="mb-1 size-11 rounded-2xl bg-p text-white shadow-lg shadow-p/20 hover:bg-p/90"
+                    className="mb-1 size-11 rounded-2xl bg-p text-white hover:bg-p/90"
                   >
                     <Send className="size-4" />
                     <span className="sr-only">Envoyer</span>

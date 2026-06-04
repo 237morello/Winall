@@ -5,9 +5,8 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation"; // url
 import {
-  Settings,
   User,
   LogOut,
   Building2,
@@ -17,7 +16,7 @@ import {
   MoreHorizontal,
   ShieldCheck,
   UserCircle,
-} from "lucide-react";
+} from "lucide-react"; // icon lucide 
 
 import {
   Sidebar,
@@ -28,7 +27,7 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   useSidebar,
-} from "@/components/ui/sidebar";
+} from "@/components/ui/sidebar"; // composant shadcn ** composant principale utiliser
 
 import {
   DropdownMenu,
@@ -42,8 +41,8 @@ import {
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
-import { DashboardService } from "@/services/dashboard.service";
-import type { UtilisateurTableauDeBord } from "@/types/dashboard.types";
+import { DashboardService } from "@/services/dashboard.service"; // services
+import type { UtilisateurTableauDeBord } from "@/types/dashboard.types"; // utilisateur actif schema {mail}
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
 
@@ -67,23 +66,24 @@ export function AppSidebar({ utilisateur }: { utilisateur: UtilisateurTableauDeB
     <Sidebar 
       collapsible="none" 
       className={cn(
-        "z-50 transition-all duration-300 border-r border-border/50 bg-background h-screen",
-        !isMobile && "w-64"
+        "z-50 transition-all duration-300 border-r border-border/50 h-screen",
+        "bg-white dark:bg-background", 
+        !isMobile && "w-[130px] m-2 rounded-2xl border shadow-sm" // Largeur réduite à 130px
       )}
     >
-      {/* Header : Logo Winall */}
-      <SidebarHeader className="py-6 px-4">
+      {/* Header : Logo Winall (Icône uniquement sur Desktop) */}
+      <SidebarHeader className="py-6 px-4 flex items-center justify-center">
         <Link href="/dashboard" className="flex items-center gap-3 group">
           <div className="flex items-center justify-center rounded-xl bg-primary text-primary-foreground h-10 w-10 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
             <Building2 className="h-6 w-6" />
           </div>
-          <span className="font-bold text-lg tracking-tight">Winall Tech</span>
+          <span className={cn(isMobile ? "block" : "hidden", "font-bold text-lg tracking-tight")}>Winall Tech</span>
         </Link>
       </SidebarHeader>
 
-      {/* Navigation Principale */}
+      {/* Navigation Principale (Icônes centrées sur Desktop) */}
       <SidebarContent className="px-3 py-2">
-        <SidebarMenu className="gap-1">
+        <SidebarMenu className="gap-2">
           {navigationItems.map((item) => {
             const isActive = pathname === item.href;
             return (
@@ -92,16 +92,17 @@ export function AppSidebar({ utilisateur }: { utilisateur: UtilisateurTableauDeB
                   asChild
                   isActive={isActive}
                   className={cn(
-                    "transition-all duration-200 h-11 px-3 rounded-lg flex items-center gap-3",
+                    "transition-all duration-200 h-12 rounded-lg flex items-center",
+                    !isMobile ? "justify-center px-0" : "gap-3 px-3",
                     isActive 
-                      ? "bg-primary/10 text-primary font-semibold" 
+                      ? "bg-p/10 text-primary font-semibold border border-primary/20" 
                       : "text-muted-foreground hover:bg-accent hover:text-accent-foreground"
                   )}
                   onClick={() => isMobile && setOpenMobile(false)}
                 >
                   <Link href={item.href}>
-                    <item.icone className={cn("shrink-0 size-5")} />
-                    <span className="text-sm">{item.libelle}</span>
+                    <item.icone className={cn("shrink-0 size-6")} />
+                    <span className={cn(isMobile ? "block" : "hidden", "text-sm")}>{item.libelle}</span>
                   </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
@@ -110,18 +111,18 @@ export function AppSidebar({ utilisateur }: { utilisateur: UtilisateurTableauDeB
         </SidebarMenu>
       </SidebarContent>
 
-      {/* Footer : Notifications, Thème et Menu Utilisateur */}
+      {/* Footer : Actions centrées */}
       <SidebarFooter className="p-4 border-t border-border/20">
-        <div className="flex items-center justify-between gap-2">
-          {/* Groupe de gauche : Notifs et Thème */}
-          <div className="flex items-center gap-1">
-            <Button variant="ghost" size="icon" className="h-9 w-9 rounded-lg text-muted-foreground hover:text-primary">
+        <div className={cn("flex items-center gap-2", !isMobile ? "flex-col" : "justify-between")}>
+          {/* Groupe : Notifs et Thème */}
+          <div className={cn("flex items-center gap-1", !isMobile && "flex-col")}>
+            <Button variant="ghost" size="icon" className="h-10 w-10 rounded-lg text-muted-foreground hover:text-primary">
               <Bell className="h-5 w-5" />
             </Button>
             <Button 
               variant="ghost" 
               size="icon" 
-              className="h-9 w-9 rounded-lg text-muted-foreground hover:text-primary"
+              className="h-10 w-10 rounded-lg text-muted-foreground hover:text-primary"
               onClick={() => setTheme(isDark ? "light" : "dark")}
             >
               {isDark ? <SunMedium className="h-5 w-5" /> : <MoonStar className="h-5 w-5" />}

@@ -24,7 +24,7 @@ export function DashboardCharts() {
   return (
     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
       {/* Graphique de Croissance (Revenus) */}
-      <Card className="lg:col-span-2 border-border/50 rounded-3xl shadow-xl shadow-p/5 bg-card/50 backdrop-blur-sm overflow-hidden">
+      <Card className="lg:col-span-2 border border-border/50 rounded-3xl bg-card/50 backdrop-blur-sm overflow-hidden">
         <CardHeader className="p-6 pb-0">
           <CardTitle className="text-lg font-bold">Croissance du Chiffre d&apos;Affaires (M CFA)</CardTitle>
           <p className="text-xs text-muted-foreground italic">Évolution sur les 6 derniers mois</p>
@@ -32,25 +32,19 @@ export function DashboardCharts() {
         <CardContent className="h-[300px] p-6 pt-0">
           <ResponsiveContainer width="100%" height="100%">
             <AreaChart data={dataRevenue}>
-              <defs>
-                <linearGradient id="colorTotal" x1="0" y1="0" x2="0" y2="1">
-                  <stop offset="5%" stopColor="#D4AF37" stopOpacity={0.3}/>
-                  <stop offset="95%" stopColor="#D4AF37" stopOpacity={0}/>
-                </linearGradient>
-              </defs>
               <XAxis dataKey="mois" axisLine={false} tickLine={false} tick={{fontSize: 10, fontWeight: "bold"}} dy={10} />
               <YAxis hide />
               <Tooltip 
-                contentStyle={{ borderRadius: "16px", border: "none", boxShadow: "0 10px 15px -3px rgba(0,0,0,0.1)", fontSize: "12px", fontWeight: "bold" }}
+                contentStyle={{ borderRadius: "16px", border: "1px solid var(--border)", backgroundColor: "var(--background)", fontSize: "12px", fontWeight: "bold" }}
               />
-              <Area type="monotone" dataKey="total" stroke="#D4AF37" strokeWidth={4} fillOpacity={1} fill="url(#colorTotal)" />
+              <Area type="monotone" dataKey="total" stroke="#D4AF37" strokeWidth={4} fillOpacity={0.1} fill="#D4AF37" />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>
       </Card>
 
       {/* Répartition par Domaine (Pie) */}
-      <Card className="border-border/50 rounded-3xl shadow-xl shadow-p/5 bg-card/50 backdrop-blur-sm">
+      <Card className="border border-border/50 rounded-3xl bg-card/50 backdrop-blur-sm">
         <CardHeader className="p-6">
           <CardTitle className="text-lg font-bold">Répartition Activités</CardTitle>
           <p className="text-xs text-muted-foreground italic">Par volume de projets</p>

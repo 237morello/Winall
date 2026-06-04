@@ -37,6 +37,15 @@ enum ProjectStatut {
   ARCHIVE      // Ni visible ni notifiable
 }
 
+/// Statut de paiement d'une facture
+enum InvoiceStatut {
+  BROUILLON
+  ENVOYE
+  PAYE
+  EN_RETARD
+  ANNULE
+}
+
 /// Types de formulaires envoyés par les visiteurs ou clients
 enum FormType {
   DEVIS        // Nouveau prospect : intéressé par un domaine
@@ -80,6 +89,7 @@ model User {
 
   // Relations métier
   projects         Project[]        // Projets où ce User est le client
+  invoices         Invoice[]        // Factures liées à ce User
   comments         ProjectComment[] // Commentaires postés par ce User
   messagesSent     Message[]        @relation("MessagesSent")
   messagesReceived Message[]        @relation("MessagesReceived")
@@ -95,19 +105,25 @@ model User {
 
 /// Un projet réalisé par Winall Tech (affiché sur le portfolio public)
 model Project {
-  id          String         @id @default(cuid())
+  id          String         @id @default(uuid())
   titre       String
   description String         @db.Text
   domaine     ProjectDomaine
   statut      ProjectStatut  @default(BROUILLON)
   isPublic    Boolean        @default(false)    // true = visible sur la vitrine publique
 
+  // Métriques financières et avancement
+  budget      Float?         @default(0)
+  progression Int            @default(0)        // 0 à 100
+
   // Médias
   imageUrl    String?        @db.VarChar(500)   // Image principale du projet
   images      String[]                           // Galerie d'images (URLs Supabase Storage)
 
-  // Localisation (ex: Yaoundé, Douala)
+  // Localisation & Planning
   localisation String?
+  dateDebut    DateTime?
+  dateFin      DateTime?
 
   // Client propriétaire (nullable : projet vitrine sans client spécifique)
   userId      String?
@@ -116,6 +132,7 @@ model Project {
   // Relations
   comments    ProjectComment[]
   formulaires FormRequest[]    // Demandes d'intervention liées à ce projet
+  invoices    Invoice[]        // Factures liées à ce projet
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
@@ -127,9 +144,34 @@ model Project {
   @@map("project")
 }
 
+/// Facture émise par Winall Tech
+model Invoice {
+  id           String        @id @default(uuid())
+  numero       String        @unique // ex: FAC-2026-001
+  montant      Float
+  statut       InvoiceStatut @default(BROUILLON)
+  dateEcheance DateTime
+
+  // Client destinataire
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Projet lié (optionnel)
+  projectId    String?
+  project      Project?      @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([statut])
+  @@map("invoice")
+}
+
 /// Commentaire posté sur un projet (visible par l'Admin et le Client propriétaire)
 model ProjectComment {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   contenu   String   @db.Text
   projectId String
   project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
@@ -144,7 +186,7 @@ model ProjectComment {
 
 /// Message privé entre l'Admin Winall et un Client (boîte de réception)
 model Message {
-  id             String   @id @default(cuid())
+  id             String   @id @default(uuid())
   contenu        String   @db.Text
   lu             Boolean  @default(false)  // false = message non lu
   senderUserId   String
@@ -165,7 +207,7 @@ model Message {
 /// INTERVENTION → { projectId, urgence, description }
 /// CONTACT   → { sujet, message }
 model FormRequest {
-  id        String     @id @default(cuid())
+  id        String     @id @default(uuid())
   type      FormType
   statut    FormStatut @default(NON_LU)
 
@@ -199,7 +241,7 @@ model FormRequest {
 
 /// Notification système envoyée à un utilisateur
 model Notification {
-  id       String           @id @default(cuid())
+  id       String           @id @default(uuid())
   type     NotificationType
   titre    String
   message  String           @db.Text
@@ -272,7 +314,7 @@ model Verification {
 }
 
 model AuthAuditLog {
-  id               String   @id @default(cuid())
+  id               String   @id @default(uuid())
   typeEvenement    String
   emailHash        String?  @db.VarChar(64)
   utilisateurId    String?

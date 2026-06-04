@@ -55,7 +55,7 @@ export function SectionProjets() {
 
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {[1, 2, 3, 4].map((i) => (
-            <Card key={i} className="group overflow-hidden border-border/50 bg-card/40 hover:border-p/40 transition-all hover:shadow-xl rounded-2xl">
+            <Card key={i} className="group overflow-hidden border-border/50 bg-card/40 hover:border-p/40 transition-all rounded-2xl">
               <div className="relative h-40 overflow-hidden">
                 <Image
                   src={`https://picsum.photos/seed/${i + 10}/400/300`}
@@ -63,7 +63,7 @@ export function SectionProjets() {
                   fill
                   className="object-cover transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity" />
                 <Badge className="absolute left-3 top-3 rounded-lg border-none bg-background/80 backdrop-blur-md text-foreground font-bold text-[10px]">
                   BTP
                 </Badge>
@@ -88,9 +88,9 @@ export function SectionProjets() {
             <button
               key={d.id}
               onClick={() => router.push(`/dashboard/${params.userId}/quotes?type=${encodeURIComponent(d.type)}`)}
-              className="group relative flex flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-border/60 bg-muted/30 p-6 text-center transition-all hover:border-p hover:bg-p/5 hover:shadow-lg"
+              className="group relative flex flex-col items-center justify-center gap-4 rounded-3xl border-2 border-dashed border-border/60 bg-muted/30 p-6 text-center transition-all hover:border-p hover:bg-p/5"
             >
-              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-background shadow-sm border border-border group-hover:bg-p group-hover:text-white transition-all">
+              <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-background border border-border group-hover:bg-p group-hover:text-white transition-all">
                 <d.icon className="h-7 w-7" />
               </div>
               <div className="space-y-1">

@@ -90,7 +90,7 @@ export function Footer() {
                 <li><Link href="/projets" className="hover:text-white transition-colors">Projets</Link></li>
                 <li>
                   <Link href="/about" className="text-white border-b border-[#0d9488] pb-1 font-medium">
-                    about
+                    À propos
                   </Link>
                 </li>
               </ul>

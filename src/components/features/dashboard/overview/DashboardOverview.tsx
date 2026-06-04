@@ -1,78 +1,61 @@
-/**
- * MISSION : Composant Dashboard — DashboardOverview assemble les éléments de la page d'accueil.
- * Design Premium : Hero, Services, Actions (3 cartes), Quoi de neuf.
- */
 import { HeroSection } from "./HeroSection";
 import { HomeActions } from "./HomeActions";
-import type { UtilisateurTableauDeBord } from "@/types/dashboard.types";
+import type { DashboardProject, DashboardStats, UtilisateurTableauDeBord } from "@/types/dashboard.types";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import { ArrowRight } from "lucide-react";
+import { ImageTall } from "@/components/features/long-image";
 
 interface DashboardOverviewProps {
   utilisateur: UtilisateurTableauDeBord;
+  projetsRecents: DashboardProject[];
+  stats: DashboardStats;
 }
 
-const NOUVEAUTES = [
-  {
-    title: "Support 24/7 disponible",
-    description: "Notre équipe technique est maintenant disponible pour vos urgences.",
-    image: "/images/Group 24.png",
-    tag: "Nouveau",
-  },
-  {
-    title: "Guide Domotique 2026",
-    description: "Découvrez comment optimiser votre consommation d'énergie.",
-    image: "/images/Group 25.png",
-    tag: "Tutoriel",
-  },
-  {
-    title: "Nouveaux Panneaux Solaires",
-    description: "Performance accrue de 20% sur nos installations photovoltaïques.",
-    image: "/images/Group 26.png",
-    tag: "Annonce",
-  },
-];
-
-export function DashboardOverview({ utilisateur }: DashboardOverviewProps) {
+export function DashboardOverview({ utilisateur, projetsRecents, stats }: DashboardOverviewProps) {
   return (
-    <div className="space-y-8 pb-12">
+    <div className="space-y-12 pb-20">
       {/* 1. Hero & Barre de recherche & Grille de Services */}
-      <HeroSection utilisateur={utilisateur} />
+      <HeroSection utilisateur={utilisateur} stats={stats} />
       
       {/* 2. Actions Rapides (Les 3 Cartes) */}
-      <HomeActions />
+      <HomeActions projetsRecents={projetsRecents} />
 
-      {/* 3. Section "Quoi de neuf" */}
-      <div className="space-y-6 pt-4">
-        <div className="flex items-center justify-between">
-          <h2 className="text-xl font-bold tracking-tight">Quoi de neuf chez Winall</h2>
-          <Button variant="ghost" size="sm" className="text-xs">Voir tout</Button>
+      {/* 3. Section "Quoi de neuf" (Projets) - Grille 4x3 */}
+      <div className="space-y-8 pt-8 border-t border-border/40">
+        <div className="flex flex-col gap-2">
+          <h2 className="text-3xl font-black tracking-tight flex items-center gap-3">
+            Quoi de neuf chez Winall
+            <span className="size-2 rounded-full bg-primary animate-pulse" />
+          </h2>
+          <p className="text-muted-foreground text-sm font-medium">Découvrez nos dernières réalisations et expertises sur le terrain.</p>
         </div>
         
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {NOUVEAUTES.map((news) => (
-            <Card key={news.title} className="group overflow-hidden border-border/50 bg-card/30 hover:bg-card/50 transition-colors cursor-pointer border-none shadow-none">
-              <div className="relative aspect-[16/9] w-full overflow-hidden rounded-2xl">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent z-10" />
-                <div className="absolute top-3 left-3 z-20">
-                  <Badge className="bg-primary/90 text-[10px] font-bold uppercase tracking-wider">{news.tag}</Badge>
-                </div>
-                {/* Image placeholder - Uses images from public/images/ found earlier */}
-                <Image 
-                  src={news.image} 
-                  alt={news.title}
-                  fill
-                  className="object-cover transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute bottom-4 left-4 right-4 z-20">
-                  <h3 className="text-white font-bold text-sm leading-snug">{news.title}</h3>
-                  <p className="text-white/70 text-[10px] mt-1 line-clamp-2">{news.description}</p>
-                </div>
-              </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+          {projetsRecents.map((projet) => (
+            <ImageTall 
+              key={projet.id}
+              id={projet.id}
+              image={projet.imageUrl || "/images/63966.jpg"}
+              text={projet.titre}
+              description={projet.description || ""}
+              categorie={projet.domaine || "Expertise Winall"}
+            />
+          ))}
+
+          {/* Fallback si peu de projets pour montrer la grille */}
+          {projetsRecents.length === 0 && Array.from({ length: 4 }).map((_, i) => (
+            <Card key={i} className="aspect-[3/4] rounded-[2rem] bg-muted/20 border-dashed border-2 flex items-center justify-center p-6 text-center">
+              <p className="text-muted-foreground text-xs">Nouveau projet à venir...</p>
             </Card>
           ))}
+        </div>
+
+        <div className="flex justify-center pt-4">
+          <Button variant="outline" className="rounded-full gap-2 px-8 border-border/60 hover:bg-primary hover:text-primary-foreground transition-all group shadow-lg shadow-primary/5">
+            <span className="font-bold uppercase tracking-widest text-[10px]">Explorer tous nos projets</span>
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </Button>
         </div>
       </div>
     </div>

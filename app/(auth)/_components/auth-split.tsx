@@ -13,7 +13,7 @@ interface AuthSplitProps {
  */
 export function AuthSplit({ children }: AuthSplitProps) {
   return (
-    <div className="h-svh overflow-hidden bg-[linear-gradient(135deg,#fffdf9,#f6f6f3)]">
+    <div className="h-svh overflow-hidden bg-[#f7f5f0]">
       <div className="grid h-svh lg:grid-cols-[1fr_0.82fr]">
         <aside className="relative hidden overflow-hidden lg:block">
           <Image
@@ -23,12 +23,12 @@ export function AuthSplit({ children }: AuthSplitProps) {
             priority
             className="object-cover object-center"
           />
-          <div className="absolute inset-0 bg-[linear-gradient(160deg,rgba(10,10,10,0.18),rgba(10,10,10,0.78))]" />
+          <div className="absolute inset-0 bg-black/45" />
 
           <div className="absolute inset-0 flex flex-col justify-between p-8 text-white">
             <Link
               href="/"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs font-medium backdrop-blur transition-colors hover:bg-white/20"
+              className="inline-flex w-fit items-center gap-2 rounded-full border border-white/25 bg-white/15 px-3 py-1.5 text-xs font-medium backdrop-blur transition-colors hover:bg-white/25"
             >
               <Image
                 src="/images/logo_v2.png"
@@ -45,16 +45,27 @@ export function AuthSplit({ children }: AuthSplitProps) {
                 Espace client securise
               </p>
               <h1 className="font-noteSansJp text-3xl font-semibold leading-tight">
-                Vos projets et interventions accessibles en quelques secondes.
+                Un acces clair a vos projets, devis et interventions.
               </h1>
               <p className="text-sm leading-6 text-white/75">
-                Connexion sans mot de passe par OTP, Magic Link ou OAuth.
+                Connexion sans mot de passe par OTP, Magic Link ou OAuth, avec retour rapide vers votre espace.
               </p>
             </div>
 
-            <p className="text-xs text-white/60">
-              OTP expire en 60 secondes • Session protegee
-            </p>
+            <div className="grid grid-cols-3 gap-2 text-xs text-white/70">
+              <div className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">
+                <p className="font-medium text-white">OTP</p>
+                <p className="mt-1">Code court</p>
+              </div>
+              <div className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">
+                <p className="font-medium text-white">Magic Link</p>
+                <p className="mt-1">Lien unique</p>
+              </div>
+              <div className="rounded-lg border border-white/15 bg-white/10 p-3 backdrop-blur">
+                <p className="font-medium text-white">OAuth</p>
+                <p className="mt-1">Google/GitHub</p>
+              </div>
+            </div>
           </div>
         </aside>
 

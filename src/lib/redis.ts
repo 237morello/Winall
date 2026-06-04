@@ -1,14 +1,5 @@
 import "server-only";
-
-type ReponseUpstash<T> = {
-  error?: string;
-  result?: T;
-};
-
-type ConfigurationRedis = {
-  url: string;
-  jeton: string;
-};
+import { Redis } from "@upstash/redis";
 
 type StockageSecondaireAuthentification = {
   get(cle: string): Promise<string | null>;
@@ -18,81 +9,51 @@ type StockageSecondaireAuthentification = {
 
 /**
  * @class ServiceRedis
- * @description Fournit un accès minimal et typé à Upstash Redis via son API REST.
+ * @description Fournit un accès performant à Upstash Redis via le SDK officiel.
  */
 export class ServiceRedis {
-  /**
-   * Vérifie si la configuration Upstash requise est disponible.
-   */
-  static obtenirConfiguration(): ConfigurationRedis | null {
-    const url = process.env.UPSTASH_REDIS_REST_URL;
-    const jeton = process.env.UPSTASH_REDIS_REST_TOKEN;
+  private static client: Redis | null = null;
 
-    if (!url || !jeton) {
+  /**
+   * Initialise et retourne le client Redis Upstash (Singleton).
+   */
+  private static obtenirClient(): Redis | null {
+    if (this.client) return this.client;
+
+    const url = process.env.UPSTASH_REDIS_REST_URL;
+    const token = process.env.UPSTASH_REDIS_REST_TOKEN;
+
+    if (!url || !token) {
       return null;
     }
 
-    return { url, jeton };
+    this.client = new Redis({
+      url,
+      token,
+    });
+
+    return this.client;
   }
 
   /**
-   * Indique si Redis est activé pour les fonctionnalités d'authentification.
+   * Indique si Redis est activé et configuré.
    */
   static estDisponible(): boolean {
-    return ServiceRedis.obtenirConfiguration() !== null;
-  }
-
-  /**
-   * Construit l'URL REST Upstash en encodant correctement chaque segment.
-   */
-  static construireUrlCommande(url: string, segments: string[]): string {
-    const chemin = segments.map((segment) => encodeURIComponent(segment)).join("/");
-    return `${url}/${chemin}`;
-  }
-
-  /**
-   * Exécute une commande Redis simple et remonte les erreurs réseau ou métier.
-   */
-  static async executerCommande<T>(segments: string[]): Promise<T | null> {
-    const configuration = ServiceRedis.obtenirConfiguration();
-
-    if (!configuration) {
-      return null;
-    }
-
-    const reponse = await fetch(
-      ServiceRedis.construireUrlCommande(configuration.url, segments),
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${configuration.jeton}`,
-          "Content-Type": "application/json",
-        },
-        cache: "no-store",
-      },
-    );
-
-    if (!reponse.ok) {
-      throw new Error(
-        `Upstash Redis a répondu avec le statut ${reponse.status}.`,
-      );
-    }
-
-    const donnees = (await reponse.json()) as ReponseUpstash<T>;
-
-    if (donnees.error) {
-      throw new Error(`Upstash Redis a retourné une erreur: ${donnees.error}`);
-    }
-
-    return donnees.result ?? null;
+    return !!process.env.UPSTASH_REDIS_REST_URL && !!process.env.UPSTASH_REDIS_REST_TOKEN;
   }
 
   /**
    * Lit une valeur texte brute.
    */
   static async lireTexte(cle: string): Promise<string | null> {
-    const valeur = await ServiceRedis.executerCommande<string | null>(["GET", cle]);
-    return valeur ?? null;
+    try {
+      const client = this.obtenirClient();
+      if (!client) return null;
+      return await client.get<string>(cle);
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de la lecture (${cle}):`, erreur);
+      return null;
+    }
   }
 
   /**
@@ -103,26 +64,32 @@ export class ServiceRedis {
     valeur: string,
     dureeDeVieEnSecondes?: number,
   ): Promise<void> {
-    if (typeof dureeDeVieEnSecondes === "number" && dureeDeVieEnSecondes > 0) {
-      await ServiceRedis.executerCommande([
-        "SET",
-        cle,
-        valeur,
-        "EX",
-        `${dureeDeVieEnSecondes}`,
-      ]);
-      return;
-    }
+    try {
+      const client = this.obtenirClient();
+      if (!client) return;
 
-    await ServiceRedis.executerCommande(["SET", cle, valeur]);
+      if (typeof dureeDeVieEnSecondes === "number" && dureeDeVieEnSecondes > 0) {
+        await client.set(cle, valeur, { ex: dureeDeVieEnSecondes });
+      } else {
+        await client.set(cle, valeur);
+      }
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de l'écriture (${cle}):`, erreur);
+    }
   }
 
   /**
    * Incrémente un compteur Redis atomiquement.
    */
   static async incrementer(cle: string): Promise<number> {
-    const resultat = await ServiceRedis.executerCommande<number>(["INCR", cle]);
-    return typeof resultat === "number" ? resultat : 0;
+    try {
+      const client = this.obtenirClient();
+      if (!client) return 0;
+      return await client.incr(cle);
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de l'incrémentation (${cle}):`, erreur);
+      return 0;
+    }
   }
 
   /**
@@ -132,27 +99,41 @@ export class ServiceRedis {
     cle: string,
     dureeDeVieEnSecondes: number,
   ): Promise<void> {
-    await ServiceRedis.executerCommande(["EXPIRE", cle, `${dureeDeVieEnSecondes}`]);
+    try {
+      const client = this.obtenirClient();
+      if (!client) return;
+      await client.expire(cle, dureeDeVieEnSecondes);
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de l'expiration (${cle}):`, erreur);
+    }
   }
 
   /**
    * Lit le TTL courant d'une clé.
    */
   static async lireDureeDeVie(cle: string): Promise<number | null> {
-    const resultat = await ServiceRedis.executerCommande<number>(["TTL", cle]);
-
-    if (typeof resultat !== "number" || resultat < 0) {
+    try {
+      const client = this.obtenirClient();
+      if (!client) return null;
+      const ttl = await client.ttl(cle);
+      return ttl < 0 ? null : ttl;
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de la lecture du TTL (${cle}):`, erreur);
       return null;
     }
-
-    return resultat;
   }
 
   /**
    * Supprime une clé si elle existe.
    */
   static async supprimer(cle: string): Promise<void> {
-    await ServiceRedis.executerCommande(["DEL", cle]);
+    try {
+      const client = this.obtenirClient();
+      if (!client) return;
+      await client.del(cle);
+    } catch (erreur) {
+      console.error(`[Redis] Erreur lors de la suppression (${cle}):`, erreur);
+    }
   }
 
   /**

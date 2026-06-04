@@ -1,105 +1,91 @@
 /**
- * MISSION : Composant Dashboard — HomeActions affiche les 3 cartes principales de la page d'accueil.
+ * MISSION : HomeActions — Affiche les nouveautés et les projets récents sous forme de grille FancyCard.
  */
 "use client";
 
-import { 
-  Plus, 
-  FolderKanban, 
-  FileText, 
-  MessageSquare,
-  ChevronRight,
-  Clock,
-  Send
-} from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import * as React from "react";
+import { FancyCard } from "@/components/features/card-hover-light";
 import { Button } from "@/components/ui/button";
+import {
+  ArrowRight,
+  Sparkles,
+  Network,
+  Cctv,
+  HardHat,
+  ShieldAlert,
+  Zap,
+  Radio,
+  Lock,
+  Cpu,
+} from "lucide-react";
 import Link from "next/link";
+import type { DashboardProject } from "@/types/dashboard.types";
 
-export function HomeActions() {
+interface HomeActionsProps {
+  projetsRecents: DashboardProject[];
+}
+
+export function HomeActions({ projetsRecents }: HomeActionsProps) {
+  // Mock icons and gradients for variety
+  const ICONS = [Network, Cctv, HardHat, ShieldAlert, Zap, Radio, Lock, Cpu];
+  const GRADIENTS: ("blue" | "purple" | "emerald" | "orange")[] = [
+    "blue",
+    "purple",
+    "emerald",
+    "orange",
+  ];
+
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 py-6">
-      {/* Carte 1 : Projets Récents */}
-      <Card className="border-border/50 bg-card/50 shadow-sm overflow-hidden flex flex-col">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-bold flex items-center gap-2">
-            <FolderKanban className="size-4 text-primary" />
-            Projets Récents
-          </CardTitle>
-          <Button variant="ghost" size="icon" className="h-6 w-6">
-            <Plus className="size-4" />
-          </Button>
-        </CardHeader>
-        <CardContent className="flex-1 space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 p-2 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer group">
-              <div className="size-8 rounded-lg bg-blue-500/20 flex items-center justify-center text-blue-500 font-bold text-xs">VH</div>
-              <div className="flex-1">
-                <p className="text-xs font-bold truncate">Villa Horizon</p>
-                <p className="text-[10px] text-muted-foreground">Mise à jour il y a 2h</p>
-              </div>
-              <ChevronRight className="size-3 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-            </div>
-            <div className="flex items-center gap-3 p-2 rounded-xl bg-primary/5 hover:bg-primary/10 transition-colors cursor-pointer group">
-              <div className="size-8 rounded-lg bg-amber-500/20 flex items-center justify-center text-amber-500 font-bold text-xs">HA</div>
-              <div className="flex-1">
-                <p className="text-xs font-bold truncate">Hôtel Azur</p>
-                <p className="text-[10px] text-muted-foreground">Terminé</p>
-              </div>
-              <ChevronRight className="size-3 text-muted-foreground group-hover:translate-x-1 transition-transform" />
-            </div>
-          </div>
-          <Button variant="link" className="text-xs p-0 h-auto text-primary" asChild>
-            <Link href="/dashboard/projects">Voir tous les projets</Link>
-          </Button>
-        </CardContent>
-      </Card>
-
-      {/* Carte 2 : Nouvel Espace (Formulaires) */}
-      <Card className="border-border/50 bg-primary/5 shadow-md overflow-hidden flex flex-col items-center justify-center text-center p-6 border-dashed border-2">
-        <div className="size-16 rounded-3xl bg-primary/10 flex items-center justify-center text-primary mb-4">
-          <FileText className="size-8" />
+    <section className="space-y-8 py-12">
+      <div className="flex items-center justify-between">
+        <div className="space-y-1">
+          <h2 className="text-2xl font-bold tracking-tight flex items-center gap-2">
+            <Sparkles className="size-5 text-primary" />
+            Quoi de neuf aujourd&apos;hui ?
+          </h2>
+          <p className="text-sm text-muted-foreground">
+            Découvrez nos dernières réalisations et expertises.
+          </p>
         </div>
-        <h3 className="font-bold text-lg mb-2">Créer un espace</h3>
-        <p className="text-xs text-muted-foreground mb-6 max-w-[200px]">
-          Lancez un nouveau devis ou une demande d'intervention en un clic.
-        </p>
-        <Button className="rounded-xl px-8 gap-2 shadow-lg shadow-primary/20">
-          <Plus className="size-4" />
-          Nouvel espace
-        </Button>
-      </Card>
+      </div>
 
-      {/* Carte 3 : Outils & Messages */}
-      <Card className="border-border/50 bg-card/50 shadow-sm overflow-hidden flex flex-col">
-        <CardHeader className="flex flex-row items-center justify-between pb-2">
-          <CardTitle className="text-sm font-bold flex items-center gap-2">
-            <MessageSquare className="size-4 text-primary" />
-            Messages récents
-          </CardTitle>
-          <ChevronRight className="size-4 text-muted-foreground" />
-        </CardHeader>
-        <CardContent className="flex-1 space-y-4">
-          <div className="space-y-3">
-            <div className="flex items-center gap-3 p-3 rounded-xl border border-border/50 bg-background/50">
-              <Clock className="size-4 text-muted-foreground" />
-              <div className="flex-1">
-                <p className="text-[10px] font-bold">Admin Winall</p>
-                <p className="text-[10px] text-muted-foreground line-clamp-1 italic">"Le planning est prêt..."</p>
-              </div>
-              <Button size="icon" variant="ghost" className="h-6 w-6 rounded-full bg-primary/10 text-primary">
-                <Send className="size-3" />
-              </Button>
-            </div>
-          </div>
-          <div className="mt-auto pt-4 border-t border-border/20">
-             <div className="flex flex-wrap gap-2">
-                <div className="px-2 py-1 rounded-md bg-accent text-[9px] font-medium text-accent-foreground">#support</div>
-                <div className="px-2 py-1 rounded-md bg-accent text-[9px] font-medium text-accent-foreground">#factures</div>
-             </div>
-          </div>
-        </CardContent>
-      </Card>
-    </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {projetsRecents.slice(0, 12).map((projet, index) => {
+          const Icon = ICONS[index % ICONS.length];
+          const gradient = GRADIENTS[index % GRADIENTS.length];
+
+          return (
+            <FancyCard
+              key={projet.id}
+              id={projet.id}
+              title={projet.titre}
+              description={
+                projet.description ||
+                "Suivi de projet technique Winall Tech Sarl."
+              }
+              domain={projet.domaine || "Expertise"}
+              domainIcon={<Icon className="size-3" />}
+              gradient={gradient}
+              image={projet.imageUrl || undefined}
+            />
+          );
+        })}
+
+        {/* Si pas assez de projets, on pourrait ajouter des placeholders ou des suggestions de services */}
+      </div>
+
+      <div className="flex justify-end pt-4">
+        <Button
+          variant="ghost"
+          asChild
+          className="group text-primary font-bold hover:bg-primary/5 rounded-xl px-6"
+        >
+          <Link href="/dashboard/projects" className="flex items-center gap-2">
+            Voir tous les projets
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </Button>
+      </div>
+    </section>
   );
 }

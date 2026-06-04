@@ -20,14 +20,14 @@ export class EnTeteLogique {
   }
 
   /**
-   * @description Construit les classes Tailwind d'un lien selon son �tat actif.
+   * @description Construit les classes Tailwind d'un lien selon son état actif.
    */
   static obtenirClassesLien(estActif: boolean): string {
     return cn(
-      "rounded-full px-1 py-0.5 text-sm transition-colors transition-all ease-in-out",
+      "relative rounded-full px-4 py-2 text-sm font-medium transition-all duration-300 ease-out",
       estActif
-        ? "bg-p text-background "
-        : "text-muted-foreground hover:bg-gray-100/2  hover:text-background",
+        ? "bg-primary text-primary-foreground shadow-sm shadow-primary/20"
+        : "text-muted-foreground hover:text-foreground hover:bg-foreground/5",
     );
   }
 }

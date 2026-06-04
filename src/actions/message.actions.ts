@@ -1,134 +1,180 @@
 "use server";
 
+/**
+ * Server Actions — Messagerie Privée
+ * 
+ * Gère les échanges entre les clients et l'équipe administrative de Winall Tech.
+ */
+
 import prisma from "@/lib/prisma";
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
 import { revalidatePath } from "next/cache";
 import { z } from "zod";
-
-const messageSchema = z.object({
-  receiverId: z.string(),
-  contenu: z.string().min(1),
-});
-
-/**
- * Récupère les messages entre l'utilisateur actuel et un autre.
- */
-export async function getMessages(otherUserId?: string) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session?.user) throw new Error("Non autorisé");
-
-  const currentUserId = session.user.id;
-  const role = (session.user as { role?: string }).role?.toUpperCase();
-
-  // Si c'est un client, il ne peut parler qu'à l'admin
-  if (role !== "ADMIN") {
-    const admin = await prisma.user.findFirst({ where: { role: "ADMIN" } });
-    if (!admin) return [];
-
-    return prisma.message.findMany({
-      where: {
-        OR: [
-          { senderUserId: currentUserId, receiverUserId: admin.id },
-          { senderUserId: admin.id, receiverUserId: currentUserId },
-        ],
-      },
-      orderBy: { createdAt: "asc" },
-    });
-  }
-
-  // Si c'est l'admin et qu'un otherUserId est fourni
-  if (otherUserId) {
-    return prisma.message.findMany({
-      where: {
-        OR: [
-          { senderUserId: currentUserId, receiverUserId: otherUserId },
-          { senderUserId: otherUserId, receiverUserId: currentUserId },
-        ],
-      },
-      orderBy: { createdAt: "asc" },
-    });
-  }
-
-  return [];
-}
-
 import { EmailService } from "@/services/email.service";
 
+// ============================================================
+// SCHÉMA DE VALIDATION (ZOD)
+// ============================================================
+
+const MessageSchema = z.object({
+  receiverId: z.string().min(1, "Destinataire requis"),
+  content: z.string().min(1, "Le message ne peut pas être vide"),
+});
+
+// ============================================================
+// ACTIONS DE MESSAGERIE
+// ============================================================
+
 /**
- * Envoie un message.
+ * Envoie un message privé.
  */
-export async function sendMessage(data: z.infer<typeof messageSchema>) {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
-
-  if (!session?.user) throw new Error("Non autorisé");
-
-  const validatedData = messageSchema.parse(data);
+export async function sendMessage(data: unknown) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  
+  const validated = MessageSchema.parse(data);
+  const senderId = session?.user?.id || "guest-dev";
+  const senderName = session?.user?.name || "Expert Winall";
 
   const message = await prisma.message.create({
     data: {
-      contenu: validatedData.contenu,
-      senderUserId: session.user.id,
-      receiverUserId: validatedData.receiverId,
+      contenu: validated.content.trim(),
+      senderUserId: senderId,
+      receiverUserId: validated.receiverId,
     },
-    include: { receiverUser: true, senderUser: true }
+    include: { 
+      senderUser: { select: { name: true } },
+      receiverUser: { select: { email: true } } 
+    }
   });
 
-  // Notification Email au destinataire
+  // 1. Notification interne (BBD)
+  await prisma.notification.create({
+    data: {
+      userId: validated.receiverId,
+      type: "NOUVEAU_MESSAGE",
+      titre: `💬 Message de ${senderName}`,
+      message: validated.content.slice(0, 100) + (validated.content.length > 100 ? "..." : ""),
+      lienUrl: `/dashboard/chat/${senderId}`,
+    },
+  });
+
+  // 2. Notification Email (si possible)
   if (message.receiverUser?.email) {
     await EmailService.envoyerNotificationMessage(
       message.receiverUser.email,
-      message.senderUser.name,
-      message.contenu.substring(0, 100) + "..."
-    );
+      senderName,
+      validated.content.slice(0, 100) + "..."
+    ).catch(err => console.error("Erreur envoi email message:", err));
   }
 
-  revalidatePath("/dashboard");
+  revalidatePath("/dashboard/chat");
   return { success: true, message };
 }
 
 /**
- * Récupère l'identifiant du compte administrateur support.
+ * Récupère les messages d'une conversation spécifique.
  */
-export async function getSupportAdminId() {
-  const admin = await prisma.user.findFirst({
-    where: { role: "ADMIN" },
-    select: { id: true },
+export async function getMessages(otherUserId: string) {
+  const session = await auth.api.getSession({ headers: await headers() });
+  const currentUserId = session?.user?.id || "guest-dev";
+
+  // Marquer comme lus les messages reçus de cet utilisateur
+  await prisma.message.updateMany({
+    where: {
+      senderUserId: otherUserId,
+      receiverUserId: currentUserId,
+      lu: false,
+    },
+    data: { lu: true },
   });
 
-  return admin?.id ?? "";
+  return prisma.message.findMany({
+    where: {
+      OR: [
+        { senderUserId: currentUserId, receiverUserId: otherUserId },
+        { senderUserId: otherUserId, receiverUserId: currentUserId },
+      ],
+    },
+    include: {
+      senderUser: { select: { id: true, name: true, image: true } },
+    },
+    orderBy: { createdAt: "asc" },
+  });
 }
 
 /**
- * Récupère la liste des conversations (Admin uniquement).
+ * Récupère la liste des conversations (utilisateurs avec qui on a échangé).
  */
 export async function getConversations() {
-  const session = await auth.api.getSession({
-    headers: await headers(),
-  });
+  const session = await auth.api.getSession({ headers: await headers() });
+  
+  // Pour le développement : si non connecté, on retourne toutes les conversations clients (comportement Admin)
+  if (!session?.user) {
+    return prisma.user.findMany({
+      where: { role: "CLIENT" },
+      include: {
+        messagesSent: { orderBy: { createdAt: "desc" }, take: 1 },
+        messagesReceived: { orderBy: { createdAt: "desc" }, take: 1 },
+      },
+    });
+  }
 
-  const role = (session?.user as { role?: string })?.role?.toUpperCase();
-  if (role !== "ADMIN") throw new Error("Accès réservé");
+  const role = (session.user as { role?: string }).role?.toUpperCase();
+  const currentUserId = session.user.id;
 
-  // Récupère tous les utilisateurs qui ont envoyé ou reçu des messages
-  const users = await prisma.user.findMany({
+  // Pour l'Admin : liste tous les clients avec qui il y a eu échange
+  if (role === "ADMIN") {
+    return prisma.user.findMany({
+      where: {
+        OR: [
+          { messagesSent: { some: { receiverUserId: currentUserId } } },
+          { messagesReceived: { some: { senderUserId: currentUserId } } },
+        ],
+        role: "CLIENT",
+      },
+      include: {
+        messagesSent: { orderBy: { createdAt: "desc" }, take: 1 },
+        messagesReceived: { orderBy: { createdAt: "desc" }, take: 1 },
+      },
+    });
+  }
+
+  // Pour un Client : seulement les Admins
+  return prisma.user.findMany({
     where: {
       OR: [
-        { messagesSent: { some: { receiverUserId: session?.user.id } } },
-        { messagesReceived: { some: { senderUserId: session?.user.id } } },
+        { messagesSent: { some: { receiverUserId: currentUserId } } },
+        { messagesReceived: { some: { senderUserId: currentUserId } } },
       ],
-      role: "CLIENT",
+      role: "ADMIN",
     },
     include: {
       messagesSent: { orderBy: { createdAt: "desc" }, take: 1 },
       messagesReceived: { orderBy: { createdAt: "desc" }, take: 1 },
     },
   });
+}
 
-  return users;
+/**
+ * Compte les messages non lus globalement pour l'utilisateur.
+ */
+export async function getUnreadMessagesCount() {
+  const session = await auth.api.getSession({ headers: await headers() }).catch(() => null);
+  if (!session?.user) return 0;
+
+  return prisma.message.count({
+    where: { receiverUserId: session.user.id, lu: false },
+  });
+}
+
+/**
+ * Récupère l'ID du support administratif.
+ */
+export async function getSupportAdminId() {
+  const admin = await prisma.user.findFirst({
+    where: { role: "ADMIN" },
+    select: { id: true },
+  });
+  return admin?.id ?? "";
 }

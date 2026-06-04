@@ -14,7 +14,23 @@ export class ServiceAuth {
     erreur: { message?: string } | null | undefined,
     messageParDefaut: string,
   ): string {
-    return erreur?.message || messageParDefaut;
+    const message = erreur?.message?.trim();
+    if (!message) return messageParDefaut;
+
+    const messageMinuscule = message.toLowerCase();
+    const correspondances: Array<[string[], string]> = [
+      [["invalid otp", "invalid code", "otp is invalid", "code is invalid"], "Le code saisi est invalide. Verifiez les 6 chiffres puis reessayez."],
+      [["expired", "expire"], "Ce code a expire. Renvoyez un nouveau code pour continuer."],
+      [["too many", "rate limit", "too_many"], "Trop de tentatives. Patientez quelques instants avant de reessayer."],
+      [["email", "not found"], "Aucun acces n'est associe a cet email."],
+      [["network", "fetch"], "La connexion au service d'authentification a echoue. Reessayez dans un instant."],
+    ];
+
+    const correspondance = correspondances.find(([motifs]) =>
+      motifs.some((motif) => messageMinuscule.includes(motif)),
+    );
+
+    return correspondance?.[1] || message;
   }
 
   /**

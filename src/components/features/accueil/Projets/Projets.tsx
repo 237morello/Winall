@@ -2,11 +2,10 @@
 
 import { useState, useMemo } from "react";
 import { Typography } from "@/components/ui/typography";
-import Image from "next/image";
-import { LISTE_PROJETS } from "./Projets.constants";
+import { LISTE_PROJETS } from './Projets.constants';
 import { ProjetsProps } from "./Projets.types";
-import { motion } from "motion/react";
 import { FiltreProjets } from "./FiltreProjets";
+import { ImageTall } from "../../long-image";
 
 export const Projets = ({ projets = LISTE_PROJETS }: ProjetsProps) => {
   const [categoriesSelectionnees, setCategoriesSelectionnees] = useState<
@@ -56,69 +55,28 @@ export const Projets = ({ projets = LISTE_PROJETS }: ProjetsProps) => {
             onCategoriesChange={setCategoriesSelectionnees}
           />
         </div>
-
-        {/* Résultats du filtrage */}
-        {categoriesSelectionnees.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="mb-8 text-sm text-muted-foreground"
-          >
-            {projetsFiltres.length} projet{projetsFiltres.length > 1 ? "s" : ""}{" "}
-            trouvé{projetsFiltres.length > 1 ? "s" : ""}
-          </motion.div>
-        )}
-
-        {/* Grille des projets */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
-          {projetsFiltres.map((projet, index) => (
-            <motion.div
-              key={projet.id}
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-              viewport={{ once: true }}
-              className="group relative overflow-hidden rounded-3xl border border-border/40 bg-card/30"
-            >
-              <div className="aspect-[16/10] overflow-hidden">
-                <Image
-                  src={projet.imageSrc}
-                  alt={projet.titre}
-                  width={800}
-                  height={500}
-                  className="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-background/95 via-background/30 to-transparent p-8 flex flex-col justify-end">
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-primary font-bold text-sm uppercase tracking-widest">
-                    {projet.categorie}
-                  </span>
-                  <div className="flex gap-2">
-                    <span className="bg-primary/10 text-primary px-2 py-1 rounded-full text-xs font-medium">
-                      {projet.duree}
-                    </span>
-                    <span className="bg-o/10 text-o px-2 py-1 rounded-full text-xs font-medium">
-                      {projet.budget}
-                    </span>
-                  </div>
-                </div>
-                <Typography variant="h3" className="text-2xl font-bold mb-2">
-                  {projet.titre}
-                </Typography>
-                <Typography className="text-muted-foreground line-clamp-2 mb-3">
-                  {projet.description}
-                </Typography>
-                <div className="flex items-center gap-2 text-sm">
-                  <span className="text-green-500 font-medium">✓</span>
-                  <span className="text-green-600 font-medium">
-                    {projet.resultats}
-                  </span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
+        {/* Affichage des cartes */}
+        <div className="w-full">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 md:gap-8">
+            {projetsFiltres.map((projet) => (
+              <ImageTall 
+                key={projet.id}
+                image={projet.imageSrc}
+                text={projet.titre}
+                categorie={projet.categorie}
+                description={projet.description}
+              />
+            ))}
+          </div>
+          {projetsFiltres.length === 0 && (
+            <div className="text-center py-20">
+              <Typography variant="p" className="text-muted-foreground">
+                Aucun projet ne correspond aux filtres sélectionnés.
+              </Typography>
+            </div>
+          )}
         </div>
+        
       </div>
     </section>
   );
