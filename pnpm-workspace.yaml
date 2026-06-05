@@ -1,0 +1,6 @@
+allowBuilds:
+  '@prisma/engines': true
+  prisma: true
+  sharp: true
+  supabase: true
+  unrs-resolver: true

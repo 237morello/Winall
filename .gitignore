@@ -40,4 +40,29 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# prisma
 /app/generated/prisma
+/src/lib/generated/prisma
+
+# logs
+*.log
+next-server*.txt
+lint_*.txt
+errorNextjs.txt
+
+# ide/tools
+.agents/
+.codex/
+.gemini/
+.zed/
+Microsoft/
+zed-settings-updated.json
+
+# local planning / scratch files
+planP.txt
+PLAN_ADMIN.md
+*.tmp
+*.bak
+
+# local compressed assets
+public/fonts/*.zip

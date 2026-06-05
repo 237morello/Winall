@@ -1,37 +1,55 @@
-import React from 'react'
+"use client";
+
 import Image from "next/image";
-import Link from 'next/link'
-import {SocialButton} from "../components/social-button.tsx"
-import {Typography} from "@/components/ui/typography.tsx"
+import Link from "next/link";
+import { motion } from "motion/react";
+import { AuthForm } from "../_components/auth-form";
 
-export default function logIn() {
-
+/**
+ * @page LogInPage
+ * @description Page de connexion compacte et lisible sans scroll.
+ */
+export default function LogInPage() {
   return (
-    <div className="w-full">
-      <div className="min-h-screen flex flex-col justify-center items-center space-y-4">
-        {/* logo */}
-        <div>
-           <Image src="/images/logo_v2.png" width={100} height={100} alt="logo-site" />
+    <motion.div
+      className="space-y-3"
+      initial={{ opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.28, ease: "easeOut" }}
+    >
+      <div className="space-y-2 text-center lg:text-left">
+        <div className="inline-flex items-center gap-2 rounded-full border border-black/8 bg-white/95 px-3 py-1.5 shadow-sm">
+          <Image
+            src="/images/logo_v2.png"
+            alt="Logo Winall Tech"
+            width={28}
+            height={28}
+            className="rounded-full"
+          />
+          <span className="text-xs font-medium text-foreground">Portail Winall Tech</span>
         </div>
-        {/* tete */}
-        <div>
 
-        </div>
-        {/* provider */}
-        <div className="flex flex-col justify-center items-center gap-2">
-          <SocialButton />
-          <SocialButton variant="github"/>
-        </div>
-        {/* sign up */}
-        <div className="mt-3">
-          <Typography variant="muted">
-            vous avez-deja un compte ? | 
-            <Typography variant="muted" className="">
-              <Link href="/sign-up">sign up</Link>
-            </Typography>
-          </Typography>
+        <div className="space-y-1">
+          <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-orange-600">
+            Connexion securisee
+          </p>
+          <h2 className="font-noteSansJp text-xl font-semibold leading-tight text-foreground sm:text-2xl">
+            Accedez a votre espace client.
+          </h2>
         </div>
       </div>
-    </div>
-  )
+
+      <AuthForm intent="login" />
+
+      <p className="text-center text-xs text-muted-foreground lg:text-left">
+        Besoin d&apos;aide ?{" "}
+        <Link
+          href="/"
+          className="font-medium text-foreground underline-offset-4 transition-colors hover:text-orange-600 hover:underline"
+        >
+          Retour accueil
+        </Link>
+      </p>
+    </motion.div>
+  );
 }

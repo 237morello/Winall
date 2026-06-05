@@ -1,0 +1,1 @@
+export { BanniereCTA } from "./BanniereCTA";

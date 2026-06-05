@@ -1,0 +1,25 @@
+/**
+ * Mission : Composant UI reutilisable : $base pour construire l'interface de facon coherente.
+ */
+"use client";
+
+import { ThemeProvider as NextThemesProvider } from "next-themes";
+
+interface ThemeProviderProps {
+  children: React.ReactNode;
+}
+
+export function ThemeProvider({ children }: ThemeProviderProps) {
+  return (
+    <NextThemesProvider
+      attribute="class"
+      defaultTheme="light"
+      disableTransitionOnChange
+      enableSystem={false}
+      storageKey="winall-theme"
+      themes={["light", "dark"]}
+    >
+      {children}
+    </NextThemesProvider>
+  );
+}
