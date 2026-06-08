@@ -6,6 +6,7 @@ import { toast } from "sonner";
 import { FileSpreadsheet, Info, Send, Wrench } from "lucide-react";
 import { submitContactRequest, submitInterventionRequest, submitQuoteRequest } from "@/actions/form.actions";
 import { playSound } from "@/lib/sounds";
+import { trackUsageEvent } from "@/lib/analytics/track-usage-event";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -122,6 +123,13 @@ export function SupportRequestForm({
       }
 
       playSound("success");
+      void trackUsageEvent("support_request_sent", {
+        metadata: {
+          type,
+          projectId: project?.id ?? null,
+          domain: type === "DEVIS" ? domain : null,
+        },
+      });
       toast.success("Votre demande a été envoyée avec succès.");
       setLastSuccessType(type);
       formRef.current?.reset();
@@ -141,7 +149,7 @@ export function SupportRequestForm({
           Support et demandes projet
         </Typography>
         <Typography variant="p" className="text-muted-foreground">
-          Transmettez une intervention, un devis complémentaire ou une question à l'équipe Winall Tech.
+          Transmettez une intervention, un devis complémentaire ou une question à l&apos;équipe Winall Tech.
         </Typography>
       </div>
 
@@ -198,7 +206,7 @@ export function SupportRequestForm({
             <div className="flex items-start gap-3 rounded-lg border border-blue-100 bg-blue-50/60 p-4 text-sm text-blue-700">
               <Info className="mt-0.5 size-5 shrink-0" />
               <p className="font-medium">
-                Votre demande sera transmise à l'équipe administrative et visible dans le suivi client.
+                Votre demande sera transmise à l&apos;équipe administrative et visible dans le suivi client.
               </p>
             </div>
 

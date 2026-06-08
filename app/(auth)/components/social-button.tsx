@@ -3,16 +3,20 @@
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { authClient } from "@/lib/auth-client";
+import { cn } from "@/lib/utils";
 import { toast } from "sonner";
 import { Loader2 } from "lucide-react";
+import { trackUsageEvent } from "@/lib/analytics/track-usage-event";
 
-type Provider = "github" | "google";
+export type Provider = "github" | "google";
 
 interface SocialButtonProps {
   provider: Provider;
   disabled?: boolean;
   callbackURL?: string;
   size?: "default" | "sm" | "lg" | "icon";
+  label?: string;
+  className?: string;
 }
 
 /** SVG Google officiel multicolore */
@@ -69,13 +73,34 @@ export const SocialButton = ({
   disabled = false,
   callbackURL = "/dashboard",
   size = "default",
+  label,
+  className,
 }: SocialButtonProps) => {
   const [isLoading, setIsLoading] = React.useState(false);
 
   const handleLogin = async () => {
     setIsLoading(true);
+    void trackUsageEvent("login_started", {
+      metadata: { method: provider },
+    });
     try {
-      await authClient.signIn.social({ provider, callbackURL });
+      window.localStorage.setItem("winall:last-auth-provider", provider);
+      const reponse = await authClient.signIn.social({
+        provider,
+        callbackURL,
+        disableRedirect: true,
+      });
+
+      if (reponse.error) {
+        throw new Error(reponse.error.message || `Provider ${provider} indisponible.`);
+      }
+
+      const url = reponse.data?.url;
+      if (!url) {
+        throw new Error("URL de redirection OAuth introuvable.");
+      }
+
+      window.location.href = url;
     } catch (error) {
       console.error(`Erreur de connexion ${provider}:`, error);
       toast.error(`Impossible de se connecter avec ${provider}.`);
@@ -83,13 +108,16 @@ export const SocialButton = ({
     }
   };
 
-  const label = provider === "google" ? "Google" : "GitHub";
+  const providerLabel = provider === "google" ? "Google" : "GitHub";
 
   return (
     <Button
       variant="outline"
       size={size}
-      className="h-9 w-full gap-2 border-black/10 bg-white/90 text-xs font-normal shadow-sm transition-all hover:border-black/20 hover:bg-white hover:shadow-md"
+      className={cn(
+        "h-11 w-full justify-start gap-3 border-white/15 bg-white/5 px-4 text-sm font-medium text-white shadow-none transition-all hover:border-white/25 hover:bg-white/10 hover:text-white",
+        className,
+      )}
       disabled={disabled || isLoading}
       onClick={handleLogin}
     >
@@ -100,7 +128,7 @@ export const SocialButton = ({
       ) : (
         <GitHubIcon />
       )}
-      <span>{label}</span>
+      <span>{label || providerLabel}</span>
     </Button>
   );
 };

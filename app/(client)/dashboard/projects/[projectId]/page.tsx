@@ -5,6 +5,7 @@ import {
 } from "@/components/features/dashboard/projects/ProjectDetail";
 import { getFormRequests } from "@/actions/form.actions";
 import { getProjectById, getRelatedProjectsByDomain } from "@/actions/project.actions";
+import { UsageEventTracker } from "@/components/features/analytics/UsageEventTracker";
 import { notFound } from "next/navigation";
 
 export default async function ProjectDetailPage({
@@ -55,5 +56,14 @@ export default async function ProjectDetailPage({
     imageUrl: relatedProject.imageUrl,
   }));
 
-  return <ProjectDetail project={projectDetail} relatedProjects={relatedProjectCards} />;
+  return (
+    <>
+      <UsageEventTracker
+        eventName="project_viewed"
+        route={`/dashboard/projects/${project.id}`}
+        metadata={{ projectId: project.id, domaine: project.domaine }}
+      />
+      <ProjectDetail project={projectDetail} relatedProjects={relatedProjectCards} />
+    </>
+  );
 }

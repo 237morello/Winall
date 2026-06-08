@@ -1,5 +1,6 @@
 import { CheckCircle2, Clock3, Send, Wallet } from "lucide-react";
 import { DashboardEntityListCardClient } from "@/components/features/dashboard/shared/DashboardEntityListCardClient";
+import { UsageEventTracker } from "@/components/features/analytics/UsageEventTracker";
 import { DashboardService } from "@/services/dashboard.service";
 import { getFormRequests } from "@/actions/form.actions";
 import type { QuoteEntity } from "@/types/dashboard.types";
@@ -32,6 +33,8 @@ export default async function QuotesPage() {
 
   return (
     <div className="space-y-6 pb-10 animate-in fade-in duration-500">
+      <UsageEventTracker eventName="quote_opened" route="/dashboard/quotes" />
+
       <div className="flex flex-col gap-4 border-b pb-6 lg:flex-row lg:items-end lg:justify-between">
         <div className="space-y-2">
           <Badge variant="outline" className="w-fit rounded-lg border-primary/30 bg-primary/5 text-primary">

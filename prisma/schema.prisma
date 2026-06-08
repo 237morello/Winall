@@ -95,6 +95,7 @@ model User {
   messagesReceived Message[]        @relation("MessagesReceived")
   notifications    Notification[]   // Notifications destinées à ce User
   formulaires      FormRequest[]    // Formulaires soumis par ce User
+  analyticsEvents  AnalyticsEvent[]
 
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
@@ -328,4 +329,23 @@ model AuthAuditLog {
   @@index([utilisateurId])
   @@index([creeLe])
   @@map("journal_audit_auth")
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(uuid())
+  eventName String
+  route     String?
+  userId    String?
+  role      Role?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([eventName])
+  @@index([route])
+  @@index([userId])
+  @@index([role])
+  @@index([createdAt])
+  @@map("analytics_event")
 }

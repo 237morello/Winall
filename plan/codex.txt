@@ -1,0 +1,222 @@
+# Mission
+
+Tu es un Software Architect Senior spécialisé en Analytics, Next.js App Router, PostgreSQL, Prisma, Recharts et Microsoft Clarity.
+
+Nous voulons construire un système nommé "Winall Analytics" inspiré de Microsoft Clarity mais plus léger.
+
+L'objectif n'est PAS de remplacer Clarity.
+
+L'objectif est de fournir dans notre interface Admin les 50% d'informations les plus utiles afin que les administrateurs puissent surveiller rapidement le comportement des utilisateurs sans devoir ouvrir Clarity.
+
+Pour les analyses avancées (heatmaps, session replay, rage clicks, dead clicks, scroll maps, etc.), nous continuerons d'utiliser Microsoft Clarity.
+
+# Contexte technique
+
+Stack :
+
+* Next.js App Router
+* TypeScript
+* Prisma
+* PostgreSQL
+* Shadcn UI
+* Tailwind CSS
+* Recharts
+* Microsoft Clarity
+
+# Contraintes
+
+1. Architecture scalable.
+2. Faible impact sur les performances.
+3. Compatible SSR et App Router.
+4. Compatible utilisateurs connectés et visiteurs anonymes.
+5. Respect RGPD.
+6. Aucune donnée sensible.
+7. Possibilité d'ajouter de nouvelles métriques facilement.
+
+# Utilisation de Microsoft Clarity
+
+Nous utiliserons :
+
+window.clarity("event", ...)
+window.clarity("set", ...)
+window.clarity("identify", ...)
+
+afin de relier nos événements métiers avec les données Clarity. Microsoft Clarity permet également les événements personnalisés et les tags personnalisés. Les événements et tags devront être intégrés à notre architecture analytics.
+
+Nous souhaitons également étudier l'utilisation future du Data Export API de Clarity pour enrichir nos tableaux de bord internes.
+
+# Objectif
+
+Produire un plan d'architecture complet.
+
+Ne pas coder immédiatement.
+
+Commencer par la phase conception.
+
+# Étape 1
+
+Définir :
+
+* les KPIs principaux
+* les événements à enregistrer
+* les métriques à stocker
+* les dimensions analytiques
+
+# Étape 2
+
+Proposer le schéma Prisma complet :
+
+* AnalyticsSession
+* AnalyticsEvent
+* AnalyticsPageView
+* AnalyticsSearch
+* AnalyticsError
+* AnalyticsConversion
+* AnalyticsUserJourney
+
+avec leurs relations.
+
+# Étape 3
+
+Définir un système de tracking universel :
+
+track()
+
+capable de gérer :
+
+* page_view
+* click
+* search
+* login
+* register
+* logout
+* form_submit
+* purchase
+* add_to_cart
+* create_listing
+* create_project
+* custom_event
+
+# Étape 4
+
+Construire le dashboard Admin.
+
+Lister toutes les pages :
+
+## Dashboard Overview
+
+KPIs :
+
+* visiteurs uniques
+* sessions
+* pages vues
+* durée moyenne
+* taux de rebond
+* conversions
+
+## Audience
+
+* visiteurs par jour
+* visiteurs par mois
+* pays
+* appareils
+* navigateurs
+* systèmes
+
+## Behaviour
+
+* pages populaires
+* temps moyen par page
+* parcours utilisateurs
+* pages de sortie
+
+## Conversion
+
+* funnel
+* taux de conversion
+* événements clés
+
+## Search Analytics
+
+* recherches populaires
+* recherches sans résultat
+
+## Errors
+
+* erreurs JS
+* erreurs API
+* erreurs serveur
+
+# Étape 5
+
+Pour chaque métrique :
+
+* expliquer son intérêt métier
+* expliquer comment la calculer
+* expliquer la requête SQL ou Prisma correspondante
+
+# Étape 6
+
+Pour chaque graphique Recharts :
+
+proposer :
+
+* type de graphique
+* structure des données
+* fréquence d'actualisation
+* volume de données acceptable
+
+Exemples :
+
+* LineChart
+* AreaChart
+* BarChart
+* PieChart
+* Treemap
+* FunnelChart
+
+# Étape 7
+
+Définir les tableaux avancés :
+
+* sessions récentes
+* utilisateurs actifs
+* pages populaires
+* événements populaires
+* recherches populaires
+* erreurs récentes
+
+# Étape 8
+
+Créer une roadmap MVP :
+
+Phase 1 :
+indispensable
+
+Phase 2 :
+important
+
+Phase 3 :
+avancé
+
+Phase 4 :
+intégration poussée avec Microsoft Clarity
+
+# Résultat attendu
+
+Je veux un document d'architecture complet et professionnel.
+
+Je veux que chaque décision soit justifiée.
+
+Je veux que tu critiques les mauvaises idées et proposes des alternatives plus robustes.
+
+Ne commence aucun code avant validation finale de l'architecture.
+Plan Analytics Usage: Recharts + Microsoft Clarity
+
+- Integrer Microsoft Clarity globalement via NEXT_PUBLIC_CLARITY_PROJECT_ID.
+- Identifier les utilisateurs connectes, taguer role, route, auth_state et dashboard_area.
+- Ajouter un stockage interne AnalyticsEvent dans Prisma et une API /api/analytics/events.
+- Fournir trackUsageEvent() cote client pour envoyer les evenements vers Clarity et la base interne.
+- Creer /admin/usage avec agregats serveur et graphiques Recharts.
+- Ajouter l'onglet admin Usage vers /admin/usage.
+- Instrumenter les evenements principaux: page_view, login_started, login_success, signup_started, quote_opened, support_request_sent, project_viewed, admin_page_viewed, admin_usage_viewed.

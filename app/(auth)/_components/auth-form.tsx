@@ -7,15 +7,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { KeyRound, Link2 } from "lucide-react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
+import { ChevronDown, KeyRound, Link2, Mail } from "lucide-react";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Badge } from "@/components/ui/badge";
-import { SocialButton } from "../components/social-button";
-import { emailSchema, otpSchema, type EmailFormValues, type OTPFormValues } from "@/schemas/auth.schema";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { SocialButton, type Provider } from "../components/social-button";
+import {
+  authEmailSchema,
+  authEmailSignUpSchema,
+  magicLinkSchema,
+  magicLinkSignUpSchema,
+  otpSchema,
+  type AuthEmailFormValues,
+  type MagicLinkFormValues,
+  type OTPFormValues,
+} from "@/schemas/auth.schema";
 import { PanneauMagicLink, PanneauOtp } from "./auth-form-panels";
 import { ServiceAuth } from "@/services/auth.service";
+import { trackUsageEvent } from "@/lib/analytics/track-usage-event";
 
 export type AuthIntent = "login" | "signup";
 export type OtpEtape =
@@ -33,19 +42,25 @@ interface AuthFormProps {
 
 class ServiceFormulaireAuth {
   static readonly dureeRenvoiOtp = 60;
+
   static obtenirCallbackUrl(callbackUrl: string | null): string {
     return callbackUrl && callbackUrl.startsWith("/") ? callbackUrl : "/dashboard";
   }
+
   static focaliser(selecteur: string, racine: HTMLDivElement | null): void {
     const element = racine?.querySelector(selecteur);
     if (element instanceof HTMLInputElement) element.focus();
   }
 }
 
+const libellesProvider: Record<Provider, string> = {
+  google: "Google",
+  github: "GitHub",
+};
+
 /**
  * @component AuthForm
- * @description Orchestre les parcours OTP et Magic Link via des onglets (Tabs).
- * Inclut les connexions OAuth Google et GitHub, et un separateur visuel "OU".
+ * @description Orchestre les parcours OAuth, OTP et Magic Link dans le panneau auth sombre.
  */
 export function AuthForm({ intent = "login" }: AuthFormProps) {
   const routeur = useRouter();
@@ -53,8 +68,12 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
   const searchParams = useSearchParams();
   const callbackUrl = ServiceFormulaireAuth.obtenirCallbackUrl(searchParams.get("callbackUrl"));
   const [modeOuvert, setModeOuvert] = React.useState("otp");
+  const [providerRecent, setProviderRecent] = React.useState<Provider | null>(null);
+  const [emailOuvert, setEmailOuvert] = React.useState(intent === "signup");
   const [emailOtp, setEmailOtp] = React.useState("");
+  const [nomOtp, setNomOtp] = React.useState("");
   const [emailMagic, setEmailMagic] = React.useState("");
+  const [nomMagic, setNomMagic] = React.useState("");
   const [compteur, setCompteur] = React.useState(0);
   const [etapeOtp, setEtapeOtp] = React.useState<OtpEtape>("email-entry");
   const [erreurOtp, setErreurOtp] = React.useState<string | null>(null);
@@ -62,29 +81,61 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
   const refFormulaire = React.useRef<HTMLDivElement | null>(null);
   const dernierOtpAutoSoumis = React.useRef("");
 
-  const formulaireOtpEmail = useForm<EmailFormValues>({ resolver: zodResolver(emailSchema), defaultValues: { email: "" } });
-  const formulaireOtpCode = useForm<OTPFormValues>({ resolver: zodResolver(otpSchema), defaultValues: { otp: "" } });
-  const formulaireMagic = useForm<EmailFormValues>({ resolver: zodResolver(emailSchema), defaultValues: { email: "" } });
+  const formulaireOtpEmail = useForm<AuthEmailFormValues>({
+    resolver: zodResolver(intent === "signup" ? authEmailSignUpSchema : authEmailSchema),
+    defaultValues: { email: "", name: "" },
+  });
+  const formulaireOtpCode = useForm<OTPFormValues>({
+    resolver: zodResolver(otpSchema),
+    defaultValues: { otp: "" },
+  });
+  const formulaireMagic = useForm<MagicLinkFormValues>({
+    resolver: zodResolver(intent === "signup" ? magicLinkSignUpSchema : magicLinkSchema),
+    defaultValues: { email: "", name: "" },
+  });
 
-  /* Décompte pour le renvoi OTP */
+  React.useEffect(() => {
+    const provider = window.localStorage.getItem("winall:last-auth-provider");
+    if (provider === "google" || provider === "github") {
+      setProviderRecent(provider);
+      if (intent === "login") setEmailOuvert(false);
+      return;
+    }
+    setEmailOuvert(true);
+  }, [intent]);
+
   React.useEffect(() => {
     if (compteur <= 0) return;
     const timer = window.setTimeout(() => setCompteur((v) => v - 1), 1000);
     return () => window.clearTimeout(timer);
   }, [compteur]);
 
-  /* Focalisation automatique selon le mode actif */
   React.useEffect(() => {
     const racine = refFormulaire.current;
-    if (!racine) return;
-    if (modeOuvert === "magic-link" && !lienMagiqueEnvoye) ServiceFormulaireAuth.focaliser('input[aria-label="Email pour recevoir un magic link"]', racine);
-    if (modeOuvert === "otp" && (etapeOtp === "email-entry" || etapeOtp === "sending-code")) ServiceFormulaireAuth.focaliser('input[aria-label="Email pour recevoir un code OTP"]', racine);
-    if (modeOuvert === "otp" && etapeOtp !== "email-entry" && etapeOtp !== "sending-code") ServiceFormulaireAuth.focaliser('input[aria-label="Code OTP a 6 chiffres"]', racine);
-  }, [modeOuvert, etapeOtp, lienMagiqueEnvoye]);
+    if (!racine || !emailOuvert) return;
+    if (modeOuvert === "magic-link" && !lienMagiqueEnvoye) {
+      ServiceFormulaireAuth.focaliser(
+        intent === "signup" ? 'input[aria-label="Nom complet pour le magic link"]' : 'input[aria-label="Email pour recevoir un magic link"]',
+        racine,
+      );
+    }
+    if (modeOuvert === "otp" && (etapeOtp === "email-entry" || etapeOtp === "sending-code")) {
+      ServiceFormulaireAuth.focaliser(
+        intent === "signup" ? 'input[aria-label="Nom complet pour le code OTP"]' : 'input[aria-label="Email pour recevoir un code OTP"]',
+        racine,
+      );
+    }
+    if (modeOuvert === "otp" && etapeOtp !== "email-entry" && etapeOtp !== "sending-code") {
+      ServiceFormulaireAuth.focaliser('input[aria-label="Code OTP a 6 chiffres"]', racine);
+    }
+  }, [emailOuvert, modeOuvert, etapeOtp, lienMagiqueEnvoye, intent]);
 
   const mutationEnvoiOtp = useMutation({
-    mutationFn: (valeurs: EmailFormValues) => ServiceAuth.envoyerOtp(valeurs.email),
+    mutationFn: (valeurs: AuthEmailFormValues) => ServiceAuth.envoyerOtp(valeurs.email),
     onMutate: () => {
+      void trackUsageEvent(intent === "signup" ? "signup_started" : "login_started", {
+        metadata: { method: "otp" },
+      });
       setEtapeOtp("sending-code");
       setErreurOtp(null);
     },
@@ -96,6 +147,7 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
         return toast.error(message);
       }
       setEmailOtp(valeurs.email);
+      setNomOtp(valeurs.name?.trim() || "");
       setEtapeOtp("code-sent");
       setCompteur(ServiceFormulaireAuth.dureeRenvoiOtp);
       dernierOtpAutoSoumis.current = "";
@@ -111,7 +163,7 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
   });
 
   const mutationVerificationOtp = useMutation({
-    mutationFn: (valeurs: OTPFormValues) => ServiceAuth.verifierOtp(emailOtp, valeurs.otp),
+    mutationFn: (valeurs: OTPFormValues) => ServiceAuth.verifierOtp(emailOtp, valeurs.otp, nomOtp),
     onMutate: () => {
       setEtapeOtp("verifying-code");
       setErreurOtp(null);
@@ -125,6 +177,9 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
         return toast.error(message);
       }
       setEtapeOtp("authenticated");
+      void trackUsageEvent("login_success", {
+        metadata: { method: "otp" },
+      });
       await queryClient.invalidateQueries({ queryKey: ["session"] });
       toast.success("Connexion reussie.");
       setEtapeOtp("redirecting");
@@ -141,10 +196,17 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
   });
 
   const mutationMagicLink = useMutation({
-    mutationFn: (valeurs: EmailFormValues) => ServiceAuth.envoyerLienMagique(valeurs.email, callbackUrl),
+    mutationFn: (valeurs: MagicLinkFormValues) =>
+      ServiceAuth.envoyerLienMagique(valeurs.email, callbackUrl, valeurs.name),
+    onMutate: () => {
+      void trackUsageEvent(intent === "signup" ? "signup_started" : "login_started", {
+        metadata: { method: "magic_link" },
+      });
+    },
     onSuccess: ({ error }, valeurs) => {
       if (error) return toast.error(ServiceAuth.normaliserMessageErreur(error, "Impossible d'envoyer le lien."));
       setEmailMagic(valeurs.email);
+      setNomMagic(valeurs.name?.trim() || "");
       setLienMagiqueEnvoye(true);
       toast.success("Lien magique envoye.");
     },
@@ -152,7 +214,6 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
       toast.error(ServiceAuth.normaliserMessageErreur(erreur, "Envoi du magic link impossible.")),
   });
 
-  /* Auto-soumission OTP quand les 6 chiffres sont saisis */
   const otpValeur = formulaireOtpCode.watch("otp");
   React.useEffect(() => {
     if (
@@ -168,33 +229,25 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
   }, [otpValeur, etapeOtp, mutationVerificationOtp]);
 
   const isBusy = mutationEnvoiOtp.isPending || mutationVerificationOtp.isPending || mutationMagicLink.isPending;
+  const autreProvider = providerRecent === "google" ? "github" : "google";
   const contenu = {
     login: {
-      titre: "Connexion",
-      description: "Choisissez Google, GitHub, OTP ou Magic Link.",
-      lienSecondaire: "Creer un acces",
+      titre: "Se connecter",
+      description: "Accedez a votre espace client Winall.",
+      lienSecondaire: "Inscrivez-vous",
+      prefixeSecondaire: "Vous n'avez pas de compte ?",
       hrefSecondaire: "/sign-up",
+      emailAction: "Poursuivre par courriel",
     },
     signup: {
-      titre: "Creation d'acces",
-      description: "Creez un acces sans mot de passe avec votre email professionnel.",
-      lienSecondaire: "J'ai deja un acces",
+      titre: "Creer un acces",
+      description: "Demarrez votre espace client securise.",
+      lienSecondaire: "Connectez-vous",
+      prefixeSecondaire: "Vous avez deja un compte ?",
       hrefSecondaire: "/log-in",
+      emailAction: "Creer un acces par courriel",
     },
   }[intent];
-
-  const libelleBadge =
-    etapeOtp === "sending-code"
-      ? "Envoi"
-      : etapeOtp === "code-sent" || lienMagiqueEnvoye
-        ? "Code envoye"
-        : etapeOtp === "verifying-code"
-          ? "Verification"
-          : etapeOtp === "authenticated"
-            ? "Connexion"
-            : etapeOtp === "redirecting"
-              ? "Redirection"
-              : "Sans mot de passe";
 
   const changerEmailOtp = () => {
     setEtapeOtp("email-entry");
@@ -203,63 +256,87 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
     dernierOtpAutoSoumis.current = "";
     formulaireOtpCode.reset();
     if (emailOtp) formulaireOtpEmail.setValue("email", emailOtp);
+    if (nomOtp) formulaireOtpEmail.setValue("name", nomOtp);
   };
 
   const changerEmailMagic = () => {
     setLienMagiqueEnvoye(false);
     if (emailMagic) formulaireMagic.setValue("email", emailMagic);
+    if (nomMagic) formulaireMagic.setValue("name", nomMagic);
   };
 
   return (
-    <div ref={refFormulaire}>
-      <Card className="gap-0 overflow-hidden border-black/8 bg-white/95 py-0 shadow-xl shadow-black/6 backdrop-blur-sm">
-        {/* En-tete de la carte */}
-        <CardHeader className="space-y-1 border-b border-black/5 bg-white px-4 py-3">
-          <div className="flex items-center justify-between">
-            <CardTitle className="text-lg font-semibold">{contenu.titre}</CardTitle>
-            <Badge
-              variant="secondary"
-              className="border-orange-100 bg-orange-50 px-2 text-[10px] font-medium text-orange-600 hover:bg-orange-50"
-            >
-              {libelleBadge}
-            </Badge>
-          </div>
-          <CardDescription className="text-xs leading-snug">
-            {contenu.description}
-          </CardDescription>
-        </CardHeader>
+    <div ref={refFormulaire} className="space-y-7">
+      <div className="space-y-2">
+        <h2 className="font-noteSansJp text-2xl font-semibold leading-tight text-white">
+          {contenu.titre}
+        </h2>
+        <p className="text-sm leading-6 text-white/55">{contenu.description}</p>
+      </div>
 
-        <CardContent className="space-y-3 px-4 py-4">
-          {/* Boutons OAuth : Google et GitHub */}
-          <div className="grid grid-cols-2 gap-2">
-            <SocialButton provider="google" disabled={isBusy} callbackURL={callbackUrl} />
-            <SocialButton provider="github" disabled={isBusy} callbackURL={callbackUrl} />
+      <div className="space-y-3">
+        {providerRecent ? (
+          <SocialButton
+            provider={providerRecent}
+            disabled={isBusy}
+            callbackURL={callbackUrl}
+            label={`Continuer avec ${libellesProvider[providerRecent]}`}
+            className="border-white/20 bg-white/12"
+          />
+        ) : null}
+
+        <SocialButton
+          provider={providerRecent ? autreProvider : "google"}
+          disabled={isBusy}
+          callbackURL={callbackUrl}
+          label={providerRecent ? `Continuer avec ${libellesProvider[autreProvider]}` : "Continuer avec Google"}
+        />
+
+        {!providerRecent ? (
+          <SocialButton
+            provider="github"
+            disabled={isBusy}
+            callbackURL={callbackUrl}
+            label="Continuer avec GitHub"
+          />
+        ) : null}
+
+        <Button
+          type="button"
+          variant="outline"
+          className="h-11 w-full justify-between border-white/15 bg-transparent px-4 text-sm font-medium text-white hover:border-white/25 hover:bg-white/10 hover:text-white"
+          onClick={() => setEmailOuvert((valeur) => !valeur)}
+        >
+          <span className="inline-flex items-center gap-3">
+            <Mail className="size-4" />
+            {contenu.emailAction}
+          </span>
+          <ChevronDown className={`size-4 transition-transform ${emailOuvert ? "rotate-180" : ""}`} />
+        </Button>
+      </div>
+
+      {emailOuvert ? (
+        <div className="space-y-4">
+          <div className="relative flex items-center gap-3">
+            <Separator className="flex-1 bg-white/15" />
+            <span className="text-[10px] font-medium uppercase text-white/35">email</span>
+            <Separator className="flex-1 bg-white/15" />
           </div>
 
-          {/* Separateur "ou par email" */}
-          <div className="relative flex items-center gap-2">
-            <Separator className="flex-1" />
-            <span className="text-[10px] font-medium uppercase tracking-widest text-muted-foreground">
-              ou
-            </span>
-            <Separator className="flex-1" />
-          </div>
-
-          {/* Onglets OTP / Magic Link */}
           <Tabs value={modeOuvert} onValueChange={setModeOuvert} className="w-full gap-0">
-            <TabsList className="mb-3 grid h-8 w-full grid-cols-2 bg-muted/60">
+            <TabsList className="mb-4 grid h-10 w-full grid-cols-2 rounded-md border border-white/10 bg-white/6 p-1">
               <TabsTrigger
                 value="otp"
-                className="flex items-center gap-1.5 text-xs data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="flex items-center gap-2 text-xs text-white/65 data-[state=active]:bg-white data-[state=active]:text-black"
               >
-                <KeyRound className="size-3" />
+                <KeyRound className="size-3.5" />
                 OTP
               </TabsTrigger>
               <TabsTrigger
                 value="magic-link"
-                className="flex items-center gap-1.5 text-xs data-[state=active]:bg-white data-[state=active]:shadow-sm"
+                className="flex items-center gap-2 text-xs text-white/65 data-[state=active]:bg-white data-[state=active]:text-black"
               >
-                <Link2 className="size-3" />
+                <Link2 className="size-3.5" />
                 Magic Link
               </TabsTrigger>
             </TabsList>
@@ -290,21 +367,24 @@ export function AuthForm({ intent = "login" }: AuthFormProps) {
                 formulaire={formulaireMagic}
                 onSoumettre={() => mutationMagicLink.mutate(formulaireMagic.getValues())}
                 onChangerEmail={changerEmailMagic}
-                onRenvoyerLien={() => mutationMagicLink.mutate({ email: emailMagic })}
+                onRenvoyerLien={() =>
+                  mutationMagicLink.mutate({ email: emailMagic, name: nomMagic })
+                }
               />
             </TabsContent>
           </Tabs>
+        </div>
+      ) : null}
 
-          <div className="text-center text-xs text-muted-foreground">
-            <Link
-              href={contenu.hrefSecondaire}
-              className="font-medium text-foreground underline-offset-4 transition-colors hover:text-orange-600 hover:underline"
-            >
-              {contenu.lienSecondaire}
-            </Link>
-          </div>
-        </CardContent>
-      </Card>
+      <p className="text-center text-xs text-white/55">
+        {contenu.prefixeSecondaire}{" "}
+        <Link
+          href={contenu.hrefSecondaire}
+          className="font-semibold text-white underline-offset-4 hover:underline"
+        >
+          {contenu.lienSecondaire}
+        </Link>
+      </p>
     </div>
   );
 }
