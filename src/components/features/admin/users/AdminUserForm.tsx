@@ -30,7 +30,6 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader2, Save, User as UserIcon } from "lucide-react";
-import type { Role } from "@/lib/generated/prisma";
 
 const userFormSchema = z.object({
   name: z.string().min(2, "Le nom doit contenir au moins 2 caractères"),

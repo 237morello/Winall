@@ -5,7 +5,6 @@ import { useState } from "react";
 import { ArrowUpRight, CheckCircle2 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Typography } from "@/components/ui/typography";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Domain } from "./DomainGrid.types";
 import {

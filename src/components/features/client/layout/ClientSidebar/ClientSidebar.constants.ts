@@ -8,7 +8,8 @@ import {
 } from "lucide-react";
 import { ClientSidebarLink } from "./ClientSidebar.types";
 
-export const CLIENT_SIDEBAR_LINKS = (userId: string): ClientSidebarLink[] => [
+export const CLIENT_SIDEBAR_LINKS = (): ClientSidebarLink[] => {
+  return [
   {
     href: `/dashboard`,
     label: "Accueil",
@@ -39,4 +40,5 @@ export const CLIENT_SIDEBAR_LINKS = (userId: string): ClientSidebarLink[] => [
     label: "Paramètres",
     icon: Settings,
   },
-];
+  ];
+};
