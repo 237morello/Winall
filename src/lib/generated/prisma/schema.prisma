@@ -1,0 +1,350 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "../src/lib/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================================
+// ENUMS — Les valeurs autorisées pour chaque champ à choix
+// ============================================================
+
+/// Rôles utilisateurs de la plateforme Winall
+enum Role {
+  ADMIN // L'équipe Winall Tech (peut tout faire)
+  CLIENT // Un client (peut voir ses projets, envoyer des formulaires)
+}
+
+/// Domaines d'activité proposés par Winall Tech Sarl
+enum ProjectDomaine {
+  BTP
+  RESEAU
+  VIDEOSURVEILLANCE
+  CONTROLE_ACCES
+  SECURITE_INCENDIE
+  TELEPHONIE_IP
+  IT
+}
+
+/// État d'avancement d'un projet
+enum ProjectStatut {
+  BROUILLON // Pas encore visible par le client
+  EN_COURS // Projet actif (notifie le client)
+  TERMINE // Projet terminé (notifie le client)
+  ARCHIVE // Ni visible ni notifiable
+}
+
+/// Statut de paiement d'une facture
+enum InvoiceStatut {
+  BROUILLON
+  ENVOYE
+  PAYE
+  EN_RETARD
+  ANNULE
+}
+
+/// Types de formulaires envoyés par les visiteurs ou clients
+enum FormType {
+  DEVIS // Nouveau prospect : intéressé par un domaine
+  INTERVENTION // Client existant : problème ou évolution sur un projet
+  CONTACT // Question générale
+}
+
+/// État de traitement d'un formulaire reçu par l'Admin
+enum FormStatut {
+  NON_LU // Nouveau formulaire non traité
+  EN_TRAITEMENT // L'Admin a pris en charge la demande
+  CLOS // Demande résolue ou fermée
+}
+
+/// Types de notifications système
+enum NotificationType {
+  PROJET_DEBUT // Un projet a démarré
+  PROJET_TERMINE // Un projet est terminé
+  NOUVEAU_MESSAGE // Nouveau message privé reçu
+  NOUVEAU_COMMENTAIRE // Commentaire sur un projet
+  NOUVEAU_FORMULAIRE // Un formulaire a été soumis (pour l'Admin)
+  REPONSE_FORMULAIRE // L'Admin a répondu à une demande (pour le Client)
+}
+
+// ============================================================
+// MODÈLES — Les tables de la base de données
+// ============================================================
+
+/// Utilisateurs de la plateforme (Admin Winall ou Clients)
+model User {
+  id            String  @id
+  name          String
+  email         String
+  emailVerified Boolean @default(false)
+  image         String?
+  role          Role    @default(CLIENT) // Nouveau : rôle de l'utilisateur
+
+  // Relations d'authentification (gérées par Better Auth — ne pas toucher)
+  sessions Session[]
+  accounts Account[]
+
+  // Relations métier
+  projects         Project[] // Projets où ce User est le client
+  invoices         Invoice[] // Factures liées à ce User
+  comments         ProjectComment[] // Commentaires postés par ce User
+  messagesSent     Message[]        @relation("MessagesSent")
+  messagesReceived Message[]        @relation("MessagesReceived")
+  notifications    Notification[] // Notifications destinées à ce User
+  formulaires      FormRequest[] // Formulaires soumis par ce User
+  analyticsEvents  AnalyticsEvent[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([email])
+  @@map("user")
+}
+
+/// Un projet réalisé par Winall Tech (affiché sur le portfolio public)
+model Project {
+  id          String         @id @default(uuid())
+  titre       String
+  description String         @db.Text
+  domaine     ProjectDomaine
+  statut      ProjectStatut  @default(BROUILLON)
+  isPublic    Boolean        @default(false) // true = visible sur la vitrine publique
+
+  // Métriques financières et avancement
+  budget      Float? @default(0)
+  progression Int    @default(0) // 0 à 100
+
+  // Médias
+  imageUrl String?  @db.VarChar(500) // Image principale du projet
+  images   String[] // Galerie d'images (URLs Supabase Storage)
+
+  // Localisation & Planning
+  localisation String?
+  dateDebut    DateTime?
+  dateFin      DateTime?
+
+  // Client propriétaire (nullable : projet vitrine sans client spécifique)
+  userId String?
+  user   User?   @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  // Relations
+  comments    ProjectComment[]
+  formulaires FormRequest[] // Demandes d'intervention liées à ce projet
+  invoices    Invoice[] // Factures liées à ce projet
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([statut])
+  @@index([domaine])
+  @@index([isPublic])
+  @@index([userId])
+  @@map("project")
+}
+
+/// Facture émise par Winall Tech
+model Invoice {
+  id           String        @id @default(uuid())
+  numero       String        @unique // ex: FAC-2026-001
+  montant      Float
+  statut       InvoiceStatut @default(BROUILLON)
+  dateEcheance DateTime
+
+  // Client destinataire
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Projet lié (optionnel)
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@index([projectId])
+  @@index([statut])
+  @@map("invoice")
+}
+
+/// Commentaire posté sur un projet (visible par l'Admin et le Client propriétaire)
+model ProjectComment {
+  id        String   @id @default(uuid())
+  contenu   String   @db.Text
+  projectId String
+  project   Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([projectId])
+  @@index([userId])
+  @@map("project_comment")
+}
+
+/// Message privé entre l'Admin Winall et un Client (boîte de réception)
+model Message {
+  id             String   @id @default(uuid())
+  contenu        String   @db.Text
+  lu             Boolean  @default(false) // false = message non lu
+  senderUserId   String
+  receiverUserId String
+  senderUser     User     @relation("MessagesSent", fields: [senderUserId], references: [id], onDelete: Cascade)
+  receiverUser   User     @relation("MessagesReceived", fields: [receiverUserId], references: [id], onDelete: Cascade)
+  createdAt      DateTime @default(now())
+
+  @@index([senderUserId])
+  @@index([receiverUserId])
+  @@index([createdAt])
+  @@map("message")
+}
+
+/// Formulaire soumis par un visiteur ou un client
+/// Le champ "donnees" (JSON) stocke les champs spécifiques à chaque type
+/// DEVIS     → { domaine, budgetEstimatif, description, telephone }
+/// INTERVENTION → { projectId, urgence, description }
+/// CONTACT   → { sujet, message }
+model FormRequest {
+  id     String     @id @default(uuid())
+  type   FormType
+  statut FormStatut @default(NON_LU)
+
+  // Champs communs à tous les formulaires
+  nom       String
+  email     String
+  telephone String?
+
+  // Données spécifiques au type (flexibilité JSON)
+  donnees Json
+
+  // Réponse de l'Admin
+  reponseAdmin String?   @db.Text
+  reponduLe    DateTime?
+
+  // Relations optionnelles
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+  projectId String?
+  project   Project? @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([type])
+  @@index([statut])
+  @@index([userId])
+  @@index([createdAt])
+  @@map("form_request")
+}
+
+/// Notification système envoyée à un utilisateur
+model Notification {
+  id      String           @id @default(uuid())
+  type    NotificationType
+  titre   String
+  message String           @db.Text
+  lu      Boolean          @default(false)
+  lienUrl String? // Lien vers la ressource concernée (ex: /projets/123)
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([lu])
+  @@index([createdAt])
+  @@map("notification")
+}
+
+// ============================================================
+// MODÈLES D'AUTHENTIFICATION (Better Auth — ne pas modifier)
+// ============================================================
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([token])
+  @@index([userId])
+  @@map("session")
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  @@unique([providerId, accountId])
+  @@index([userId])
+  @@map("account")
+}
+
+model Verification {
+  id         String   @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  type       String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([identifier])
+  @@map("verification")
+}
+
+model AuthAuditLog {
+  id               String   @id @default(uuid())
+  typeEvenement    String
+  emailHash        String?  @db.VarChar(64)
+  utilisateurId    String?
+  adresseIp        String?
+  agentUtilisateur String?
+  succes           Boolean  @default(false)
+  details          Json?
+  creeLe           DateTime @default(now())
+
+  @@index([emailHash])
+  @@index([utilisateurId])
+  @@index([creeLe])
+  @@map("journal_audit_auth")
+}
+
+model AnalyticsEvent {
+  id        String   @id @default(uuid())
+  eventName String
+  route     String?
+  userId    String?
+  role      Role?
+  metadata  Json?
+  createdAt DateTime @default(now())
+
+  user User? @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@index([eventName])
+  @@index([route])
+  @@index([userId])
+  @@index([role])
+  @@index([createdAt])
+  @@map("analytics_event")
+}
