@@ -34,6 +34,15 @@ function normalizeMetadata(value: unknown): Prisma.JsonObject {
   return metadata;
 }
 
+function isMissingAnalyticsTableError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "P2021"
+  );
+}
+
 export async function POST(request: Request) {
   const body = await request.json().catch(() => null);
   const eventName = normalizeString(body?.eventName, MAX_EVENT_NAME_LENGTH);
@@ -44,15 +53,26 @@ export async function POST(request: Request) {
 
   const currentUser = await getCurrentUser();
 
-  await prisma.analyticsEvent.create({
-    data: {
-      eventName,
-      route: normalizeString(body?.route, MAX_ROUTE_LENGTH),
-      userId: currentUser?.id ?? null,
-      role: currentUser?.role ?? null,
-      metadata: normalizeMetadata(body?.metadata),
-    },
-  });
+  try {
+    await prisma.analyticsEvent.create({
+      data: {
+        eventName,
+        route: normalizeString(body?.route, MAX_ROUTE_LENGTH),
+        userId: currentUser?.id ?? null,
+        role: currentUser?.role ?? null,
+        metadata: normalizeMetadata(body?.metadata),
+      },
+    });
+  } catch (error) {
+    if (!isMissingAnalyticsTableError(error)) {
+      throw error;
+    }
+
+    return NextResponse.json(
+      { ok: true, skipped: "analytics_table_missing" },
+      { status: 202 },
+    );
+  }
 
   return NextResponse.json({ ok: true }, { status: 201 });
 }

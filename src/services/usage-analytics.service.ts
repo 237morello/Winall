@@ -21,6 +21,38 @@ function formatRouteLabel(route: string | null) {
   return route.split("?")[0] || "/";
 }
 
+function isMissingAnalyticsTableError(error: unknown) {
+  return (
+    typeof error === "object" &&
+    error !== null &&
+    "code" in error &&
+    error.code === "P2021"
+  );
+}
+
+function createEmptyUsageAnalytics(firstDay: Date) {
+  const days = Array.from({ length: 30 }, (_, index) => {
+    const day = new Date(firstDay);
+    day.setDate(firstDay.getDate() + index);
+    const date = formatDayKey(day);
+    return { date, events: 0, pageViews: 0 };
+  });
+
+  return {
+    kpis: {
+      totalEvents: 0,
+      activeUsers: 0,
+      trackedPages: 0,
+      actionRate: 0,
+    },
+    dailyUsage: days,
+    topRoutes: [],
+    roleDistribution: [],
+    topEvents: [],
+    hasEvents: false,
+  };
+}
+
 export class UsageAnalyticsService {
   static async getUsageAnalytics() {
     const now = new Date();
@@ -28,23 +60,28 @@ export class UsageAnalyticsService {
     firstDay.setDate(firstDay.getDate() - 29);
 
     const [events, totalEvents, activeUsers, trackedPages] = await Promise.all([
-      prisma.analyticsEvent.findMany({
-        where: {
-          createdAt: {
-            gte: firstDay,
+      prisma.analyticsEvent
+        .findMany({
+          where: {
+            createdAt: {
+              gte: firstDay,
+            },
           },
-        },
-        select: {
-          eventName: true,
-          route: true,
-          role: true,
-          userId: true,
-          createdAt: true,
-        },
-        orderBy: {
-          createdAt: "asc",
-        },
-      }),
+          select: {
+            eventName: true,
+            route: true,
+            role: true,
+            userId: true,
+            createdAt: true,
+          },
+          orderBy: {
+            createdAt: "asc",
+          },
+        })
+        .catch((error: unknown) => {
+          if (isMissingAnalyticsTableError(error)) return null;
+          throw error;
+        }),
       prisma.analyticsEvent.count(),
       prisma.analyticsEvent.findMany({
         where: {
@@ -68,7 +105,17 @@ export class UsageAnalyticsService {
         },
         distinct: ["route"],
       }),
-    ]);
+    ]).catch((error: unknown) => {
+      if (isMissingAnalyticsTableError(error)) {
+        return [null, 0, [], []] as const;
+      }
+
+      throw error;
+    });
+
+    if (!events) {
+      return createEmptyUsageAnalytics(firstDay);
+    }
 
     const days = Array.from({ length: 30 }, (_, index) => {
       const day = new Date(firstDay);
