@@ -1,31 +1,13 @@
-import { Pool } from "pg";
-import { PrismaPg } from "@prisma/adapter-pg";
-import { PrismaClient } from "./generated/prisma";
+import { PrismaClient } from "@prisma/client";
 
-/**
- * Utilise l'adaptateur PostgreSQL recommandé pour les déploiements serverless.
- */
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL!,
-  ssl: {
-    rejectUnauthorized: false,
-  },
-});
-
-const adaptateur = new PrismaPg(pool);
-
-const globalPourPrisma = global as unknown as {
-  prisma: PrismaClient;
+const globalForPrisma = globalThis as unknown as {
+  prisma?: PrismaClient;
 };
 
-const prisma =
-  globalPourPrisma.prisma ||
-  new PrismaClient({
-    adapter: adaptateur,
-  });
+const prisma = globalForPrisma.prisma ?? new PrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
-  globalPourPrisma.prisma = prisma;
+  globalForPrisma.prisma = prisma;
 }
 
 export default prisma;
