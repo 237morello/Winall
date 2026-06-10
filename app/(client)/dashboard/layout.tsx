@@ -17,7 +17,7 @@ export default async function ClientRootLayout({
 
   // On injecte le layout client avec l'ID de l'utilisateur pour la sidebar
   return (
-    <ClientLayout userId={userId}>
+    <ClientLayout user={user} userId={userId}>
       {children}
     </ClientLayout>
   );

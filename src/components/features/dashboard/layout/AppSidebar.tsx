@@ -9,7 +9,6 @@ import { usePathname, useRouter } from "next/navigation"; // url
 import {
   User,
   LogOut,
-  Building2,
   Bell,
   MoonStar,
   SunMedium,
@@ -45,6 +44,7 @@ import { DashboardService } from "@/services/dashboard.service"; // services
 import type { UtilisateurTableauDeBord } from "@/types/dashboard.types"; // utilisateur actif schema {mail}
 import { useTheme } from "next-themes";
 import { useEffect, useState } from "react";
+import { SidebarBrandMark } from "@/components/features/sidebar-brand-mark";
 
 export function AppSidebar({ utilisateur }: { utilisateur: UtilisateurTableauDeBord }) {
   const pathname = usePathname();
@@ -74,9 +74,7 @@ export function AppSidebar({ utilisateur }: { utilisateur: UtilisateurTableauDeB
       {/* Header : Logo Winall (Icône uniquement sur Desktop) */}
       <SidebarHeader className="py-6 px-4 flex items-center justify-center">
         <Link href="/dashboard" className="flex items-center gap-3 group">
-          <div className="flex items-center justify-center rounded-xl bg-primary text-primary-foreground h-10 w-10 shadow-lg shadow-primary/20 transition-transform group-hover:scale-105">
-            <Building2 className="h-6 w-6" />
-          </div>
+          <SidebarBrandMark priority />
           <span className={cn(isMobile ? "block" : "hidden", "font-bold text-lg tracking-tight")}>Winall Tech</span>
         </Link>
       </SidebarHeader>

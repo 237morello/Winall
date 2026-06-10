@@ -71,8 +71,8 @@ const SERVICES = [
     title: "Énergie Solaire",
     description: "Photovoltaïque",
     icon: Sun,
-    color: "text-orange-500",
-    bg: "bg-orange-500/10",
+    color: "text-primary",
+    bg: "bg-primary/10",
   },
   {
     title: "Contrôle d'Accès",

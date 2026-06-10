@@ -38,6 +38,6 @@ export const ACTION_PRINCIPALE_HEADER: ActionHeader[] = [
 export const MARQUE_HEADER = {
   titre: "Winall",
   sousTitre: "Tech Sarl",
-  logo: "/images/logo_v2.png",
+  logo: "/images/logo.png",
   altLogo: "Logo Winall Tech Sarl",
 };

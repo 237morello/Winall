@@ -1,6 +1,9 @@
-import { redirect } from "next/navigation";
+import { redirect} from "next/navigation";
 import { AdminLayout } from "@/components/features/admin/layout/AdminLayout";
 import { getCurrentUser } from "@/lib/current-user";
+import { AdminStatsCardsPage } from "./_components/AdminStats";
+import { StatsCard } from "./_components/statsCard";
+
 
 /**
  * Layout principal de l'espace Admin.
@@ -12,7 +15,7 @@ export default async function AdminRootLayout({
   children: React.ReactNode;
 }) {
   const user = await getCurrentUser();
-
+ 
   if (!user) {
     redirect("/log-in");
   }
@@ -24,7 +27,8 @@ export default async function AdminRootLayout({
   }
 
   return (
-    <AdminLayout>
+    <AdminLayout user={user}>
+      <StatsCard />
       {children}
     </AdminLayout>
   );

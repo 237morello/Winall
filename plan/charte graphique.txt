@@ -1,0 +1,52 @@
+file:///C:/Users/unix/Downloads/winall_charte_graphique_web.html
+
+
+  >_ OpenAI Codex (v0.137.0)                                                    │
+│                                                                                │
+│ Visit https://chatgpt.com/codex/settings/usage for up-to-date                  │
+│ information on rate limits and credits                                         │
+│                                                                                │
+│  Model:                gpt-5.5 (reasoning medium, summaries auto)              │
+│  Directory:            ~\Desktop\Projets\Winall                                │
+│  Permissions:          Workspace (Ask for approval)                            │
+│  Agents.md:            <none>                                                  │
+│  Account:              morelprog237@gmail.com (Free)                           │
+│  Collaboration mode:   Default                                                 │
+│  Session:              019e9b0e-ca2a-7ef1-921c-a3c281a535f6                    │
+│                                                                                │
+│  Context window:       100% left (11.6K used / 258K)                           │
+│  Monthly limit:        [███████████████████░] 95% left (resets 04:51 on 6 Jul)
+Plan
+Refonte Globale Charte Graphique Winall
+Summary
+Appliquer la charte fournie à tout le projet : site public, auth, dashboards client/admin et composants UI partagés. La refonte passera d’abord par les tokens globaux, puis par les composants de base, puis par un nettoyage ciblé des styles directs qui contredisent la nouvelle identité.
+
+Key Changes
+Remplacer les tokens dans app/globals.css par la charte Winall :
+vert forêt #204222, rouge vif #DF0A17, neutres zinc, surfaces light/dark, bordures, textes, états interactifs et danger.
+Corriger la configuration typographique :
+garder la police locale NotoSansJP, nettoyer le double chargement @font-face / next/font, uniformiser les styles h1 à small dans src/components/ui/typography.tsx.
+Refonte des boutons dans src/components/ui/button.tsx :
+variantes default/primary, secondary, outline, ghost, destructive, link, dark, avec hover/focus/disabled conformes à la charte.
+Refonte des badges dans src/components/ui/badge.tsx :
+variantes default, success, neutral, destructive, critical, dark, outline, outlineDanger.
+Harmoniser les composants UI liés aux surfaces :
+cartes, inputs, progress, checkbox/switch, sidebar, dropdowns et popovers doivent utiliser les tokens sémantiques existants plutôt que des couleurs codées en dur.
+Nettoyer les styles directs dans les pages :
+remplacer les anciens accents teal/orange/gold/gris Tailwind par primary, destructive, muted, foreground, card, border ou les nouvelles variantes de badges/boutons.
+Mettre à jour les charts et indicateurs visuels :
+remplacer les couleurs hardcodées par une palette cohérente basée sur vert, rouge et zinc, avec contraste lisible en light/dark.
+Test Plan
+Lancer pnpm lint pour détecter les erreurs de classes, imports ou variantes invalides.
+Lancer pnpm build pour valider Next, TypeScript et Prisma.
+Vérifier visuellement au minimum :
+accueil, about, auth login/signup, dashboard client, dashboard admin, chat, formulaires projet/support.
+Contrôler light/dark mode :
+fond page, surfaces, texte secondaire, bordures, boutons, badges, focus rings et états disabled.
+Rechercher après refonte les restes de couleurs directes :
+bg-[#, text-[#, border-[#, orange-, teal-, gold, #D4AF37, text-g, bg-p hors usages volontairement conservés.
+Assumptions
+Le périmètre est bien “tout le projet”.
+La charte fournie devient la source de vérité visuelle.
+Les noms shadcn standards restent compatibles autant que possible pour éviter de casser les usages existants.
+Les anciennes variantes personnalisées comme variant="p" seront remplacées ou gardées temporairement comme alias si nécessaire pour préserver la compatibilité pendant la refonte.

@@ -68,7 +68,7 @@ export const Services = ({ services }: ServicesProps) => {
     <section className="w-full py-20 relative overflow-hidden">
       {/* Background moderne avec gradients */}
       <div className="absolute inset-0 bg-gradient-to-br from-gray-100/5 via-transparent to-o/5" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(250,121,33,0.08),transparent_50%),radial-gradient(ellipse_at_bottom_right,rgba(15,23,42,0.05),transparent_40%)]" />
+      <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-foreground/5" />
 
       <div className="relative mx-auto max-w-7xl px-4 md:px-6">
         <div className="mb-14 text-center space-y-4">

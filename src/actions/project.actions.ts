@@ -39,6 +39,82 @@ const ProjectSchema = z.object({
 
 export type ProjectInput = z.infer<typeof ProjectSchema>;
 
+const PROJECT_DOMAIN_VALUES = [
+  "BTP",
+  "RESEAU",
+  "VIDEOSURVEILLANCE",
+  "CONTROLE_ACCES",
+  "SECURITE_INCENDIE",
+  "TELEPHONIE_IP",
+  "IT",
+] as const;
+
+const DOMAIN_SEARCH_LABELS: Record<ProjectDomaine, string[]> = {
+  BTP: ["btp", "genie civil", "infrastructure"],
+  RESEAU: ["reseau", "fibre", "wifi", "telecom"],
+  VIDEOSURVEILLANCE: ["videosurveillance", "camera", "cctv", "video"],
+  CONTROLE_ACCES: ["controle acces", "badge", "biometrie", "acces"],
+  SECURITE_INCENDIE: ["securite incendie", "incendie", "alarme", "detection"],
+  TELEPHONIE_IP: ["telephonie ip", "telephonie", "pabx", "ip"],
+  IT: ["it", "informatique", "maintenance"],
+};
+
+type ProjectQueryInput = {
+  q?: string | null;
+  domaine?: ProjectDomaine | string | null;
+  limit?: number;
+};
+
+function normalizeProjectDomain(value?: ProjectDomaine | string | null): ProjectDomaine | undefined {
+  if (!value) return undefined;
+  return PROJECT_DOMAIN_VALUES.includes(value as ProjectDomaine)
+    ? (value as ProjectDomaine)
+    : undefined;
+}
+
+function buildProjectSearchWhere({ q, domaine }: ProjectQueryInput): Prisma.ProjectWhereInput {
+  const query = q?.trim();
+  const selectedDomain = normalizeProjectDomain(domaine);
+  const where: Prisma.ProjectWhereInput = {};
+
+  if (selectedDomain) {
+    where.domaine = selectedDomain;
+  }
+
+  if (query) {
+    const normalizedQuery = query.toLowerCase();
+    const matchingDomains = PROJECT_DOMAIN_VALUES.filter((domain) =>
+      DOMAIN_SEARCH_LABELS[domain].some((label) => label.includes(normalizedQuery)),
+    );
+
+    where.OR = [
+      { titre: { contains: query, mode: "insensitive" } },
+      { description: { contains: query, mode: "insensitive" } },
+      { localisation: { contains: query, mode: "insensitive" } },
+      ...matchingDomains.map((domain) => ({ domaine: domain })),
+    ];
+  }
+
+  return where;
+}
+
+async function getProjectAccessWhere(extraWhere: Prisma.ProjectWhereInput = {}) {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (!session?.user) {
+    return extraWhere;
+  }
+
+  const role = (session.user as { role?: string }).role?.toUpperCase();
+  if (role === "ADMIN") {
+    return extraWhere;
+  }
+
+  return {
+    AND: [{ userId: session.user.id }, extraWhere],
+  } satisfies Prisma.ProjectWhereInput;
+}
+
 // ============================================================
 // LECTURE (PUBLIC & AUTHENTIFIÉ)
 // ============================================================
@@ -63,38 +139,39 @@ export async function getPublicProjects(domaine?: ProjectDomaine) {
 /**
  * Récupère les projets selon le rôle de l'utilisateur (Dashboard).
  */
-export async function getProjects() {
-  const session = await auth.api.getSession({ headers: await headers() });
-  
-  // Pour le développement : si non authentifié, on retourne tous les projets
-  if (!session?.user) {
-    return prisma.project.findMany({
-      include: { 
-        user: { select: { id: true, name: true, email: true, image: true } },
-        _count: { select: { comments: true, formulaires: true } }
-      },
-      orderBy: { updatedAt: "desc" },
-    });
-  }
+export async function getProjects(filters: ProjectQueryInput = {}) {
+  const where = await getProjectAccessWhere(buildProjectSearchWhere(filters));
 
-  const role = (session.user as { role?: string }).role?.toUpperCase();
-
-  if (role === "ADMIN") {
-    return prisma.project.findMany({
-      include: { 
-        user: { select: { id: true, name: true, email: true, image: true } },
-        _count: { select: { comments: true, formulaires: true } }
-      },
-      orderBy: { updatedAt: "desc" },
-    });
-  }
-
-  // Pour un client, on ne retourne que ses projets
   return prisma.project.findMany({
-    where: { userId: session.user.id },
+    where,
     orderBy: { updatedAt: "desc" },
+    ...(filters.limit ? { take: filters.limit } : {}),
     include: {
-      _count: { select: { comments: true } },
+      user: { select: { id: true, name: true, email: true, image: true } },
+      _count: { select: { comments: true, formulaires: true } },
+    },
+  });
+}
+
+/**
+ * Recherche rapide de projets accessibles depuis le dashboard client.
+ */
+export async function searchProjects(filters: ProjectQueryInput = {}) {
+  const where = await getProjectAccessWhere(buildProjectSearchWhere(filters));
+
+  return prisma.project.findMany({
+    where,
+    orderBy: { updatedAt: "desc" },
+    take: Math.min(Math.max(filters.limit ?? 6, 1), 12),
+    select: {
+      id: true,
+      titre: true,
+      description: true,
+      domaine: true,
+      imageUrl: true,
+      localisation: true,
+      progression: true,
+      statut: true,
     },
   });
 }

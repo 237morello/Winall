@@ -34,18 +34,18 @@ export function Typography({
   const Component = tagByVariant[variant];
 
   const styles = {
-    h1: "font-noteSansJp text-4xl md:text-5xl font-semibold tracking-tight leading-tight",
-    h2: "font-noteSansJp text-3xl md:text-4xl font-semibold tracking-tight leading-snug",
-    h3: "font-noteSansJp text-2xl md:text-3xl font-semibold  leading-snug",
-    h4: "font-noteSansJp text-xl md:text-2xl font-semibold  leading-snug",
-    h5: "font-noteSansJp text-lg  font-medium  leading-normal",
-    p: "font-noteSansJp text-base    leading-relaxed text-g-300",
-    div: "font-noteSansJp  leading-relaxed",
-    span: "font-noteSansJp  ",
-    muted: "font-noteSansJp text-sm text-g  leading-relaxed",
-    small: "font-noteSansJp text-sm text-g-200  leading-normal",
-    lead: "font-noteSansJp text-lg text-g  leading-relaxed",
-    code: "font-noteSansJp text-sm  bg-gray-100 px-1 py-0.5 rounded",
+    h1: "font-sans text-4xl font-semibold leading-tight text-foreground md:text-5xl",
+    h2: "font-sans text-3xl font-semibold leading-snug text-foreground md:text-4xl",
+    h3: "font-sans text-2xl font-semibold leading-snug text-foreground md:text-3xl",
+    h4: "font-sans text-xl font-semibold leading-snug text-foreground md:text-2xl",
+    h5: "font-sans text-lg font-medium leading-normal text-foreground",
+    p: "font-sans text-base leading-relaxed text-muted-foreground",
+    div: "font-sans leading-relaxed",
+    span: "font-sans",
+    muted: "font-sans text-sm leading-relaxed text-muted-foreground",
+    small: "font-sans text-sm leading-normal text-muted-foreground",
+    lead: "font-sans text-lg leading-relaxed text-muted-foreground",
+    code: "font-mono text-sm bg-muted px-1.5 py-0.5 rounded-md text-foreground",
   }
 
   return (

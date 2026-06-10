@@ -1,64 +1,195 @@
 "use client";
 
-import { AdminSidebarProps } from "./AdminSidebar.types";
-import { ADMIN_SIDEBAR_LINKS } from "./AdminSidebar.constants";
-import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Bell, MoreHorizontal, Settings, SunMedium, User } from "lucide-react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Sidebar,
+  SidebarContent,
+  SidebarFooter,
+  SidebarGroup,
+  SidebarGroupContent,
+  SidebarHeader,
+  SidebarMenu,
+  SidebarMenuButton,
+  SidebarMenuItem,
+  SidebarRail,
+  SidebarSeparator,
+  useSidebarCompact,
+} from "@/components/ui/sidebar";
+import { cn } from "@/lib/utils";
+import { ADMIN_SIDEBAR_LINKS } from "./AdminSidebar.constants";
+import { AdminSidebarProps } from "./AdminSidebar.types";
 
-/**
- * AdminSidebar - Sidebar flottante 52px icon-only pour le pilotage business.
- * @param {AdminSidebarProps} props - Les propriétés du composant.
- */
-export function AdminSidebar({ className }: AdminSidebarProps) {
+const FALLBACK_AVATAR = "/images/profile-avatar.png";
+
+function initials(name?: string | null, email?: string | null) {
+  const source = name || email || "Winall Tech";
+  return source
+    .split(/[.\s@_-]+/)
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase())
+    .join("") || "WT";
+}
+
+export function AdminSidebar({ className, user }: AdminSidebarProps) {
   const pathname = usePathname();
+  const { isCompact, showText } = useSidebarCompact();
+  const displayName = user.name || "Admin Winall";
+  const avatarSrc = user.image || FALLBACK_AVATAR;
 
   return (
-    <aside
-      className={cn(
-        "fixed left-0 top-0 z-50 flex h-screen w-[52px] flex-col items-center",
-        "border-r border-border/50 bg-background/80 backdrop-blur-md transition-all duration-300",
-        className
-      )}
+    <Sidebar
+      variant="floating"
+      collapsible="icon"
+      className={cn("z-50 [&_[data-sidebar=sidebar]]:bg-zinc-950 [&_[data-sidebar=sidebar]]:text-white [&_[data-sidebar=sidebar]]:border-white/10", className)}
     >
-      <div className="flex h-16 items-center justify-center">
-        <Link href="/admin">
-          <div className="h-8 w-8 rounded bg-primary flex items-center justify-center text-primary-foreground font-bold">
-            W
-          </div>
+      <SidebarHeader className={cn(isCompact ? "items-center px-2 py-4" : "px-3 py-4")}>
+        <Link
+          href="/admin"
+          aria-label="Accueil admin Winall Tech"
+          className={cn(
+            "flex h-12 items-center rounded-lg outline-none transition-colors hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-primary",
+            isCompact ? "size-11 justify-center gap-0 px-0" : "w-full justify-start gap-3 px-2",
+          )}
+        >
+          <span className="grid size-9 shrink-0 place-items-center rounded-lg bg-white">
+            <Image
+              src="/images/iconlogo.png"
+              alt="Logo Winall"
+              width={30}
+              height={24}
+              priority
+              className="h-auto w-7 object-contain"
+            />
+          </span>
+          {showText ? (
+            <span className="min-w-0">
+              <span className="block truncate text-sm font-bold leading-tight">Winall Tech</span>
+              <span className="block truncate text-xs text-white/55">Administration</span>
+            </span>
+          ) : null}
         </Link>
-      </div>
+      </SidebarHeader>
 
-      <nav className="flex flex-1 flex-col gap-4 py-4">
-        {ADMIN_SIDEBAR_LINKS.map((link) => {
-          const isActive = pathname === link.href;
-          const Icon = link.icon;
+      <SidebarContent className={cn(isCompact ? "items-center px-2" : "px-2")}>
+        <SidebarGroup className={cn(isCompact && "items-center p-0")}>
+          <SidebarGroupContent className={cn(isCompact && "w-auto")}>
+            <SidebarMenu className="gap-1.5">
+              {ADMIN_SIDEBAR_LINKS.map((link) => {
+                const Icon = link.icon;
+                const isActive = pathname === link.href || (link.href !== "/admin" && pathname.startsWith(`${link.href}/`));
 
-          return (
-            <Link
-              key={link.href}
-              href={link.href}
+                return (
+                  <SidebarMenuItem key={link.href}>
+                    <SidebarMenuButton
+                      asChild
+                      size="lg"
+                      tooltip={link.label}
+                      isActive={isActive}
+                      className={cn(
+                        "h-11 rounded-lg text-white/70 hover:bg-white/10 hover:text-white",
+                        isCompact ? "size-11! justify-center gap-0 px-0! py-0!" : "w-full justify-start gap-3 px-2",
+                        "data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:shadow-sm data-[active=true]:shadow-primary/20",
+                      )}
+                    >
+                      <Link href={link.href}>
+                        <Icon className="size-[18px]" />
+                        {showText ? <span>{link.label}</span> : null}
+                      </Link>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+      </SidebarContent>
+
+      <SidebarSeparator className="bg-white/10" />
+
+      <SidebarFooter className={cn(isCompact ? "items-center p-2" : "p-3")}>
+        <div className={cn("grid gap-1", isCompact ? "grid-cols-1 justify-items-center" : "grid-cols-3")}>
+          <Button variant="ghost" size="icon" className="size-9 rounded-lg text-white/60 hover:bg-white/10 hover:text-white" aria-label="Notifications">
+            <Bell className="size-4" />
+          </Button>
+          <Button variant="ghost" size="icon" className="size-9 rounded-lg text-white/60 hover:bg-white/10 hover:text-white" aria-label="Thème">
+            <SunMedium className="size-4" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" size="icon" className="size-9 rounded-lg text-white/60 hover:bg-white/10 hover:text-white" aria-label="Plus">
+                <MoreHorizontal className="size-4" />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-56 rounded-lg">
+              <DropdownMenuLabel>Winall Tech SARL</DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem className="gap-2">
+                <Settings className="size-4" />
+                Paramètres
+              </DropdownMenuItem>
+              <DropdownMenuItem className="gap-2">
+                <User className="size-4" />
+                Profil
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button
+              variant="ghost"
               className={cn(
-                "group relative flex h-10 w-10 items-center justify-center rounded-lg transition-colors",
-                isActive 
-                  ? "bg-primary text-primary-foreground" 
-                  : "text-muted-foreground hover:bg-muted hover:text-foreground"
+                "mt-2 h-12 rounded-lg text-white/70 hover:bg-white/10 hover:text-white",
+                isCompact ? "size-11 justify-center gap-0 p-0" : "w-full justify-start gap-3 px-2",
               )}
             >
-              <Icon size={20} />
-              
-              {/* Tooltip simple en CSS plat */}
-              <span className="absolute left-14 hidden rounded bg-foreground px-2 py-1 text-xs text-background group-hover:block whitespace-nowrap">
-                {link.label}
-              </span>
-            </Link>
-          );
-        })}
-      </nav>
-
-      <div className="py-4">
-        {/* Actions de bas de sidebar (ex: Profil, Settings) */}
-      </div>
-    </aside>
+              <Avatar className="size-8">
+                <AvatarImage src={avatarSrc} alt={displayName} />
+                <AvatarFallback className="bg-primary/20 text-xs font-bold text-primary">
+                  {initials(user.name, user.email)}
+                </AvatarFallback>
+              </Avatar>
+              {showText ? (
+                <span className="min-w-0 text-left">
+                  <span className="block truncate text-sm font-semibold">{displayName}</span>
+                  <span className="block truncate text-xs text-white/45">{user.email}</span>
+                </span>
+              ) : null}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent side="right" align="end" sideOffset={12} className="w-64 rounded-lg">
+            <DropdownMenuLabel className="font-normal">
+              <p className="truncate text-sm font-bold">{displayName}</p>
+              <p className="truncate text-xs text-muted-foreground">{user.email}</p>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem className="gap-2">
+              <User className="size-4" />
+              Profil administrateur
+            </DropdownMenuItem>
+            <DropdownMenuItem className="gap-2">
+              <Settings className="size-4" />
+              Paramètres
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </SidebarFooter>
+      <SidebarRail />
+    </Sidebar>
   );
 }

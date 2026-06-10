@@ -3,13 +3,13 @@
 import { createAuthClient } from "better-auth/react";
 import { magicLinkClient, emailOTPClient } from "better-auth/client/plugins";
 
+const baseURL = process.env.NEXT_PUBLIC_APP_URL;
+
 /**
- * @constant authClient
- * @description Instance du client Better Auth pour le frontend.
- * Permet l'utilisation des méthodes de connexion (OTP, Magic Link, Social) dans les composants.
+ * Instance du client Better Auth pour le frontend.
  */
 export const authClient = createAuthClient({
-  baseURL: process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000",
+  ...(baseURL ? { baseURL } : {}),
   plugins: [
     magicLinkClient(),
     emailOTPClient(),

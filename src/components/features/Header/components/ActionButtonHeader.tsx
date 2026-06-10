@@ -48,7 +48,7 @@ export function ActionButtonHeader() {
           <DropdownMenuTrigger asChild>
             <Button variant="ghost" className="relative size-10 rounded-full p-0 overflow-hidden hover:bg-transparent">
               <Avatar className="size-10 border border-border/50 transition-transform hover:scale-105">
-                <AvatarFallback className="bg-orange-500 text-white font-bold text-xs">
+                <AvatarFallback className="bg-primary text-primary-foreground font-bold text-xs">
                   {initiales}
                 </AvatarFallback>
               </Avatar>

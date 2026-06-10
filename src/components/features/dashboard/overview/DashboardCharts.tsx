@@ -18,7 +18,7 @@ const dataDomaines = [
   { name: "IT", value: 25 },
 ];
 
-const COLORS = ["#D4AF37", "#1E1E1E", "#4A4A4A"];
+const COLORS = ["var(--primary)", "var(--foreground)", "var(--muted-foreground)"];
 
 export function DashboardCharts() {
   return (
@@ -37,7 +37,7 @@ export function DashboardCharts() {
               <Tooltip 
                 contentStyle={{ borderRadius: "16px", border: "1px solid var(--border)", backgroundColor: "var(--background)", fontSize: "12px", fontWeight: "bold" }}
               />
-              <Area type="monotone" dataKey="total" stroke="#D4AF37" strokeWidth={4} fillOpacity={0.1} fill="#D4AF37" />
+              <Area type="monotone" dataKey="total" stroke="var(--primary)" strokeWidth={4} fillOpacity={0.1} fill="var(--primary)" />
             </AreaChart>
           </ResponsiveContainer>
         </CardContent>

@@ -32,7 +32,7 @@ export function Footer() {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="text-teal-100/70 mb-10 text-lg md:text-xl font-light"
+            className="text-primary-foreground/70 mb-10 text-lg md:text-xl font-light"
           >
             Nos experts vous accompagnent de l&apos;étude à la réalisation.
           </motion.p>
@@ -44,13 +44,13 @@ export function Footer() {
           >
             <Link
               href="/contact"
-              className="bg-[#0d9488] hover:bg-[#0f766e] text-white font-medium py-4 px-10 rounded-sm transition-all duration-300 shadow-lg"
+              className="bg-primary hover:bg-primary-hover text-primary-foreground font-medium py-4 px-10 rounded-sm transition-all duration-300 shadow-lg"
             >
               Faire un devis gratuit
             </Link>
             <Link
               href="/projets"
-              className="bg-[#1a1a1a] hover:bg-black text-white font-medium py-4 px-10 rounded-sm transition-all duration-300 border border-white/5 shadow-lg"
+              className="bg-foreground hover:bg-foreground/90 text-background font-medium py-4 px-10 rounded-sm transition-all duration-300 border border-white/5 shadow-lg"
             >
               Nos Réalisations
             </Link>
@@ -71,7 +71,7 @@ export function Footer() {
 
             {/* Column 2: Services */}
             <div className="p-10 lg:p-12 border-b md:border-b-0 lg:border-r border-white/10 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <h3 className="text-[#0d9488] text-xs font-bold mb-8 tracking-wide uppercase">Services</h3>
+              <h3 className="text-primary text-xs font-bold mb-8 tracking-wide uppercase">Services</h3>
               <ul className="space-y-4 text-gray-300/80 text-sm">
                 <li><Link href="/services" className="hover:text-white hover:translate-x-1 inline-block transition-all">Électricité & Habilitation</Link></li>
                 <li><Link href="/services" className="hover:text-white hover:translate-x-1 inline-block transition-all">Réseaux & Télécoms</Link></li>
@@ -83,13 +83,13 @@ export function Footer() {
 
             {/* Column 3: Liens rapides (Fond Noir) */}
             <div className="bg-black/40 p-10 lg:p-12 border-b lg:border-b-0 lg:border-r border-white/10 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <h3 className="text-[#0d9488] text-xs font-bold mb-8 tracking-wide uppercase">Liens rapides</h3>
+              <h3 className="text-primary text-xs font-bold mb-8 tracking-wide uppercase">Liens rapides</h3>
               <ul className="space-y-4 text-gray-300/80 text-sm">
                 <li><Link href="/" className="hover:text-white transition-colors">Accueil</Link></li>
                 <li><Link href="/services" className="hover:text-white transition-colors">Services</Link></li>
                 <li><Link href="/projets" className="hover:text-white transition-colors">Projets</Link></li>
                 <li>
-                  <Link href="/about" className="text-white border-b border-[#0d9488] pb-1 font-medium">
+                  <Link href="/about" className="text-white border-b border-primary pb-1 font-medium">
                     À propos
                   </Link>
                 </li>
@@ -98,7 +98,7 @@ export function Footer() {
 
             {/* Column 4: Nous contacter */}
             <div className="p-10 lg:p-12 flex flex-col items-center lg:items-start text-center lg:text-left">
-              <h3 className="text-[#0d9488] text-xs font-bold mb-8 tracking-wide uppercase">Nous contacter</h3>
+              <h3 className="text-primary text-xs font-bold mb-8 tracking-wide uppercase">Nous contacter</h3>
               <ul className="space-y-5 text-gray-300/80 text-sm">
                 <li className="flex flex-col gap-1">
                   <span className="text-white font-medium text-xs">Cameroun - Douala</span>
@@ -117,10 +117,10 @@ export function Footer() {
         {/* Social & Copyright */}
         <div className="container mx-auto px-4 py-12 flex flex-col items-center">
           <div className="flex gap-6 mb-12">
-            <Link href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-[#0d9488] hover:bg-[#0d9488] hover:text-white transition-all duration-300">
+            <Link href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
               <Facebook size={20} />
             </Link>
-            <Link href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-[#0d9488] hover:bg-[#0d9488] hover:text-white transition-all duration-300">
+            <Link href="#" className="w-12 h-12 rounded-full border border-white/10 flex items-center justify-center text-primary hover:bg-primary hover:text-primary-foreground transition-all duration-300">
               <MessageCircle size={20} />
             </Link>
           </div>

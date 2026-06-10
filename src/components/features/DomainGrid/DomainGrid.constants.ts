@@ -36,7 +36,7 @@ export const DOMAINS: Record<DomainKey, Domain> = {
     description: "Protection intelligente des biens et des personnes via Vidéoprotection, Contrôle d'Accès et Détection intrusion.",
     icon: React.createElement(Cctv, { className: "size-6" }),
     colors: {
-      gradient: "from-emerald-600/20 via-teal-400/10 to-transparent",
+      gradient: "from-emerald-600/20 via-primary/10 to-transparent",
       iconBg: "bg-emerald-500/10",
       iconText: "text-emerald-500",
       badge: "border-emerald-500/20 text-emerald-500",
@@ -72,11 +72,11 @@ export const DOMAINS: Record<DomainKey, Domain> = {
     description: "Génie civil, aménagements techniques et solutions énergétiques (Solaire) pour infrastructures critiques.",
     icon: React.createElement(HardHat, { className: "size-6" }),
     colors: {
-      gradient: "from-orange-600/20 via-amber-400/10 to-transparent",
-      iconBg: "bg-orange-500/10",
-      iconText: "text-orange-500",
-      badge: "border-orange-500/20 text-orange-500",
-      glow: "group-hover:shadow-orange-500/20",
+      gradient: "from-destructive/20 via-primary/10 to-transparent",
+      iconBg: "bg-destructive/10",
+      iconText: "text-destructive",
+      badge: "border-destructive/20 text-destructive",
+      glow: "group-hover:shadow-destructive/20",
     },
     keyPoints: [
       { id: "1", label: "Génie Civil & BTP" },

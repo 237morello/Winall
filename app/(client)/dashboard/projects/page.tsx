@@ -4,8 +4,22 @@ import { ProjectsList } from "@/components/features/dashboard/projects/ProjectsL
 import type { UtilisateurTableauDeBord } from "@/types/dashboard.types";
 import { getProjects } from "@/actions/project.actions";
 import { getDashboardStats } from "@/actions/dashboard.actions";
+import { isProjectDomainValue } from "@/components/features/dashboard/domain-options";
 
-export default async function ProjectsPage() {
+type ProjectsPageProps = {
+  searchParams?: Promise<{
+    domaine?: string | string[];
+    q?: string | string[];
+  }>;
+};
+
+export default async function ProjectsPage({ searchParams }: ProjectsPageProps) {
+  const params = (await searchParams) ?? {};
+  const rawDomain = Array.isArray(params.domaine) ? params.domaine[0] : params.domaine;
+  const rawQuery = Array.isArray(params.q) ? params.q[0] : params.q;
+  const selectedDomain = isProjectDomainValue(rawDomain) ? rawDomain : null;
+  const query = rawQuery?.trim() || "";
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -18,9 +32,17 @@ export default async function ProjectsPage() {
   };
 
   const [projets, stats] = await Promise.all([
-    getProjects(),
+    getProjects({ q: query, domaine: selectedDomain }),
     getDashboardStats(),
   ]);
 
-  return <ProjectsList utilisateur={utilisateur} projets={projets} stats={stats} />;
+  return (
+    <ProjectsList
+      utilisateur={utilisateur}
+      projets={projets}
+      stats={stats}
+      selectedDomain={selectedDomain}
+      query={query}
+    />
+  );
 }

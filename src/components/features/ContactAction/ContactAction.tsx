@@ -23,14 +23,14 @@ export const ContactAction = () => {
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 flex flex-col gap-4">
             <Button 
               size="lg" 
-              className="bg-green-500 hover:bg-green-600 text-white font-bold px-8 py-7 rounded-2xl shadow-xl transition-all hover:-translate-y-1"
+              className="bg-primary hover:bg-primary-hover text-primary-foreground font-bold px-8 py-7 rounded-2xl shadow-xl transition-all hover:-translate-y-1"
             >
               <Mail className="mr-2 h-6 w-6" />
               mail
             </Button>
             <Button 
               size="lg" 
-              className="bg-orange-500 hover:bg-orange-600 text-white font-bold px-8 py-7 rounded-2xl shadow-xl transition-all hover:-translate-y-1"
+              className="bg-destructive hover:bg-destructive-hover text-destructive-foreground font-bold px-8 py-7 rounded-2xl shadow-xl transition-all hover:-translate-y-1"
             >
               <FileText className="mr-2 h-6 w-6" />
               Devis

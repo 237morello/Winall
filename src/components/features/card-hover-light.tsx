@@ -17,7 +17,7 @@ export interface FancyCardProps {
   domain?: string;
   domainIcon?: React.ReactNode;
   logo?: React.ReactNode;
-  gradient?: "blue" | "purple" | "emerald" | "orange" | "slate";
+  gradient?: "blue" | "purple" | "emerald" | "accent" | "slate";
   onClick?: () => void;
   dialogContent?: React.ReactNode;
 }
@@ -25,8 +25,8 @@ export interface FancyCardProps {
 const gradients = {
   blue: "from-blue-600/20 via-cyan-400/10 to-transparent",
   purple: "from-purple-600/20 via-violet-400/10 to-transparent",
-  emerald: "from-emerald-600/20 via-teal-400/10 to-transparent",
-  orange: "from-orange-600/20 via-amber-400/10 to-transparent",
+  emerald: "from-emerald-600/20 via-primary/10 to-transparent",
+  accent: "from-destructive/20 via-primary/10 to-transparent",
   slate: "from-slate-600/20 via-slate-400/10 to-transparent",
 };
 
@@ -34,7 +34,7 @@ const iconBgs = {
   blue: "bg-blue-500/10",
   purple: "bg-purple-500/10",
   emerald: "bg-emerald-500/10",
-  orange: "bg-orange-500/10",
+  accent: "bg-destructive/10",
   slate: "bg-slate-500/10",
 };
 
@@ -42,7 +42,7 @@ const iconTexts = {
   blue: "text-blue-500",
   purple: "text-purple-500",
   emerald: "text-emerald-500",
-  orange: "text-orange-500",
+  accent: "text-destructive",
   slate: "text-slate-500",
 };
 
@@ -50,7 +50,7 @@ const badges = {
   blue: "border-blue-500/20 text-blue-500",
   purple: "border-purple-500/20 text-purple-500",
   emerald: "border-emerald-500/20 text-emerald-500",
-  orange: "border-orange-500/20 text-orange-500",
+  accent: "border-destructive/20 text-destructive",
   slate: "border-slate-500/20 text-slate-500",
 };
 
@@ -58,7 +58,7 @@ const glows = {
   blue: "group-hover:shadow-blue-500/20",
   purple: "group-hover:shadow-purple-500/20",
   emerald: "group-hover:shadow-emerald-500/20",
-  orange: "group-hover:shadow-orange-500/20",
+  accent: "group-hover:shadow-destructive/20",
   slate: "group-hover:shadow-slate-500/20",
 };
 

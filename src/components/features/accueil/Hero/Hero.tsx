@@ -156,7 +156,7 @@ export const SectionHero = ({ className }: ProprietesHero) => {
       >
         {/* ARRIÈRE-PLAN TEXTURÉ (Fond Cinématique avec plus de contraste) */}
         {/* 1. Glow Orange (Accent Winall) - Plus présent */}
-        <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[85vw] h-[45vh] bg-orange-500/15 blur-[100px] md:blur-[150px] rounded-full pointer-events-none z-0" />
+        <div className="absolute top-[-15%] left-1/2 -translate-x-1/2 w-[85vw] h-[45vh] bg-primary/15 blur-[100px] md:blur-[150px] rounded-full pointer-events-none z-0" />
         
         {/* 2. Glow Gris/Noir (Profondeur) */}
         <div className="absolute bottom-[-5%] left-1/2 -translate-x-1/2 w-[60vw] h-[35vh] bg-black/10 blur-[80px] rounded-full pointer-events-none z-0" />
@@ -187,8 +187,8 @@ export const SectionHero = ({ className }: ProprietesHero) => {
             >
               {BADGE_TECHNIQUE.avecPulse && (
                 <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
                 </span>
               )}
               <Typography variant="span" className="text-[10px] md:text-xs font-bold uppercase tracking-[0.25em] text-black/90">

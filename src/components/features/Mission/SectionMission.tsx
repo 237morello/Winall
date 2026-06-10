@@ -59,7 +59,7 @@ export const SectionMission = () => {
               <AccordionItem key={valeur.id} value={valeur.id} className="border-none">
                 <AccordionTrigger className="flex items-center justify-between py-4 text-xl md:text-2xl font-bold text-black hover:no-underline group border-t border-gray-100">
                   <span className="flex-1 text-left">{valeur.titre}</span>
-                  <div className="ml-4 text-orange-500">
+                  <div className="ml-4 text-primary">
                     <Plus className="h-6 w-6 shrink-0 transition-transform duration-200 group-data-[state=open]:hidden" />
                     <Minus className="h-6 w-6 shrink-0 transition-transform duration-200 group-data-[state=closed]:hidden" />
                   </div>

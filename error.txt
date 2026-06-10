@@ -1,0 +1,35 @@
+Already up to date
+Done in 804ms using pnpm v11.5.1
+$ prisma generate
+Loaded Prisma config from prisma.config.ts.
+
+Prisma schema loaded from prisma\schema.prisma.
+
+✔ Generated Prisma Client (v7.8.0) to .\src\lib\generated\prisma in 1.44s
+
+Start by importing your Prisma Client (See: https://pris.ly/d/importing-client)
+
+
+$ next build
+   ▲ Next.js 15.5.12
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 72s
+   Linting and checking validity of types  ...Failed to compile.
+
+./app/(client)/dashboard/page.tsx:31:7
+Type error: Type '{ totalProjects: number; activeProjects: number; pendingForms: number; totalRevenue: number; myProjects?: undefined; myPendingQuotes?: undefined; myUnreadMessages?: undefined; myInvoicesInArrears?: undefined; } | { ...; }' is not assignable to type 'DashboardStats'.
+  Type '{ totalProjects: number; activeProjects: number; pendingForms: number; totalRevenue: number; myProjects?: undefined; myPendingQuotes?: undefined; myUnreadMessages?: undefined; myInvoicesInArrears?: undefined; }' is not assignable to type 'DashboardStats'.
+    Types of property 'myProjects' are incompatible.
+      Type 'undefined' is not assignable to type 'number'.
+
+  29 |       utilisateur={utilisateur} 
+  30 |       projetsRecents={projets.slice(0, 12)} 
+> 31 |       stats={stats}
+     |       ^
+  32 |     />
+  33 |   );
+  34 | }
+Next.js build worker exited with code: 1 and signal: null
+[ELIFECYCLE] Command failed with exit code 1.

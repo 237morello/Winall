@@ -9,7 +9,6 @@ import {
   Settings,
   User,
   LogOut,
-  Building2,
 } from "lucide-react";
 
 import {
@@ -37,6 +36,7 @@ import { getSidebarItems } from "./sidebar-items";
 import { cn } from "@/lib/utils";
 import { RichTooltip } from "./rich-tooltip";
 import { Button } from "@/components/ui/button";
+import { SidebarBrandMark } from "@/components/features/sidebar-brand-mark";
 
 export function AppSidebar({ userId }: { userId: string }) {
   const pathname = usePathname();
@@ -46,9 +46,9 @@ export function AppSidebar({ userId }: { userId: string }) {
     <Sidebar collapsible="none" className="w-[70px] border-r border-border/40 bg-card/40 backdrop-blur-md">
       {/* Header avec logo Winall uniquement */}
       <SidebarHeader className="py-6 px-0 flex items-center justify-center">
-        <div className="flex items-center justify-center rounded-xl bg-p text-white shadow-lg shadow-p/20 h-10 w-10">
-          <Building2 className="h-6 w-6" />
-        </div>
+        <Link href="/dashboard" aria-label="Accueil dashboard Winall Tech" className="group outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2">
+          <SidebarBrandMark priority className="size-10 rounded-xl" imageClassName="w-[32px]" />
+        </Link>
       </SidebarHeader>
 
       {/* Navigation avec icônes uniquement + Tooltips */}

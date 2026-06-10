@@ -11,7 +11,7 @@ export const Timeline = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="relative flex items-center justify-between">
           {/* Ligne pointillée de fond */}
-          <div className="absolute top-1/2 left-0 w-full h-0 border-t-2 border-dotted border-orange-200 -translate-y-1/2 z-0" />
+          <div className="absolute top-1/2 left-0 w-full h-0 border-t-2 border-dotted border-primary/20 -translate-y-1/2 z-0" />
           
           {/* Étapes */}
           {ETAPES.map((etape, index) => (
@@ -20,8 +20,8 @@ export const Timeline = () => {
                 className={`
                   px-6 py-3 rounded-xl text-lg font-bold transition-all duration-300
                   ${etape.active 
-                    ? "bg-orange-500 text-white shadow-lg shadow-orange-200 scale-110" 
-                    : "bg-orange-100 text-orange-600 border border-orange-200"
+                    ? "bg-primary text-primary-foreground shadow-lg shadow-primary/20 scale-110" 
+                    : "bg-primary/10 text-primary border border-primary/20"
                   }
                 `}
               >

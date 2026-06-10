@@ -46,20 +46,26 @@ export class ServiceAuth {
   /**
    * Verifie un code OTP puis ouvre une session si le code est valide.
    */
-  static async verifierOtp(email: string, otp: string) {
+  static async verifierOtp(email: string, otp: string, name?: string) {
+    const nomNettoye = name?.trim();
+
     return authClient.signIn.emailOtp({
       email,
       otp,
+      ...(nomNettoye ? { name: nomNettoye } : {}),
     });
   }
 
   /**
    * Declenche l'envoi d'un magic link vers l'email demande.
    */
-  static async envoyerLienMagique(email: string, callbackURL: string) {
+  static async envoyerLienMagique(email: string, callbackURL: string, name?: string) {
+    const nomNettoye = name?.trim();
+
     return authClient.signIn.magicLink({
       email,
       callbackURL,
+      ...(nomNettoye ? { name: nomNettoye } : {}),
     });
   }
 }
