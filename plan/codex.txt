@@ -1,222 +1,34 @@
-# Mission
-
-Tu es un Software Architect Senior spécialisé en Analytics, Next.js App Router, PostgreSQL, Prisma, Recharts et Microsoft Clarity.
-
-Nous voulons construire un système nommé "Winall Analytics" inspiré de Microsoft Clarity mais plus léger.
-
-L'objectif n'est PAS de remplacer Clarity.
-
-L'objectif est de fournir dans notre interface Admin les 50% d'informations les plus utiles afin que les administrateurs puissent surveiller rapidement le comportement des utilisateurs sans devoir ouvrir Clarity.
-
-Pour les analyses avancées (heatmaps, session replay, rage clicks, dead clicks, scroll maps, etc.), nous continuerons d'utiliser Microsoft Clarity.
-
-# Contexte technique
-
-Stack :
-
-* Next.js App Router
-* TypeScript
-* Prisma
-* PostgreSQL
-* Shadcn UI
-* Tailwind CSS
-* Recharts
-* Microsoft Clarity
-
-# Contraintes
-
-1. Architecture scalable.
-2. Faible impact sur les performances.
-3. Compatible SSR et App Router.
-4. Compatible utilisateurs connectés et visiteurs anonymes.
-5. Respect RGPD.
-6. Aucune donnée sensible.
-7. Possibilité d'ajouter de nouvelles métriques facilement.
-
-# Utilisation de Microsoft Clarity
-
-Nous utiliserons :
-
-window.clarity("event", ...)
-window.clarity("set", ...)
-window.clarity("identify", ...)
-
-afin de relier nos événements métiers avec les données Clarity. Microsoft Clarity permet également les événements personnalisés et les tags personnalisés. Les événements et tags devront être intégrés à notre architecture analytics.
-
-Nous souhaitons également étudier l'utilisation future du Data Export API de Clarity pour enrichir nos tableaux de bord internes.
-
-# Objectif
-
-Produire un plan d'architecture complet.
-
-Ne pas coder immédiatement.
-
-Commencer par la phase conception.
-
-# Étape 1
-
-Définir :
-
-* les KPIs principaux
-* les événements à enregistrer
-* les métriques à stocker
-* les dimensions analytiques
-
-# Étape 2
-
-Proposer le schéma Prisma complet :
-
-* AnalyticsSession
-* AnalyticsEvent
-* AnalyticsPageView
-* AnalyticsSearch
-* AnalyticsError
-* AnalyticsConversion
-* AnalyticsUserJourney
-
-avec leurs relations.
-
-# Étape 3
-
-Définir un système de tracking universel :
-
-track()
-
-capable de gérer :
-
-* page_view
-* click
-* search
-* login
-* register
-* logout
-* form_submit
-* purchase
-* add_to_cart
-* create_listing
-* create_project
-* custom_event
-
-# Étape 4
-
-Construire le dashboard Admin.
-
-Lister toutes les pages :
-
-## Dashboard Overview
-
-KPIs :
-
-* visiteurs uniques
-* sessions
-* pages vues
-* durée moyenne
-* taux de rebond
-* conversions
-
-## Audience
-
-* visiteurs par jour
-* visiteurs par mois
-* pays
-* appareils
-* navigateurs
-* systèmes
-
-## Behaviour
-
-* pages populaires
-* temps moyen par page
-* parcours utilisateurs
-* pages de sortie
-
-## Conversion
-
-* funnel
-* taux de conversion
-* événements clés
-
-## Search Analytics
-
-* recherches populaires
-* recherches sans résultat
-
-## Errors
-
-* erreurs JS
-* erreurs API
-* erreurs serveur
-
-# Étape 5
-
-Pour chaque métrique :
-
-* expliquer son intérêt métier
-* expliquer comment la calculer
-* expliquer la requête SQL ou Prisma correspondante
-
-# Étape 6
-
-Pour chaque graphique Recharts :
-
-proposer :
-
-* type de graphique
-* structure des données
-* fréquence d'actualisation
-* volume de données acceptable
-
-Exemples :
-
-* LineChart
-* AreaChart
-* BarChart
-* PieChart
-* Treemap
-* FunnelChart
-
-# Étape 7
-
-Définir les tableaux avancés :
-
-* sessions récentes
-* utilisateurs actifs
-* pages populaires
-* événements populaires
-* recherches populaires
-* erreurs récentes
-
-# Étape 8
-
-Créer une roadmap MVP :
-
-Phase 1 :
-indispensable
-
-Phase 2 :
-important
-
-Phase 3 :
-avancé
-
-Phase 4 :
-intégration poussée avec Microsoft Clarity
-
-# Résultat attendu
-
-Je veux un document d'architecture complet et professionnel.
-
-Je veux que chaque décision soit justifiée.
-
-Je veux que tu critiques les mauvaises idées et proposes des alternatives plus robustes.
-
-Ne commence aucun code avant validation finale de l'architecture.
-Plan Analytics Usage: Recharts + Microsoft Clarity
-
-- Integrer Microsoft Clarity globalement via NEXT_PUBLIC_CLARITY_PROJECT_ID.
-- Identifier les utilisateurs connectes, taguer role, route, auth_state et dashboard_area.
-- Ajouter un stockage interne AnalyticsEvent dans Prisma et une API /api/analytics/events.
-- Fournir trackUsageEvent() cote client pour envoyer les evenements vers Clarity et la base interne.
-- Creer /admin/usage avec agregats serveur et graphiques Recharts.
-- Ajouter l'onglet admin Usage vers /admin/usage.
-- Instrumenter les evenements principaux: page_view, login_started, login_success, signup_started, quote_opened, support_request_sent, project_viewed, admin_page_viewed, admin_usage_viewed.
+CONTEXTE
+Projet Next.js 15 (App Router) + TypeScript + Tailwind, convention de composants à 4 fichiers déjà en place :
+  ComponentName.types.ts
+  ComponentName.constants.ts
+  ComponentName.tsx
+  index.ts
+avec une classe statique `ComponentService` pour la logique (formatage, calculs, etc.), séparée du JSX.
+Design system existant : variables CSS en OKLCH (--color-p vert, --color-o orange, --color-g neutre), style flat (pas de gradient, pas de shadow), font-weight 400/500 uniquement, bordures 0.5px, icônes Lucide/Tabler.
+
+OBJECTIF
+Créer une page admin "Système et ressources" à l'adresse /admin/systeme (ou équivalent selon la structure de routes existante). Cette page est réservée à l'admin et affiche l'usage/les quotas des services externes utilisés par Winall (Supabase, Upstash Redis, Vercel, Resend).
+
+CONTRAINTES DE LAYOUT
+- Pas de sidebar. Layout en page normale avec une nav horizontale en haut (logo + liens + avatar admin).
+- Contenu centré, largeur max ~1100px.
+- Titre de page + sous-titre, une ligne de 3 mini stat-cards, puis une grille de cartes (une par service) avec pour chaque carte : icône, nom, catégorie/plan, badge de statut (Actif / À surveiller), et des barres de progression par métrique (valeur actuelle / limite), colorées vert si sain, orange si >80% du quota.
+
+STRUCTURE DE DONNÉES ATTENDUE
+Créer un type `ExternalService` avec : id, nom, catégorie, plan, statut ('active' | 'warning' | 'critical'), et une liste de métriques `{ label, current, limit, unit }`.
+`ComponentService` doit exposer une fonction pure qui calcule le pourcentage d'usage et détermine la couleur de la barre (seuils : <70% vert, 70-90% orange, >90% rouge) — pas de logique dans le JSX.
+
+DONNÉES
+Pour l'instant, utiliser un tableau de données statique (mock) dans .constants.ts pour Supabase, Upstash, Vercel, Resend. Ne PAS appeler les vraies APIs externes dans cette étape — juste la UI avec des données factices réalistes. On branchera les vraies APIs (Supabase Management API, Upstash REST API) dans une itération suivante via une route API Next.js séparée.
+
+CODE
+- Rester simple et court : pas de sur-ingénierie, pas d'abstraction inutile pour 4 services.
+- Composants réutilisables : un `ServiceCard` qui prend un `ExternalService` en props, réutilisé pour les 4 cartes.
+- Pas de librairie de composants externe (pas de shadcn, pas de Radix) sauf si déjà utilisée ailleurs dans le projet.
+
+DÉPENDANCES
+Si une dépendance npm est nécessaire (icônes, etc.), ne pas l'installer directement — lister ce qui est requis et me demander confirmation avant d'exécuter `pnpm add`.
+
+LIVRABLE
+Les fichiers du composant `SystemResourcesPage` (ou nom cohérent avec l'arborescence existante) suivant la convention 4 fichiers, plus la page route qui l'utilise.

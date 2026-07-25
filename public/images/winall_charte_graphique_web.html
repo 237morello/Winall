@@ -1,0 +1,295 @@
+
+<style>
+.sec{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--color-text-secondary);margin:2rem 0 .75rem;padding-bottom:7px;border-bottom:.5px solid var(--color-border-tertiary)}
+.f5{display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.sw{border-radius:10px;overflow:hidden;border:.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.sw-c{height:68px}
+.sw-l{padding:8px 10px}
+.sw-n{font-size:12px;font-weight:500;color:var(--color-text-primary);margin:0 0 2px}
+.sw-h{font-size:11px;font-family:var(--font-mono);color:var(--color-text-secondary);margin:0;line-height:1.5}
+.sc-wrap{margin-bottom:18px}
+.sc-nm{font-size:12px;font-weight:500;color:var(--color-text-primary);margin:0 0 7px;display:flex;align-items:center;gap:8px}
+.sc-row{display:grid;grid-template-columns:repeat(10,1fr);border-radius:8px;overflow:hidden}
+.sc-s{height:42px}
+.sc-meta{display:grid;grid-template-columns:repeat(10,1fr);margin-top:4px}
+.sc-m{font-size:11px;font-family:var(--font-mono);color:var(--color-text-secondary);text-align:center;line-height:1.5}
+.sc-m b{font-weight:500;color:var(--color-text-primary)}
+.tag{font-size:10px;padding:2px 7px;border-radius:4px;font-weight:500}
+.rg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.rc{border:.5px solid var(--color-border-tertiary);border-radius:8px;overflow:hidden}
+.rp{height:34px;display:flex;align-items:center;padding:0 10px;font-size:11px;font-weight:500}
+.ri{padding:6px 10px;background:var(--color-background-primary)}
+.rl{font-size:11px;color:var(--color-text-secondary);margin:0 0 1px}
+.rh{font-size:11px;font-family:var(--font-mono);color:var(--color-text-primary);font-weight:500;margin:0}
+.cb{padding:16px;background:var(--color-background-secondary);border-radius:10px;border:.5px solid var(--color-border-tertiary)}
+.br{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:4px}
+.btn{padding:7px 15px;border-radius:6px;font-size:12px;font-weight:500;font-family:var(--font-sans);cursor:default;border:none;display:inline-block;line-height:1.4}
+.bdg{padding:3px 9px;border-radius:4px;font-size:11px;font-weight:500;display:inline-block;border:.5px solid transparent}
+.cblock{background:var(--color-background-secondary);border:.5px solid var(--color-border-tertiary);border-radius:8px;padding:14px 16px;font-family:var(--font-mono);font-size:11px;line-height:1.85;color:var(--color-text-primary);overflow-x:auto;white-space:pre;margin:0}
+.cm{color:var(--color-text-secondary)}
+.clb{font-size:11px;font-weight:500;color:var(--color-text-secondary);margin:12px 0 6px}
+</style>
+
+<h2 class="sr-only">Charte graphique web complète — Winall Tech Sarl : palette, gammes, rôles, composants et variables CSS.</h2>
+
+<div style="padding:1.25rem .25rem">
+
+<p class="sec">Couleurs fondamentales</p>
+<div class="f5">
+  <div class="sw">
+    <div class="sw-c" style="background:#204222"></div>
+    <div class="sw-l"><p class="sw-n">Vert forêt</p><p class="sw-h">#204222</p><p class="sw-h">Primaire — CTA, liens</p></div>
+  </div>
+  <div class="sw">
+    <div class="sw-c" style="background:#DF0A17"></div>
+    <div class="sw-l"><p class="sw-n">Rouge vif</p><p class="sw-h">#DF0A17</p><p class="sw-h">Accent — danger, alerte</p></div>
+  </div>
+  <div class="sw">
+    <div class="sw-c" style="background:#F4F4F5;border-bottom:.5px solid var(--color-border-tertiary)"></div>
+    <div class="sw-l"><p class="sw-n">Zinc 100</p><p class="sw-h">#F4F4F5</p><p class="sw-h">Surface — cards, UI</p></div>
+  </div>
+  <div class="sw">
+    <div class="sw-c" style="background:#000000"></div>
+    <div class="sw-l"><p class="sw-n">Noir</p><p class="sw-h">#000000</p><p class="sw-h">Texte — fond dark</p></div>
+  </div>
+  <div class="sw">
+    <div class="sw-c" style="background:#FFFFFF;border-bottom:.5px solid var(--color-border-tertiary)"></div>
+    <div class="sw-l"><p class="sw-n">Blanc</p><p class="sw-h">#FFFFFF</p><p class="sw-h">Fond — texte sur dark</p></div>
+  </div>
+</div>
+
+<p class="sec" style="margin-top:2.25rem">Gammes de teintes</p>
+
+<div class="sc-wrap">
+  <p class="sc-nm">Vert <span class="tag" style="background:#dee3de;color:#204222">base = 800</span></p>
+  <div class="sc-row">
+    <div class="sc-s" style="background:#f4f6f4"></div><div class="sc-s" style="background:#dee3de"></div>
+    <div class="sc-s" style="background:#bbc6bc"></div><div class="sc-s" style="background:#9baa9b"></div>
+    <div class="sc-s" style="background:#758a76"></div><div class="sc-s" style="background:#516c52"></div>
+    <div class="sc-s" style="background:#365537"></div><div class="sc-s" style="background:#2b4b2d"></div>
+    <div class="sc-s" style="background:#204222;outline:2px solid rgba(255,255,255,.4);outline-offset:-3px"></div>
+    <div class="sc-s" style="background:#1b381d"></div>
+  </div>
+  <div class="sc-meta">
+    <p class="sc-m">50</p><p class="sc-m">100</p><p class="sc-m">200</p><p class="sc-m">300</p><p class="sc-m">400</p>
+    <p class="sc-m">500</p><p class="sc-m">600</p><p class="sc-m">700</p><p class="sc-m"><b>800</b></p><p class="sc-m">900</p>
+  </div>
+</div>
+
+<div class="sc-wrap">
+  <p class="sc-nm">Rouge <span class="tag" style="background:#fdf3f3;color:#86060e;border:.5px solid #f5b6b9">base = 500</span></p>
+  <div class="sc-row">
+    <div class="sc-s" style="background:#fdf3f3"></div><div class="sc-s" style="background:#fadbdb"></div>
+    <div class="sc-s" style="background:#f5b6b9"></div><div class="sc-s" style="background:#f19197"></div>
+    <div class="sc-s" style="background:#eb676f"></div>
+    <div class="sc-s" style="background:#df0a17;outline:2px solid rgba(255,255,255,.4);outline-offset:-3px"></div>
+    <div class="sc-s" style="background:#a70811"></div><div class="sc-s" style="background:#86060e"></div>
+    <div class="sc-s" style="background:#64050a"></div><div class="sc-s" style="background:#430307"></div>
+  </div>
+  <div class="sc-meta">
+    <p class="sc-m">50</p><p class="sc-m">100</p><p class="sc-m">200</p><p class="sc-m">300</p><p class="sc-m">400</p>
+    <p class="sc-m"><b>500</b></p><p class="sc-m">600</p><p class="sc-m">700</p><p class="sc-m">800</p><p class="sc-m">900</p>
+  </div>
+</div>
+
+<div class="sc-wrap">
+  <p class="sc-nm">Zinc — neutre <span class="tag" style="background:#e4e4e7;color:#3f3f46">fourni = 100</span></p>
+  <div class="sc-row">
+    <div class="sc-s" style="background:#fafafa;border-right:.5px solid #e4e4e7"></div>
+    <div class="sc-s" style="background:#f4f4f5;border-right:.5px solid #e4e4e7;outline:2px solid rgba(0,0,0,.15);outline-offset:-3px"></div>
+    <div class="sc-s" style="background:#e4e4e7"></div><div class="sc-s" style="background:#d4d4d8"></div>
+    <div class="sc-s" style="background:#a1a1aa"></div><div class="sc-s" style="background:#71717a"></div>
+    <div class="sc-s" style="background:#52525b"></div><div class="sc-s" style="background:#3f3f46"></div>
+    <div class="sc-s" style="background:#27272a"></div><div class="sc-s" style="background:#18181b"></div>
+  </div>
+  <div class="sc-meta">
+    <p class="sc-m">50</p><p class="sc-m"><b>100</b></p><p class="sc-m">200</p><p class="sc-m">300</p><p class="sc-m">400</p>
+    <p class="sc-m">500</p><p class="sc-m">600</p><p class="sc-m">700</p><p class="sc-m">800</p><p class="sc-m">900</p>
+  </div>
+</div>
+
+<p class="sec" style="margin-top:2.25rem">Rôles sémantiques</p>
+<div class="rg">
+
+  <div class="rc">
+    <div class="rp" style="background:#fff;color:#000;border-bottom:.5px solid #e4e4e7">Fond page — light</div>
+    <div class="ri"><p class="rl">bg-page</p><p class="rh">#FFFFFF</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#F4F4F5;color:#000">Fond surface</div>
+    <div class="ri"><p class="rl">bg-surface · cards, inputs</p><p class="rh">#F4F4F5</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#000;color:#fff">Fond page — dark</div>
+    <div class="ri"><p class="rl">bg-page (dark mode)</p><p class="rh">#000000</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#18181b;color:#fff">Surface — dark</div>
+    <div class="ri"><p class="rl">bg-surface (dark mode)</p><p class="rh">#18181B</p></div>
+  </div>
+
+  <div class="rc">
+    <div class="rp" style="background:#fff;color:#000;border-bottom:.5px solid #e4e4e7">Texte principal</div>
+    <div class="ri"><p class="rl">titres, corps de texte</p><p class="rh">#000000</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#fff;color:#52525b;border-bottom:.5px solid #e4e4e7">Texte secondaire</div>
+    <div class="ri"><p class="rl">descriptions, captions</p><p class="rh">#52525B</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#fff;color:#a1a1aa;border-bottom:.5px solid #e4e4e7">Texte désactivé</div>
+    <div class="ri"><p class="rl">placeholders, disabled</p><p class="rh">#A1A1AA</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#e4e4e7;color:#3f3f46">Bordure défaut</div>
+    <div class="ri"><p class="rl">séparateurs, inputs, cards</p><p class="rh">#E4E4E7</p></div>
+  </div>
+
+  <div class="rc">
+    <div class="rp" style="background:#204222;color:#fff">Bouton primaire</div>
+    <div class="ri"><p class="rl">CTA, liens, actions</p><p class="rh">#204222</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#2b4b2d;color:#fff">Primaire — hover</div>
+    <div class="ri"><p class="rl">état survol bouton vert</p><p class="rh">#2B4B2D</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#dee3de;color:#204222">Primaire — subtil</div>
+    <div class="ri"><p class="rl">badges succès, fond doux</p><p class="rh">#DEE3DE</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#f4f6f4;color:#365537">Primaire — très doux</div>
+    <div class="ri"><p class="rl">hover sur fond blanc</p><p class="rh">#F4F6F4</p></div>
+  </div>
+
+  <div class="rc">
+    <div class="rp" style="background:#DF0A17;color:#fff">Danger / Accent</div>
+    <div class="ri"><p class="rl">erreurs, CTA urgents</p><p class="rh">#DF0A17</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#a70811;color:#fff">Danger — hover</div>
+    <div class="ri"><p class="rl">état survol bouton rouge</p><p class="rh">#A70811</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#fdf3f3;color:#86060e">Danger — subtil</div>
+    <div class="ri"><p class="rl">alertes, fond erreur</p><p class="rh">#FDF3F3</p></div>
+  </div>
+  <div class="rc">
+    <div class="rp" style="background:#000;color:#bbc6bc">Texte sur fond noir</div>
+    <div class="ri"><p class="rl">hero dark, sections sombres</p><p class="rh">#BBC6BC</p></div>
+  </div>
+
+</div>
+
+<p class="sec" style="margin-top:2.25rem">Composants UI</p>
+<div class="cb">
+
+  <p class="clb" style="margin-top:0">Boutons</p>
+  <div class="br">
+    <span class="btn" style="background:#204222;color:#fff">Primaire</span>
+    <span class="btn" style="background:#2b4b2d;color:#fff">Primaire hover</span>
+    <span class="btn" style="background:#DF0A17;color:#fff">Danger</span>
+    <span class="btn" style="background:transparent;color:#204222;border:1px solid #204222">Outline</span>
+    <span class="btn" style="background:#F4F4F5;color:#3f3f46;border:1px solid #e4e4e7">Secondaire</span>
+    <span class="btn" style="background:#000;color:#fff">Dark</span>
+    <span class="btn" style="background:#e4e4e7;color:#a1a1aa">Désactivé</span>
+  </div>
+
+  <p class="clb">Badges & tags</p>
+  <div class="br">
+    <span class="bdg" style="background:#dee3de;color:#204222">Succès</span>
+    <span class="bdg" style="background:#204222;color:#fff">Primaire</span>
+    <span class="bdg" style="background:#fdf3f3;color:#86060e;border-color:#f5b6b9">Erreur</span>
+    <span class="bdg" style="background:#DF0A17;color:#fff">Critique</span>
+    <span class="bdg" style="background:#f4f4f5;color:#3f3f46;border-color:#e4e4e7">Neutre</span>
+    <span class="bdg" style="background:#000;color:#dee3de">Sombre</span>
+    <span class="bdg" style="background:transparent;color:#204222;border-color:#9baa9b">Outline vert</span>
+    <span class="bdg" style="background:transparent;color:#86060e;border-color:#f19197">Outline rouge</span>
+  </div>
+
+  <p class="clb">Exemple de carte</p>
+  <div style="background:#fff;border:.5px solid #e4e4e7;border-radius:10px;padding:14px;display:grid;grid-template-columns:1fr 1fr;gap:14px">
+    <div>
+      <p style="margin:0 0 3px;font-size:11px;color:#a1a1aa;font-weight:500;text-transform:uppercase;letter-spacing:.07em">Services réseau</p>
+      <p style="margin:0 0 6px;font-size:14px;font-weight:500;color:#000">Infrastructure LAN</p>
+      <p style="margin:0 0 10px;font-size:11.5px;color:#52525b;line-height:1.55">Câblage structuré, configuration switches, déploiement Wi-Fi professionnel.</p>
+      <div style="display:flex;gap:6px;flex-wrap:wrap">
+        <span class="bdg" style="background:#dee3de;color:#204222">Actif</span>
+        <span class="bdg" style="background:#f4f4f5;color:#3f3f46;border-color:#e4e4e7">Réseau</span>
+      </div>
+    </div>
+    <div style="background:#F4F4F5;border-radius:8px;padding:12px">
+      <p style="margin:0 0 8px;font-size:11px;color:#71717a;font-weight:500">Progression</p>
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#000"><div style="width:7px;height:7px;border-radius:50%;background:#204222;flex-shrink:0"></div>Audit site</div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#000"><div style="width:7px;height:7px;border-radius:50%;background:#204222;flex-shrink:0"></div>Plan réseau</div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#52525b"><div style="width:7px;height:7px;border-radius:50%;border:.5px solid #d4d4d8;flex-shrink:0"></div>Installation</div>
+        <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#52525b"><div style="width:7px;height:7px;border-radius:50%;border:.5px solid #d4d4d8;flex-shrink:0"></div>Recette</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<p class="sec" style="margin-top:2.25rem">Variables CSS</p>
+<pre class="cblock"><span class="cm">/* Winall Tech Sarl — Design Tokens */</span>
+
+<span class="cm">/* Brand */</span>
+--color-p:          oklch(0.344 0.068 145.2);  <span class="cm">/* #204222 vert forêt */</span>
+--color-p-dark:     oklch(0.305 0.062 144.5);  <span class="cm">/* #19371A vert profond */</span>
+--color-o:          oklch(0.570 0.230 27.6);   <span class="cm">/* #DF0A17 rouge vif */</span>
+
+<span class="cm">/* Échelle verte */</span>
+--green-50: #f4f6f4;  --green-100: #dee3de;  --green-200: #bbc6bc;
+--green-300: #9baa9b; --green-400: #758a76;  --green-500: #516c52;
+--green-600: #365537; --green-700: #2b4b2d;  --green-800: #204222;
+--green-900: #1b381d;
+
+<span class="cm">/* Échelle rouge */</span>
+--red-50: #fdf3f3;   --red-100: #fadbdb;    --red-200: #f5b6b9;
+--red-300: #f19197;  --red-400: #eb676f;    --red-500: #df0a17;
+--red-600: #a70811;  --red-700: #86060e;    --red-800: #64050a;
+--red-900: #430307;
+
+<span class="cm">/* Zinc neutre */</span>
+--zinc-50: #fafafa;  --zinc-100: #f4f4f5;   --zinc-200: #e4e4e7;
+--zinc-300: #d4d4d8; --zinc-400: #a1a1aa;   --zinc-500: #71717a;
+--zinc-600: #52525b; --zinc-700: #3f3f46;   --zinc-800: #27272a;
+--zinc-900: #18181b;
+
+<span class="cm">/* Tokens fonctionnels — light mode */</span>
+--bg-page:            #ffffff;
+--bg-surface:         #f4f4f5;       <span class="cm">/* zinc-100 */</span>
+--text-primary:       #000000;
+--text-secondary:     #52525b;       <span class="cm">/* zinc-600 */</span>
+--text-muted:         #a1a1aa;       <span class="cm">/* zinc-400 */</span>
+--text-inverse:       #ffffff;
+--border:             #e4e4e7;       <span class="cm">/* zinc-200 */</span>
+--border-strong:      #d4d4d8;       <span class="cm">/* zinc-300 */</span>
+
+<span class="cm">/* Interactif */</span>
+--interactive:        #204222;
+--interactive-hover:  #2b4b2d;       <span class="cm">/* green-700 */</span>
+--interactive-text:   #ffffff;
+--interactive-soft:   #dee3de;       <span class="cm">/* green-100 */</span>
+--interactive-muted:  #f4f6f4;       <span class="cm">/* green-50 */</span>
+
+<span class="cm">/* Danger */</span>
+--danger:             #df0a17;
+--danger-hover:       #a70811;       <span class="cm">/* red-600 */</span>
+--danger-text:        #ffffff;
+--danger-soft:        #fdf3f3;       <span class="cm">/* red-50 */</span>
+--danger-soft-text:   #86060e;       <span class="cm">/* red-700 */</span>
+
+<span class="cm">/* Dark mode */</span>
+@media (prefers-color-scheme: dark) {
+  --bg-page:       #000000;
+  --bg-surface:    #18181b;          <span class="cm">/* zinc-900 */</span>
+  --text-primary:  #ffffff;
+  --text-secondary:#a1a1aa;          <span class="cm">/* zinc-400 */</span>
+  --text-muted:    #52525b;          <span class="cm">/* zinc-600 */</span>
+  --border:        #27272a;          <span class="cm">/* zinc-800 */</span>
+  --border-strong: #3f3f46;          <span class="cm">/* zinc-700 */</span>
+}</pre>
+
+</div>

@@ -1,13 +1,31 @@
 import { PrismaClient } from "@prisma/client";
+import { Pool } from "pg";
+import { PrismaPg } from "@prisma/adapter-pg";
 
-const globalForPrisma = globalThis as unknown as {
-  prisma?: PrismaClient;
+// Pattern Singleton robuste pour Next.js (Hot Reload) avec Driver Adapter
+const prismaClientSingleton = () => {
+  const connectionString = `${process.env.DATABASE_URL}`;
+  
+  // Instancier le pool pg
+  const pool = new Pool({ connectionString });
+  
+  // Créer l'adapter pour Prisma
+  const adapter = new PrismaPg(pool);
+
+  // Instancier Prisma avec l'adapter
+  return new PrismaClient({ adapter });
 };
 
-const prisma = globalForPrisma.prisma ?? new PrismaClient();
+type PrismaClientSingleton = ReturnType<typeof prismaClientSingleton>;
+
+const globalForPrisma = globalThis as unknown as {
+  prismaGlobal: PrismaClientSingleton | undefined;
+};
+
+export const prisma = globalForPrisma.prismaGlobal ?? prismaClientSingleton();
 
 if (process.env.NODE_ENV !== "production") {
-  globalForPrisma.prisma = prisma;
+  globalForPrisma.prismaGlobal = prisma;
 }
 
 export default prisma;

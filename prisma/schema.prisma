@@ -16,15 +16,27 @@ enum Role {
   CLIENT // Un client (peut voir ses projets, envoyer des formulaires)
 }
 
-/// Domaines d'activité proposés par Winall Tech Sarl
+/// Domaines d'activité proposés par Winall Tech Sarl.
+/// Aligné EXACTEMENT sur les ServiceSlug du site public (marketing.types.ts) :
+/// chaque valeur correspond à un service via src/lib/project-domaine.ts.
 enum ProjectDomaine {
-  BTP
-  RESEAU
-  VIDEOSURVEILLANCE
-  CONTROLE_ACCES
-  SECURITE_INCENDIE
-  TELEPHONIE_IP
-  IT
+  ELECTRONIQUE      // electronique
+  GENIE_CIVIL       // genie-civil
+  BTP               // btp
+  MAINTENANCE       // maintenance
+  INFOGRAPHIE       // infographie
+  SECURITE_INCENDIE // securite-incendie
+  RESEAUX           // reseaux
+  AUTRES            // autres
+}
+
+/// Zones du site public où un projet publié peut être affiché.
+/// HERO = carrousel de la page d'accueil ; PROJETS_GLOBAL = section "réalisations"
+/// (accueil + /projets + /services) ; SOUS_SERVICE = sous-section d'un sous-service précis.
+enum PlacementZone {
+  HERO
+  PROJETS_GLOBAL
+  SOUS_SERVICE
 }
 
 /// État d'avancement d'un projet
@@ -80,6 +92,7 @@ model User {
   emailVerified Boolean   @default(false)
   image         String?
   role          Role      @default(CLIENT) // Nouveau : rôle de l'utilisateur
+  passwordHash  String?   // Hash PBKDF2 du mot de passe (auth admin custom, cf. src/lib/password.ts)
 
   // Relations d'authentification (gérées par Better Auth — ne pas toucher)
   sessions      Session[]
@@ -109,7 +122,8 @@ model Project {
   description String         @db.Text
   domaine     ProjectDomaine
   statut      ProjectStatut  @default(BROUILLON)
-  isPublic    Boolean        @default(false)    // true = visible sur la vitrine publique
+  isPublished  Boolean       @default(false)    // unique source de vérité pour la publication
+  publishedAt  DateTime?
 
   // Métriques financières et avancement
   budget      Float?         @default(0)
@@ -132,15 +146,34 @@ model Project {
   comments    ProjectComment[]
   formulaires FormRequest[]    // Demandes d'intervention liées à ce projet
   invoices    Invoice[]        // Factures liées à ce projet
+  placements  ProjectPlacement[] // Emplacements de publication sur le site public
 
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@index([statut])
   @@index([domaine])
-  @@index([isPublic])
+  @@index([isPublished])
+  @@index([publishedAt])
   @@index([userId])
   @@map("project")
+}
+
+/// Emplacement d'un projet sur le site public.
+/// Un projet peut avoir plusieurs placements (ex: HERO + PROJETS_GLOBAL + 2 sous-services).
+/// La visibilité effective dépend toujours de Project.isPublished (filtré à la lecture publique).
+model ProjectPlacement {
+  id             String        @id @default(uuid())
+  projectId      String
+  project        Project       @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  zone           PlacementZone
+  subServiceSlug String?       // Requis si zone = SOUS_SERVICE (format "${serviceSlug}--${slug}"), sinon null
+  ordre          Int           @default(0) // Ordre d'affichage croissant dans la zone
+  createdAt      DateTime      @default(now())
+
+  @@unique([projectId, zone, subServiceSlug])
+  @@index([zone, ordre])
+  @@map("project_placement")
 }
 
 /// Facture émise par Winall Tech
@@ -346,4 +379,28 @@ model AnalyticsEvent {
   @@index([role])
   @@index([createdAt])
   @@map("analytics_event")
+}
+
+model EventLog {
+  id         String   @id @default(uuid())
+  module     String
+  level      String
+  message    String   @db.Text
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([module])
+  @@index([level])
+  @@index([createdAt])
+  @@map("event_log")
+}
+
+model AdminPreference {
+  id        String   @id @default(uuid())
+  key       String   @unique
+  value     Json
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("admin_preference")
 }
