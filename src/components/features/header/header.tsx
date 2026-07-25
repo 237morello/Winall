@@ -4,10 +4,9 @@ import { useEffect, useRef, useState, useMemo } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ChevronDown, Phone } from "lucide-react";
+import { ChevronDown, Menu, X } from "lucide-react";
 import { Container } from "@/components/features/container";
 import { buttonVariants } from "@/components/ui/button";
-import { MARKETING_CONTACT } from "@/components/features/marketing/marketing.constants";
 import { cn } from "@/lib/utils";
 import {
   LogoHeader,
@@ -88,6 +87,7 @@ export function Header() {
   const topMarkerRef = useRef<HTMLDivElement | null>(null);
   const [activeHash, setActiveHash] = useState("");
   const [isTopMarkerVisible, setIsTopMarkerVisible] = useState(true);
+  const [isMobileNavOpen, setIsMobileNavOpen] = useState(false);
   const internalLinks = getInternalLinks(pathname);
   const shouldShowInternalLinks =
     !isTopMarkerVisible && internalLinks.length > 0;
@@ -112,6 +112,20 @@ export function Header() {
 
     return () => window.removeEventListener("hashchange", syncActiveHash);
   }, [pathname]);
+
+  // Ferme le tiroir mobile lors d'un changement de page.
+  useEffect(() => {
+    setIsMobileNavOpen(false);
+  }, [pathname]);
+
+  // Ferme le tiroir mobile avec Échap.
+  useEffect(() => {
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") setIsMobileNavOpen(false);
+    }
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, []);
 
   useEffect(() => {
     const marker = topMarkerRef.current;
@@ -239,26 +253,89 @@ export function Header() {
           </nav>
 
           <div className="flex items-center gap-2">
-            <a
-              href={MARKETING_CONTACT.phoneHref}
-              className={buttonVariants({
-                variant: "outline",
-                size: "sm",
-                className: "hidden sm:inline-flex",
-              })}
-            >
-              <Phone className="size-4" aria-hidden="true" />
-              {MARKETING_CONTACT.phone}
-            </a>
             <Link
               href={`${pathname}#contact`}
               className={buttonVariants({ size: "sm" })}
             >
               Contact
             </Link>
+            <button
+              type="button"
+              onClick={() => setIsMobileNavOpen(true)}
+              aria-label="Ouvrir le menu"
+              aria-expanded={isMobileNavOpen}
+              aria-controls="mobile-nav-panel"
+              className={buttonVariants({
+                variant: "outline",
+                size: "icon",
+                className: "lg:hidden",
+              })}
+            >
+              <Menu className="size-4" aria-hidden="true" />
+            </button>
           </div>
         </Container>
       </header>
+
+      {/* Tiroir de navigation mobile — remplace l'ancien bouton téléphone */}
+      <div
+        className={cn(
+          "fixed inset-0 z-40 bg-zinc-950/50 backdrop-blur-sm transition-opacity lg:hidden",
+          isMobileNavOpen ? "opacity-100" : "pointer-events-none opacity-0",
+        )}
+        onClick={() => setIsMobileNavOpen(false)}
+        aria-hidden="true"
+      />
+      <div
+        id="mobile-nav-panel"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Menu de navigation"
+        className={cn(
+          "fixed inset-y-0 right-0 z-50 flex w-[85vw] max-w-sm flex-col overflow-y-auto border-l border-border bg-background shadow-2xl transition-transform duration-300 lg:hidden",
+          isMobileNavOpen ? "translate-x-0" : "translate-x-full",
+        )}
+      >
+        <div className="flex items-center justify-between border-b border-border px-5 py-4">
+          <span className="text-xs font-semibold uppercase tracking-[0.18em] text-muted-foreground">
+            Menu
+          </span>
+          <button
+            type="button"
+            onClick={() => setIsMobileNavOpen(false)}
+            aria-label="Fermer le menu"
+            className="flex size-9 items-center justify-center rounded-md text-foreground transition-colors hover:bg-muted"
+          >
+            <X className="size-5" aria-hidden="true" />
+          </button>
+        </div>
+
+        <nav className="flex flex-col gap-1 p-4" aria-label="Navigation mobile">
+          {PAGE_NAV_HEADERS.map((item) => (
+            <div key={item.id}>
+              <Link
+                href={item.href}
+                className="flex h-11 items-center rounded-md px-3 text-base font-medium text-foreground transition-colors hover:bg-muted"
+              >
+                {item.libelle}
+              </Link>
+              {item.itemsLists ? (
+                <div className="ml-3 flex flex-col gap-0.5 border-l border-border pl-3">
+                  {item.itemsLists.map((subItem) => (
+                    <Link
+                      key={subItem.id}
+                      href={subItem.href}
+                      className="flex h-9 items-center rounded-md px-3 text-sm text-muted-foreground transition-colors hover:bg-muted hover:text-foreground"
+                    >
+                      {subItem.libelle}
+                    </Link>
+                  ))}
+                </div>
+              ) : null}
+            </div>
+          ))}
+        </nav>
+      </div>
     </>
   );
 }
