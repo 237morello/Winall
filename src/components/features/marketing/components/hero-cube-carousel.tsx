@@ -77,7 +77,7 @@ export function HeroCubeCarousel({ slides }: { slides?: HeroSlide[] }) {
   return (
     <section
       id="hero"
-      className="hero-cube relative isolate h-[calc(100vh-4rem)] min-h-[28rem] max-h-[46rem] overflow-hidden border-b border-border bg-zinc-950 text-white"
+      className="hero-cube relative isolate h-[26rem] overflow-hidden border-b border-border bg-zinc-950 text-white sm:h-[32rem] lg:h-[calc(100dvh-4rem)] lg:min-h-[28rem] lg:max-h-[46rem]"
     >
       <div className="absolute inset-0 overflow-hidden">
         {activeSlides.map((slide, index) => (
@@ -102,20 +102,20 @@ export function HeroCubeCarousel({ slides }: { slides?: HeroSlide[] }) {
       </div>
 
       <Container
-        className="relative z-10 flex h-full items-end py-16"
+        className="relative z-10 flex h-full items-end py-8 sm:py-12 lg:py-16"
         size="8xl"
       >
         <div className="max-w-2xl">
-          <h1 className="max-w-2xl text-3xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+          <h1 className="max-w-2xl text-2xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             <span className="text-red-200">{activeService.title}</span> pour vos
             projets.
           </h1>
 
-          <p className="mt-4 max-w-xl text-sm leading-7 text-zinc-100 sm:text-base">
+          <p className="mt-3 line-clamp-2 max-w-xl text-sm leading-6 text-zinc-100 sm:mt-4 sm:leading-7 sm:text-base">
             {activeService.tagline}
           </p>
 
-          <div className="mt-6 flex flex-col gap-3 sm:flex-row">
+          <div className="mt-4 flex flex-col gap-2.5 sm:mt-6 sm:flex-row sm:gap-3">
             <Link
               href={activeService.href}
               className={buttonVariants({ size: "sm" })}
