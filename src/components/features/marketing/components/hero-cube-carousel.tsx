@@ -77,7 +77,7 @@ export function HeroCubeCarousel({ slides }: { slides?: HeroSlide[] }) {
   return (
     <section
       id="hero"
-      className="hero-cube relative isolate mx-4 mt-4 h-[20rem] overflow-hidden rounded-2xl border border-border bg-zinc-950 text-white sm:mx-0 sm:mt-0 sm:h-[32rem] sm:rounded-none sm:border-0 sm:border-b lg:h-[calc(100dvh-4rem)] lg:min-h-[28rem] lg:max-h-[46rem]"
+      className="hero-cube relative isolate mx-4 mt-4 h-[24rem] overflow-hidden rounded-2xl border border-border bg-zinc-950 text-white sm:mx-0 sm:mt-0 sm:h-[32rem] sm:rounded-none sm:border-0 sm:border-b lg:h-[calc(100dvh-4rem)] lg:min-h-[28rem] lg:max-h-[46rem]"
     >
       <div className="absolute inset-0 overflow-hidden">
         {activeSlides.map((slide, index) => (
