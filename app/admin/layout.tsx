@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { AdminHeader } from "@/components/features/admin-header/adminHeader";
 import { adminSessionCookieName, verifyAdminSession } from "@/lib/admin-session";
 import { prisma } from "@/lib/prisma";
+
+export const metadata: Metadata = {
+  title: "Administration",
+  robots: { index: false, follow: false, nocache: true },
+};
 
 export default async function AdminLayout({
   children,

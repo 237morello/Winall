@@ -26,6 +26,7 @@ import {
 } from "@/components/features/marketing/marketing.constants";
 import { getPublishedProjectsBySubService } from "@/lib/public-projects";
 import { buildSubServiceSlug } from "@/lib/sub-service";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
 import { ContactCta } from "@/components/features/marketing/components/contact-cta";
 import { ProjectsShowcase } from "@/components/features/marketing/components/projects-showcase";
 import {
@@ -81,17 +82,37 @@ export async function generateMetadata({
 
   if (!service) {
     return {
-      title: "Service introuvable | Winall Tech Sarl",
+      title: { absolute: `Service introuvable | ${SITE_NAME}` },
     };
   }
 
+  const url = `${SITE_URL}/services/${service.slug}`;
+
   return {
-    title: service.metaTitle,
+    title: { absolute: service.metaTitle },
     description: service.metaDescription,
     keywords: service.keywords,
+    alternates: { canonical: url },
     openGraph: {
       title: service.ogTitle,
       description: service.ogDescription,
+      url,
+      siteName: SITE_NAME,
+      type: "website",
+      images: [
+        {
+          url: service.image,
+          width: 1200,
+          height: 630,
+          alt: service.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: service.ogTitle,
+      description: service.ogDescription,
+      images: [service.image],
     },
   };
 }

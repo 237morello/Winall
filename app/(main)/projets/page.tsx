@@ -12,11 +12,35 @@ import {
 } from "@/lib/public-projects";
 import { ContactCta } from "@/components/features/marketing/components/contact-cta";
 import { ProjectsByService } from "@/components/features/marketing/components/projects-by-service";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
+
+const PROJECTS_TITLE = "Projets réalisés";
+const PROJECTS_OG_TITLE = "Projets réalisés par Winall Tech Sarl";
+const PROJECTS_DESCRIPTION =
+  "Découvrez les projets réalisés par Winall Tech Sarl à Douala, classés par service : réseaux, BTP, maintenance, sécurité incendie, infographie et autres prestations.";
 
 export const metadata: Metadata = {
-  title: "Projets réalisés | Winall Tech Sarl",
-  description:
-    "Découvrez les projets réalisés par Winall Tech Sarl, classés par service : réseaux, BTP, maintenance, sécurité incendie, infographie et autres prestations.",
+  title: PROJECTS_TITLE,
+  description: PROJECTS_DESCRIPTION,
+  keywords: [
+    "projets Winall Tech",
+    "réalisations Winall Douala",
+    "chantiers BTP Douala",
+    "portfolio technique Cameroun",
+  ],
+  alternates: { canonical: "/projets" },
+  openGraph: {
+    title: PROJECTS_OG_TITLE,
+    description: PROJECTS_DESCRIPTION,
+    url: `${SITE_URL}/projets`,
+    siteName: SITE_NAME,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: PROJECTS_OG_TITLE,
+    description: PROJECTS_DESCRIPTION,
+  },
 };
 
 export default async function ProjectsPage() {

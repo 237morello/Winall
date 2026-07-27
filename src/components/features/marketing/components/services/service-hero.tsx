@@ -35,7 +35,7 @@ export function ServiceHero({ service }: ServiceHeroProps) {
         <div>
           <Eyebrow>{service.shortTitle}</Eyebrow>
 
-          <Heading id="hero-heading" level={2} className="mt-2">
+          <Heading id="hero-heading" level={1} className="mt-2">
             {titleTail ? (
               <>
                 {titleHead} <span className="text-primary">{titleTail}</span>

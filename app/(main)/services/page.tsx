@@ -18,11 +18,38 @@ import {
 } from "@/components/features/marketing/components/services";
 import { PageHeroBand } from "@/components/features/marketing/components/page-hero-band";
 import { ImageMosaic } from "@/components/features/marketing/components/image-mosaic";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
+
+const SERVICES_TITLE = "Nos services";
+const SERVICES_OG_TITLE = "Nos services techniques | Winall Tech Sarl";
+const SERVICES_DESCRIPTION =
+  "Découvrez les services Winall Tech Sarl à Douala : électronique, génie civil, BTP, maintenance, infographie, sécurité incendie, réseaux et autres prestations.";
 
 export const metadata: Metadata = {
-  title: "Services | Winall Tech Sarl",
-  description:
-    "Découvrez les services Winall Tech Sarl : électronique, génie civil, BTP, maintenance, infographie, sécurité incendie, réseaux et autres prestations.",
+  title: SERVICES_TITLE,
+  description: SERVICES_DESCRIPTION,
+  keywords: [
+    "services Winall Tech",
+    "électronique Douala",
+    "génie civil Cameroun",
+    "BTP Douala",
+    "maintenance industrielle Douala",
+    "sécurité incendie Douala",
+    "réseaux vidéosurveillance Cameroun",
+  ],
+  alternates: { canonical: "/services" },
+  openGraph: {
+    title: SERVICES_OG_TITLE,
+    description: SERVICES_DESCRIPTION,
+    url: `${SITE_URL}/services`,
+    siteName: SITE_NAME,
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: SERVICES_OG_TITLE,
+    description: SERVICES_DESCRIPTION,
+  },
 };
 
 // Argumentaire global (le catalogue n'est pas rattaché à un service unique).

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
 
 const noteSansJp = localFont({
   src: "../public/fonts/NotoSansJP[wght].ttf",
@@ -8,9 +9,51 @@ const noteSansJp = localFont({
   variable: "--font-noteSansJp",
 });
 
+const DEFAULT_TITLE =
+  "Winall Tech Sarl | Électronique, génie civil, BTP, réseaux et sécurité à Douala";
+const DEFAULT_DESCRIPTION =
+  "Winall Tech Sarl accompagne entreprises et particuliers à Douala : électronique, génie civil, BTP, maintenance, infographie, sécurité incendie et réseaux.";
+
 export const metadata: Metadata = {
-  title: "Winall Tech Sarl",
-  description: "Solutions techniques, reseaux, securite et BTP au Cameroun.",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: DEFAULT_TITLE,
+    template: `%s | ${SITE_NAME}`,
+  },
+  description: DEFAULT_DESCRIPTION,
+  keywords: [
+    "Winall",
+    "Winall Tech",
+    "Winall Tech Sarl",
+    "électronique Douala",
+    "génie civil Cameroun",
+    "BTP Douala",
+    "maintenance industrielle Cameroun",
+    "sécurité incendie Douala",
+    "réseaux et vidéosurveillance Cameroun",
+  ],
+  openGraph: {
+    type: "website",
+    locale: "fr_FR",
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: [
+      {
+        url: "/images/main-hero-imgAcceuil.png",
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: DEFAULT_TITLE,
+    description: DEFAULT_DESCRIPTION,
+    images: ["/images/main-hero-imgAcceuil.png"],
+  },
 };
 
 export default function RootLayout({

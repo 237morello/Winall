@@ -4,6 +4,7 @@ import { BadgeCheck, Info, Rocket, Star, Target, Gem, Plus, Zap } from "lucide-r
 import { Container } from "@/components/features/container";
 import { Eyebrow, Heading, Lead, Text } from "@/components/ui/typography";
 import {
+  MARKETING_CONTACT,
   MARKETING_PROCESS,
   MARKETING_SERVICES,
   getFeaturedProjects,
@@ -19,11 +20,68 @@ import { ServiceCard } from "@/components/features/marketing/components/service-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
+
+const HOME_TITLE =
+  "Winall Tech Sarl | Électronique, génie civil, BTP, maintenance, réseaux à Douala";
+const HOME_DESCRIPTION =
+  "Winall Tech Sarl à Douala : électronique, génie civil, BTP, maintenance, sécurité incendie et réseaux. Plus de 200 projets réalisés, devis gratuit sous 48h.";
 
 export const metadata: Metadata = {
-  title: "Winall Tech Sarl | Services techniques et projets réalisés",
-  description:
-    "Winall Tech Sarl conçoit et réalise des projets en électronique, génie civil, BTP, maintenance, infographie, sécurité incendie, réseaux et autres services techniques à Douala.",
+  title: { absolute: HOME_TITLE },
+  description: HOME_DESCRIPTION,
+  keywords: [
+    "Winall",
+    "Winall Tech",
+    "Winall Tech Sarl Douala",
+    "entreprise technique Douala",
+    "électronique génie civil BTP Cameroun",
+  ],
+  alternates: { canonical: "/" },
+  openGraph: {
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    url: SITE_URL,
+    siteName: SITE_NAME,
+    type: "website",
+    images: [
+      {
+        url: "/images/main-hero-imgAcceuil.png",
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: HOME_TITLE,
+    description: HOME_DESCRIPTION,
+    images: ["/images/main-hero-imgAcceuil.png"],
+  },
+};
+
+// TODO: compléter avec les coordonnées GPS précises (geo.latitude / geo.longitude),
+// les horaires d'ouverture (openingHoursSpecification) et les liens réseaux sociaux (sameAs)
+// dès qu'ils seront communiqués.
+const LOCAL_BUSINESS_JSON_LD = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  name: SITE_NAME,
+  description: HOME_DESCRIPTION,
+  url: SITE_URL,
+  telephone: MARKETING_CONTACT.phone,
+  email: MARKETING_CONTACT.email,
+  address: {
+    "@type": "PostalAddress",
+    streetAddress: MARKETING_CONTACT.address,
+    addressLocality: "Douala",
+    addressCountry: "CM",
+  },
+  areaServed: {
+    "@type": "City",
+    name: "Douala",
+  },
 };
 
 const WORK_METHOD_STEPS = [
@@ -70,6 +128,10 @@ export default async function Home() {
 
   return (
     <main className="min-h-screen bg-background">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
+      />
       <HeroCubeCarousel slides={heroSlides} />
 
       <section id="Apercu" className="space-y-3 py-20 sm:py-24">

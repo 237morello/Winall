@@ -1,7 +1,13 @@
+import type { Metadata } from "next";
 import "../globals.css";
 import Image from "next/image";
 import { KeyRound, Lock, ShieldCheck } from "lucide-react";
 import { Toaster } from "@/components/ui/toast";
+
+export const metadata: Metadata = {
+  title: "Accès administrateur",
+  robots: { index: false, follow: false, nocache: true },
+};
 
 const BRAND_POINTS = [
   { icon: KeyRound, label: "Pass d'accès obligatoire" },

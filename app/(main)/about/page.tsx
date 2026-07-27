@@ -15,11 +15,44 @@ import {
   ABOUT_TIMELINE,
   ABOUT_VALUES,
 } from "@/components/features/about/about.constant";
+import { SITE_NAME, SITE_URL } from "@/lib/site-config";
+
+const ABOUT_TITLE = "À propos";
+const ABOUT_OG_TITLE = "À propos de Winall Tech Sarl";
+const ABOUT_DESCRIPTION =
+  "Découvrez Winall Tech Sarl, son origine Firex Global Engineering, sa vision, ses valeurs et son approche des projets techniques et digitaux à Douala.";
 
 export const metadata: Metadata = {
-  title: "A propos | Winall Tech Sarl",
-  description:
-    "Decouvrez Winall Tech Sarl, son origine Firex Global Engineering, sa vision, ses valeurs et son approche des projets techniques et digitaux.",
+  title: ABOUT_TITLE,
+  description: ABOUT_DESCRIPTION,
+  keywords: [
+    "Winall Tech Sarl",
+    "à propos Winall",
+    "entreprise technique Douala",
+    "Firex Global Engineering",
+  ],
+  alternates: { canonical: "/about" },
+  openGraph: {
+    title: ABOUT_OG_TITLE,
+    description: ABOUT_DESCRIPTION,
+    url: `${SITE_URL}/about`,
+    siteName: SITE_NAME,
+    type: "website",
+    images: [
+      {
+        url: "/images/here about.jpeg",
+        width: 1200,
+        height: 630,
+        alt: SITE_NAME,
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: ABOUT_OG_TITLE,
+    description: ABOUT_DESCRIPTION,
+    images: ["/images/here about.jpeg"],
+  },
 };
 
 export default function AboutPage() {

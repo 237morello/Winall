@@ -77,7 +77,7 @@ export function HeroCubeCarousel({ slides }: { slides?: HeroSlide[] }) {
   return (
     <section
       id="hero"
-      className="hero-cube relative isolate mx-4 mt-4 h-[24rem] overflow-hidden rounded-2xl border border-border bg-zinc-950 text-white sm:mx-0 sm:mt-0 sm:h-[32rem] sm:rounded-none sm:border-0 sm:border-b lg:h-[calc(100dvh-4rem)] lg:min-h-[28rem] lg:max-h-[46rem]"
+      className="hero-cube relative isolate mx-1 mt-4 h-[30rem] overflow-hidden rounded-2xl border border-border bg-zinc-950 text-white sm:mx-0 sm:mt-0 sm:h-[32rem] sm:rounded-none sm:border-0 sm:border-b lg:h-[calc(100dvh-4rem)] lg:min-h-[28rem] lg:max-h-[46rem]"
     >
       <div className="absolute inset-0 overflow-hidden">
         {activeSlides.map((slide, index) => (
@@ -106,10 +106,10 @@ export function HeroCubeCarousel({ slides }: { slides?: HeroSlide[] }) {
         size="8xl"
       >
         <div className="max-w-2xl">
-          <h1 className="max-w-2xl text-2xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-5xl">
+          <p className="max-w-2xl text-2xl font-medium leading-tight tracking-tight sm:text-4xl lg:text-5xl">
             <span className="text-red-200">{activeService.title}</span> pour vos
             projets.
-          </h1>
+          </p>
 
           <p className="mt-3 line-clamp-2 max-w-xl text-sm leading-6 text-zinc-100 sm:mt-4 sm:leading-7 sm:text-base">
             {activeService.tagline}
