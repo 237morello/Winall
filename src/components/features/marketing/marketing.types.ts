@@ -8,6 +8,12 @@ export type ServiceSlug =
   | "infographie"
   | "securite-incendie"
   | "reseaux"
+  | "installation-electrique"
+  | "solaire"
+  | "controle-acces"
+  | "sonorisation"
+  | "domotique"
+  | "systeme-intelligent"
   | "autres";
 
 export interface MarketingProject {

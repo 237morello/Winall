@@ -16,6 +16,12 @@ export const DOMAINE_TO_SLUG: Record<ProjectDomaine, ServiceSlug> = {
   INFOGRAPHIE: "infographie",
   SECURITE_INCENDIE: "securite-incendie",
   RESEAUX: "reseaux",
+  INSTALLATION_ELECTRIQUE: "installation-electrique",
+  SOLAIRE: "solaire",
+  CONTROLE_ACCES: "controle-acces",
+  SONORISATION: "sonorisation",
+  DOMOTIQUE: "domotique",
+  SYSTEME_INTELLIGENT: "systeme-intelligent",
   AUTRES: "autres",
 };
 
@@ -27,6 +33,12 @@ export const SLUG_TO_DOMAINE: Record<ServiceSlug, ProjectDomaine> = {
   infographie: "INFOGRAPHIE",
   "securite-incendie": "SECURITE_INCENDIE",
   reseaux: "RESEAUX",
+  "installation-electrique": "INSTALLATION_ELECTRIQUE",
+  solaire: "SOLAIRE",
+  "controle-acces": "CONTROLE_ACCES",
+  sonorisation: "SONORISATION",
+  domotique: "DOMOTIQUE",
+  "systeme-intelligent": "SYSTEME_INTELLIGENT",
   autres: "AUTRES",
 };
 
@@ -39,6 +51,12 @@ export const DOMAINE_LABELS: Record<ProjectDomaine, string> = {
   INFOGRAPHIE: "Infographie",
   SECURITE_INCENDIE: "Sécurité incendie",
   RESEAUX: "Réseaux",
+  INSTALLATION_ELECTRIQUE: "Installation électrique",
+  SOLAIRE: "Plaque solaire",
+  CONTROLE_ACCES: "Contrôle d'accès",
+  SONORISATION: "Sonorisation",
+  DOMOTIQUE: "Domotique",
+  SYSTEME_INTELLIGENT: "Système intelligent",
   AUTRES: "Autres",
 };
 

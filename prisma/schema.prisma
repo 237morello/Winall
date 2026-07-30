@@ -20,14 +20,20 @@ enum Role {
 /// Aligné EXACTEMENT sur les ServiceSlug du site public (marketing.types.ts) :
 /// chaque valeur correspond à un service via src/lib/project-domaine.ts.
 enum ProjectDomaine {
-  ELECTRONIQUE      // electronique
-  GENIE_CIVIL       // genie-civil
-  BTP               // btp
-  MAINTENANCE       // maintenance
-  INFOGRAPHIE       // infographie
-  SECURITE_INCENDIE // securite-incendie
-  RESEAUX           // reseaux
-  AUTRES            // autres
+  ELECTRONIQUE            // electronique
+  GENIE_CIVIL             // genie-civil
+  BTP                     // btp
+  MAINTENANCE             // maintenance
+  INFOGRAPHIE             // infographie
+  SECURITE_INCENDIE       // securite-incendie
+  RESEAUX                 // reseaux
+  INSTALLATION_ELECTRIQUE // installation-electrique
+  SOLAIRE                 // solaire
+  CONTROLE_ACCES          // controle-acces
+  SONORISATION            // sonorisation
+  DOMOTIQUE               // domotique
+  SYSTEME_INTELLIGENT     // systeme-intelligent
+  AUTRES                  // autres
 }
 
 /// Zones du site public où un projet publié peut être affiché.

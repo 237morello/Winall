@@ -1,12 +1,18 @@
 import {
   Blocks,
+  BrainCircuit,
   Building2,
   Cpu,
   Flame,
   HardHat,
+  Home,
+  IdCard,
   Network,
   Palette,
+  Sun,
+  Volume2,
   Wrench,
+  Zap,
 } from "lucide-react";
 import type {
   MarketingContact,
@@ -32,7 +38,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "electronique",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "interventions documentées" },
@@ -310,7 +316,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "genie-civil",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "chantiers documentés" },
@@ -516,7 +522,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "btp",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "présence chantier" },
       { value: "100%", label: "lots suivis & documentés" },
@@ -654,7 +660,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "maintenance",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "interventions documentées" },
@@ -793,7 +799,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "infographie",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "2", label: "rounds de révisions inclus" },
       { value: "100%", label: "fichiers livrés exploitables" },
@@ -931,7 +937,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "securite-incendie",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "devis sous 48h" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "sites documentés & conformes" },
@@ -1070,7 +1076,7 @@ export const MARKETING_SERVICES: MarketingService[] = [
   {
     slug: "reseaux",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "liens testés & documentés" },
@@ -1211,12 +1217,840 @@ export const MARKETING_SERVICES: MarketingService[] = [
   },
 
   // ─────────────────────────────────────────────────────────────
-  // 8. AUTRES
+  // 8. INSTALLATION ÉLECTRIQUE
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "installation-electrique",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "6j/7", label: "disponibilité technique" },
+      { value: "100%", label: "installations testées" },
+    ],
+    tools: [
+      "Pince ampèremétrique",
+      "Testeur de continuité & isolement",
+      "Disjoncteurs & différentiels",
+      "Câblage normé",
+      "Tableaux de répartition modulaires",
+      "Détecteur de tension sans contact",
+    ],
+    title: "Installation électrique bâtiment",
+    shortTitle: "Installation électrique",
+    tagline: "Tableaux, câblage, prises et éclairage aux normes, du neuf à la rénovation.",
+    description:
+      "Nous réalisons vos installations électriques basse tension avec un câblage propre, des protections dimensionnées et une mise en service testée avant remise des clés.",
+    image: "/images/1.JPG",
+    icon: Zap,
+    highlights: [
+      "Tableaux normés",
+      "Câblage soigné",
+      "Protections dimensionnées",
+      "Mise en service testée",
+    ],
+    deliverables: [
+      "Schéma unifilaire",
+      "Tableau de répartition posé",
+      "Rapport de mesures",
+      "Attestation de conformité",
+    ],
+    projects: [
+      {
+        title: "Installation électrique de bureaux",
+        location: "Douala, Cameroun",
+        description:
+          "Câblage complet, pose de tableau et mise en service d'un plateau de bureaux.",
+        image: "/images/1.JPG",
+      },
+      {
+        title: "Réhabilitation d'un tableau électrique",
+        location: "Site professionnel",
+        description:
+          "Remplacement d'un tableau vétuste et remise aux normes du circuit de protection.",
+        image: "/images/image-choix.png",
+      },
+    ],
+
+    metaTitle: "Installation électrique bâtiment à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Câblage, tableaux électriques et mise en service aux normes à Douala. Winall Tech Sarl réalise vos installations électriques basse tension, du neuf à la rénovation.",
+    keywords: ["installation électrique Douala", "électricien bâtiment Cameroun", "tableau électrique Douala", "câblage basse tension"],
+    ogTitle: "Une installation électrique fiable, propre et aux normes pour votre bâtiment",
+    ogDescription: "Câblage anarchique, tableau sous-dimensionné, disjoncteurs qui sautent : nos électriciens reprennent ou installent votre réseau électrique dans les règles.",
+
+    heroTitle: "Une installation électrique fiable et conforme, du tableau à la dernière prise",
+    heroSubtitle: "Câblage soigné, protections correctement dimensionnées et mise en service testée pour un réseau électrique qui ne vous inquiète plus.",
+
+    problemIntro: "Un tableau électrique surchargé ou un câblage mal posé, c'est un risque permanent d'incendie, de panne et de mise en danger de vos équipes.",
+    problems: [
+      { label: "Tableaux sous-dimensionnés ou vétustes", description: "Des protections mal calibrées qui déclenchent sans raison ou, pire, ne protègent plus personne." },
+      { label: "Câblage non conforme ou apparent", description: "Des fils qui courent à vue, sans repérage ni protection mécanique, source de danger et de pannes." },
+      { label: "Surcharge de circuits", description: "Trop d'équipements branchés sur les mêmes lignes, avec des risques de surchauffe et de coupure." },
+      { label: "Absence de mise à la terre efficace", description: "Une installation sans terre correcte expose vos équipes à un risque d'électrocution direct." },
+    ],
+
+    solutionTitle: "Une installation électrique dimensionnée pour votre usage réel, posée dans les règles",
+    solutionDescription: "Nous étudions votre besoin en puissance, dimensionnons les protections en conséquence et réalisons un câblage propre, repéré et testé avant mise en service.",
+    solutionHow: "Notre électricien réalise un bilan de puissance, propose un schéma unifilaire adapté, pose le tableau et le câblage, puis teste chaque circuit avant de vous remettre les clés.",
+    solutionWhy: "Une installation bien dimensionnée dès le départ évite les pannes, les risques d'incendie et les reprises coûteuses. C'est la base de toute activité qui dépend de l'électricité.",
+
+    transformations: [
+      { before: "Tableau surchargé et mal identifié", after: "Tableau normé, repéré et dimensionné pour votre usage" },
+      { before: "Câblage apparent et non protégé", after: "Câblage encastré ou goulotté, propre et durable" },
+      { before: "Disjoncteurs qui sautent sans raison claire", after: "Protections calibrées selon un bilan de puissance réel" },
+      { before: "Mise à la terre absente ou défaillante", after: "Terre mesurée et conforme aux normes de sécurité" },
+      { before: "Aucun schéma de l'installation existante", after: "Schéma unifilaire remis et exploitable" },
+      { before: "Mise en service sans test préalable", after: "Chaque circuit testé avant la remise des clés" },
+    ],
+
+    solutions: [
+      { name: "Installation électrique neuve", description: "Câblage complet d'un bâtiment neuf ou d'un plateau à aménager, du tableau à la dernière prise.", benefits: "Une installation fiable et conforme dès la mise en service.", expectedResult: "Bâtiment câblé, testé et prêt à l'usage.", items: ["Bilan de puissance", "Pose du tableau", "Câblage des circuits", "Pose des prises & éclairage", "Tests de mise en service"] },
+      { name: "Réhabilitation & mise aux normes", description: "Reprise d'une installation existante vétuste ou non conforme.", benefits: "Suppression des risques et remise en conformité durable.", expectedResult: "Installation existante sécurisée et documentée.", items: ["Audit de l'existant", "Remplacement du tableau", "Reprise du câblage à risque", "Mise à la terre", "Attestation de conformité"] },
+      { name: "Dépannage & extension de circuit", description: "Ajout de circuits ou intervention rapide sur une panne électrique.", benefits: "Extension propre sans fragiliser l'installation existante.", expectedResult: "Circuit supplémentaire intégré ou panne résolue.", items: ["Diagnostic de panne", "Ajout de circuits", "Renforcement de protection", "Tests de continuité", "Rapport d'intervention"] },
+    ],
+
+    features: [
+      { name: "Bilan de puissance avant chiffrage", advantage: "Dimensionnement des protections basé sur votre usage réel, pas sur des standards approximatifs", clientBenefit: "Aucune surprise de disjoncteur qui saute ou de tableau sous-dimensionné." },
+      { name: "Câblage repéré et documenté", advantage: "Chaque circuit est identifié au tableau avec un schéma remis en fin de chantier", clientBenefit: "N'importe quel électricien peut intervenir facilement par la suite." },
+      { name: "Tests systématiques avant mise en service", advantage: "Continuité, isolement et terre vérifiés sur chaque circuit avant la remise des clés", clientBenefit: "Une installation dont la sécurité est vérifiée, pas supposée." },
+    ],
+
+    businessBenefits: [
+      { category: "Sécurité", description: "Une installation conforme protège vos équipes et vos locaux du risque électrique." },
+      { category: "Continuité d'activité", description: "Moins de coupures et de pannes liées à un réseau électrique mal dimensionné." },
+      { category: "Conformité", description: "Installation documentée, utile pour les assurances et les contrôles réglementaires." },
+      { category: "Évolutivité", description: "Un tableau bien dimensionné accueille facilement de futurs équipements." },
+      { category: "Maîtrise des coûts", description: "Une installation bien faite dès le départ évite les reprises coûteuses." },
+      { category: "Sérénité", description: "Un réseau électrique documenté et testé, sur lequel vous pouvez compter." },
+    ],
+
+    useCases: [
+      { target: "Bureaux & sièges d'entreprise", description: "Câblage de plateaux avec circuits dédiés informatique, éclairage et climatisation." },
+      { target: "Commerces & boutiques", description: "Installation adaptée aux vitrines, à l'éclairage commercial et aux équipements de caisse." },
+      { target: "Industries & ateliers", description: "Circuits de force motrice dimensionnés pour machines et équipements de production." },
+      { target: "Résidences & immeubles", description: "Installation ou rénovation électrique complète de logements et parties communes." },
+      { target: "Hôtels & restaurants", description: "Réseau électrique fiable pour cuisines, chambres et espaces recevant du public." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Visite technique & bilan de puissance", objective: "Comprendre vos besoins réels et l'existant.", actions: ["Visite du site", "Recensement des équipements à alimenter"], deliverable: "Bilan de puissance et note de cadrage." },
+      { step: 2, title: "Schéma unifilaire & devis", objective: "Vous proposer une solution claire et chiffrée.", actions: ["Élaboration du schéma", "Chiffrage détaillé des travaux"], deliverable: "Devis technique signé." },
+      { step: 3, title: "Pose du tableau & câblage", objective: "Réaliser l'installation dans les règles de l'art.", actions: ["Pose du tableau de répartition", "Tirage et raccordement des circuits"], deliverable: "Installation posée." },
+      { step: 4, title: "Pose des équipements terminaux", objective: "Finaliser les points d'usage.", actions: ["Pose des prises et interrupteurs", "Installation de l'éclairage"], deliverable: "Circuits terminaux posés." },
+      { step: 5, title: "Tests & mise en service", objective: "Vérifier la sécurité de chaque circuit.", actions: ["Tests de continuité et d'isolement", "Mesure de la terre"], deliverable: "Rapport de tests." },
+      { step: 6, title: "Remise du dossier de conformité", objective: "Vous transmettre une documentation complète.", actions: ["Rédaction du schéma unifilaire final", "Remise de l'attestation de conformité"], deliverable: "Dossier de conformité électrique." },
+    ],
+
+    faqs: [
+      { question: "Intervenez-vous aussi bien sur le neuf que sur la rénovation ?", answer: "Oui, nous réalisons des installations complètes sur bâtiment neuf ainsi que des reprises ou mises aux normes d'installations existantes." },
+      { question: "Vos installations sont-elles conformes aux normes en vigueur ?", answer: "Oui, chaque installation est dimensionnée et testée selon les normes électriques applicables, avec une attestation de conformité remise en fin de chantier." },
+      { question: "Pouvez-vous intervenir en urgence sur une panne électrique ?", answer: "Oui, nous proposons des interventions de dépannage rapide pour les pannes électriques bloquantes, avec diagnostic et remise en service le jour même selon disponibilité." },
+      { question: "Fournissez-vous le matériel électrique ou dois-je l'acheter ?", answer: "Nous pouvons fournir l'ensemble du matériel (tableaux, câbles, appareillage) ou travailler avec du matériel que vous avez déjà sélectionné, selon votre préférence." },
+      { question: "Combien de temps dure une installation électrique complète ?", answer: "Pour un plateau de bureaux ou un logement standard, comptez 3 à 10 jours selon la surface et la complexité des circuits à installer." },
+    ],
+
+    ctaTitle: "Votre installation électrique mérite d'être fiable et conforme.",
+    ctaSubtitle: "Décrivez-nous votre projet et vos équipements à alimenter. Nous revenons avec un schéma clair et un devis transparent.",
+    ctaReassurance: "Devis gratuit sous 48h — Installation testée avant remise des clés.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 9. SOLAIRE
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "solaire",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "25 ans", label: "durée de vie des panneaux" },
+      { value: "100%", label: "installations testées" },
+    ],
+    tools: [
+      "Panneaux photovoltaïques",
+      "Onduleurs solaires (string/hybrides)",
+      "Batteries de stockage",
+      "Structures de fixation",
+      "Régulateurs de charge",
+      "Testeur d'irradiance",
+    ],
+    title: "Plaque solaire",
+    shortTitle: "Solaire",
+    tagline: "Panneaux solaires et solutions hybrides pour réduire votre facture d'énergie.",
+    description:
+      "Nous installons des systèmes solaires photovoltaïques dimensionnés pour votre consommation réelle, seuls ou couplés à votre réseau existant et à un groupe électrogène.",
+    image: "/images/3.JPG",
+    icon: Sun,
+    highlights: [
+      "Étude de consommation",
+      "Dimensionnement précis",
+      "Installation hybride possible",
+      "Suivi de production",
+    ],
+    deliverables: [
+      "Étude de faisabilité",
+      "Plan d'implantation",
+      "Installation testée",
+      "Rapport de mise en service",
+    ],
+    projects: [
+      {
+        title: "Installation solaire résidentielle",
+        location: "Douala, Cameroun",
+        description:
+          "Pose de panneaux et onduleur hybride pour réduire la dépendance au réseau et au groupe électrogène.",
+        image: "/images/3.JPG",
+      },
+      {
+        title: "Solaire pour site professionnel",
+        location: "Cameroun",
+        description:
+          "Dimensionnement et installation d'une solution solaire couplée à l'alimentation existante.",
+        image: "/images/image-choix.png",
+      },
+    ],
+
+    metaTitle: "Installation solaire photovoltaïque à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Panneaux solaires, onduleurs et batteries dimensionnés pour votre consommation à Douala. Winall Tech Sarl réduit votre dépendance au réseau et vos coûts d'énergie.",
+    keywords: ["installation solaire Douala", "panneaux solaires Cameroun", "énergie solaire entreprise", "onduleur hybride solaire"],
+    ogTitle: "Réduisez votre facture d'énergie avec une installation solaire dimensionnée pour vos besoins",
+    ogDescription: "Coupures de réseau, groupe électrogène coûteux à faire tourner : le solaire réduit votre dépendance énergétique. Nos ingénieurs dimensionnent et installent votre système photovoltaïque.",
+
+    heroTitle: "Produisez votre propre énergie et réduisez durablement votre facture d'électricité",
+    heroSubtitle: "Étude de consommation, dimensionnement précis et installation testée pour une solution solaire qui tient ses promesses sur la durée.",
+
+    problemIntro: "Entre coupures de réseau, groupe électrogène coûteux et factures d'électricité qui augmentent, votre énergie vous coûte cher et reste incertaine. Le solaire change cette équation.",
+    problems: [
+      { label: "Factures d'électricité en hausse constante", description: "Une dépendance totale au réseau qui pèse de plus en plus lourd sur votre budget de fonctionnement." },
+      { label: "Coupures de réseau fréquentes", description: "Une activité interrompue à chaque délestage, sans solution de production autonome." },
+      { label: "Groupe électrogène coûteux à faire tourner", description: "Carburant, entretien et usure prématurée pour une solution de secours qui devient le mode normal." },
+      { label: "Installations solaires mal dimensionnées", description: "Des systèmes sous-dimensionnés qui déçoivent ou surdimensionnés qui coûtent inutilement cher." },
+    ],
+
+    solutionTitle: "Une installation solaire dimensionnée sur votre consommation réelle, pas sur des estimations",
+    solutionDescription: "Nous étudions votre profil de consommation, dimensionnons panneaux, onduleur et batteries en conséquence, et installons un système testé et documenté.",
+    solutionHow: "Notre équipe analyse vos factures et vos usages, propose un dimensionnement précis (autonome, hybride ou couplé au réseau), installe le système et valide sa production réelle avant remise.",
+    solutionWhy: "Un système solaire bien dimensionné s'amortit sur quelques années et continue à produire pendant 20 à 25 ans. Mal dimensionné, il déçoit et coûte plus cher que prévu.",
+
+    transformations: [
+      { before: "Facture d'électricité imprévisible et croissante", after: "Part de consommation couverte par une production solaire maîtrisée" },
+      { before: "Activité interrompue à chaque coupure réseau", after: "Continuité assurée grâce au stockage ou au couplage hybride" },
+      { before: "Groupe électrogène utilisé en continu", after: "Groupe électrogène relégué au simple secours ponctuel" },
+      { before: "Dimensionnement solaire approximatif", after: "Système calibré sur une étude de consommation réelle" },
+      { before: "Aucun suivi de la production réelle", after: "Suivi de production documenté après mise en service" },
+      { before: "Installation solaire non testée à la livraison", after: "Système testé et validé avant remise des clés" },
+    ],
+
+    solutions: [
+      { name: "Étude & dimensionnement solaire", description: "Analyse de votre consommation et de votre site pour définir la solution solaire optimale.", benefits: "Un système ni sous-dimensionné ni surdimensionné, adapté à votre budget.", expectedResult: "Étude de faisabilité avec dimensionnement et retour sur investissement estimé.", items: ["Analyse des factures", "Étude d'ensoleillement du site", "Dimensionnement panneaux & batteries", "Simulation de production", "Estimation du retour sur investissement"] },
+      { name: "Installation photovoltaïque", description: "Pose de panneaux, onduleurs et structures de fixation adaptés à votre toiture ou votre terrain.", benefits: "Une installation solide, sécurisée et esthétiquement intégrée.", expectedResult: "Système installé, raccordé et mis sous tension.", items: ["Pose des structures de fixation", "Installation des panneaux", "Raccordement de l'onduleur", "Câblage sécurisé", "Mise sous tension"] },
+      { name: "Solution hybride & stockage", description: "Couplage du solaire avec le réseau existant et un groupe électrogène, avec batteries de stockage.", benefits: "Continuité d'alimentation maximisée quelle que soit la source disponible.", expectedResult: "Système hybride basculant automatiquement entre les sources.", items: ["Batteries de stockage", "Onduleur hybride", "Bascule automatique des sources", "Paramétrage des priorités", "Tests de continuité"] },
+    ],
+
+    features: [
+      { name: "Étude de consommation avant chiffrage", advantage: "Dimensionnement basé sur vos factures réelles et non sur une estimation générique", clientBenefit: "Vous payez pour un système qui correspond exactement à votre besoin." },
+      { name: "Suivi de production après installation", advantage: "Vérification de la production réelle dans les semaines suivant la mise en service", clientBenefit: "Vous avez la preuve que votre installation tient ses promesses." },
+      { name: "Solutions hybrides sur-mesure", advantage: "Couplage intelligent entre solaire, réseau et groupe électrogène selon vos priorités", clientBenefit: "Une continuité d'alimentation optimisée sans surinvestissement." },
+    ],
+
+    businessBenefits: [
+      { category: "Réduction des coûts", description: "Diminution significative de la facture d'électricité et du recours au groupe électrogène." },
+      { category: "Continuité d'activité", description: "Moins de dépendance aux coupures de réseau grâce à la production ou au stockage local." },
+      { category: "Image de marque", description: "Une entreprise engagée dans une démarche énergétique responsable et visible." },
+      { category: "Prévisibilité budgétaire", description: "Une part de votre consommation énergétique devient indépendante des hausses de tarif réseau." },
+      { category: "Durabilité", description: "Des équipements dimensionnés pour produire de manière fiable pendant 20 à 25 ans." },
+      { category: "Retour sur investissement", description: "Un système bien dimensionné s'amortit en quelques années d'exploitation." },
+    ],
+
+    useCases: [
+      { target: "Résidences & villas", description: "Réduction de la facture d'électricité et autonomie renforcée face aux délestages." },
+      { target: "PME & bureaux", description: "Solution hybride pour sécuriser l'activité tout en réduisant les coûts d'exploitation." },
+      { target: "Industries & entrepôts", description: "Production solaire couplée au réseau pour absorber une partie de la consommation industrielle." },
+      { target: "Hôtels & résidences touristiques", description: "Continuité d'alimentation pour le confort client, même en cas de coupure réseau." },
+      { target: "Sites isolés & ruraux", description: "Solution autonome pour des sites peu ou mal desservis par le réseau électrique." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Analyse de la consommation", objective: "Comprendre votre profil de consommation énergétique.", actions: ["Analyse des factures d'électricité", "Recensement des équipements prioritaires"], deliverable: "Profil de consommation établi." },
+      { step: 2, title: "Étude du site & dimensionnement", objective: "Définir la solution technique optimale.", actions: ["Étude d'ensoleillement et de toiture", "Dimensionnement panneaux, onduleur et batteries"], deliverable: "Étude de faisabilité avec dimensionnement." },
+      { step: 3, title: "Devis & validation", objective: "Vous proposer un chiffrage clair avec retour sur investissement.", actions: ["Chiffrage détaillé", "Simulation du retour sur investissement"], deliverable: "Devis signé." },
+      { step: 4, title: "Installation des équipements", objective: "Poser panneaux, onduleur et batteries selon l'étude validée.", actions: ["Pose des structures et panneaux", "Installation de l'onduleur et des batteries"], deliverable: "Système installé." },
+      { step: 5, title: "Mise en service & tests", objective: "Valider le fonctionnement réel du système.", actions: ["Tests de production", "Paramétrage des priorités de source"], deliverable: "Rapport de mise en service." },
+      { step: 6, title: "Suivi de production", objective: "Confirmer que le système tient ses promesses.", actions: ["Relevé de production sur les premières semaines", "Recommandations d'optimisation"], deliverable: "Rapport de suivi de production." },
+    ],
+
+    faqs: [
+      { question: "En combien de temps un système solaire est-il rentabilisé ?", answer: "Cela dépend de votre consommation et du dimensionnement, mais la plupart de nos installations s'amortissent entre 3 et 6 ans, pour une durée de vie de 20 à 25 ans." },
+      { question: "Puis-je coupler le solaire avec mon groupe électrogène existant ?", answer: "Oui, nous installons des solutions hybrides qui basculent automatiquement entre solaire, réseau et groupe électrogène selon la disponibilité et vos priorités." },
+      { question: "Ai-je besoin de batteries de stockage ?", answer: "Cela dépend de votre objectif : réduire la facture (souvent sans batterie) ou assurer une continuité en cas de coupure (avec batteries). Nous vous conseillons selon votre cas." },
+      { question: "Quelle surface de toiture faut-il pour une installation solaire ?", answer: "Cela dépend de votre consommation cible. Nous réalisons une étude précise pour déterminer le nombre de panneaux nécessaires et vérifier la faisabilité sur votre toiture." },
+      { question: "Proposez-vous un suivi après l'installation ?", answer: "Oui, nous assurons un suivi de production dans les semaines suivant la mise en service, et proposons des contrats de maintenance préventive pour les installations solaires." },
+    ],
+
+    ctaTitle: "Votre facture d'énergie mérite une solution solaire bien dimensionnée.",
+    ctaSubtitle: "Partagez-nous vos factures et vos besoins. Nous revenons avec une étude claire et un dimensionnement adapté.",
+    ctaReassurance: "Étude de faisabilité gratuite — Devis transparent avec retour sur investissement estimé.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 10. CONTRÔLE D'ACCÈS
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "controle-acces",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "6j/7", label: "disponibilité technique" },
+      { value: "100%", label: "accès tracés & documentés" },
+    ],
+    tools: [
+      "Lecteurs de badges RFID",
+      "Biométrie (empreinte/visage)",
+      "Contrôleurs d'accès",
+      "Gâches électriques & ventouses",
+      "Logiciel de gestion des accès",
+      "Badgeuse horaires",
+    ],
+    title: "Contrôle d'accès & badgeuse",
+    shortTitle: "Contrôle d'accès",
+    tagline: "Sécurisez vos accès et suivez les horaires de vos équipes.",
+    description:
+      "Nous installons des systèmes de contrôle d'accès et de badgeage adaptés à votre site, pour sécuriser les entrées sensibles et fiabiliser le suivi des présences.",
+    image: "/images/image-choix.png",
+    icon: IdCard,
+    highlights: [
+      "Accès par badge ou biométrie",
+      "Gestion des droits par zone",
+      "Suivi des horaires",
+      "Historique des accès",
+    ],
+    deliverables: [
+      "Plan des points d'accès",
+      "Installation des lecteurs",
+      "Paramétrage des droits",
+      "Formation des utilisateurs",
+    ],
+    projects: [
+      {
+        title: "Contrôle d'accès de site professionnel",
+        location: "Douala, Cameroun",
+        description:
+          "Installation de lecteurs de badges sur les accès sensibles et paramétrage des droits par zone.",
+        image: "/images/image-choix.png",
+      },
+      {
+        title: "Badgeuse horaires d'entreprise",
+        location: "Cameroun",
+        description:
+          "Déploiement d'un système de badgeage pour fiabiliser le suivi des présences du personnel.",
+        image: "/images/1.JPG",
+      },
+    ],
+
+    metaTitle: "Contrôle d'accès & badgeuse professionnelle à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Installation de systèmes de contrôle d'accès par badge ou biométrie à Douala. Winall Tech Sarl sécurise vos entrées et fiabilise le suivi des horaires de vos équipes.",
+    keywords: ["contrôle d'accès Douala", "badgeuse entreprise Cameroun", "système de badge professionnel", "biométrie accès sécurisé"],
+    ogTitle: "Sécurisez vos accès et fiabilisez le suivi des présences de vos équipes",
+    ogDescription: "Accès non maîtrisés, pointage manuel peu fiable : un système de contrôle d'accès et de badgeuse résout ces deux problèmes en une seule installation.",
+
+    heroTitle: "Maîtrisez qui entre, où et quand, avec un système de contrôle d'accès fiable",
+    heroSubtitle: "Badges, biométrie et gestion des droits par zone pour sécuriser vos locaux et fiabiliser le suivi des horaires de vos équipes.",
+
+    problemIntro: "Sans contrôle d'accès, n'importe qui peut circuler librement dans vos locaux sensibles, et le suivi manuel des horaires reste approximatif et contestable.",
+    problems: [
+      { label: "Accès non maîtrisés aux zones sensibles", description: "Aucune limitation réelle de qui peut entrer dans les zones critiques de votre site." },
+      { label: "Pointage manuel peu fiable", description: "Des feuilles de présence facilement contournables qui faussent le suivi des horaires." },
+      { label: "Aucun historique en cas d'incident", description: "Impossible de savoir qui est entré ou sorti à un moment précis en l'absence de traçabilité." },
+      { label: "Gestion des clés physiques complexe", description: "Clés perdues, dupliquées ou non restituées qui fragilisent la sécurité de votre site." },
+    ],
+
+    solutionTitle: "Un système de contrôle d'accès qui sécurise vos zones et fiabilise vos horaires",
+    solutionDescription: "Nous installons des lecteurs de badges ou biométriques sur vos points d'accès sensibles, avec une gestion des droits par zone et un suivi horaire centralisé.",
+    solutionHow: "Nous identifions vos zones sensibles, installons les lecteurs et gâches adaptés, paramétrons les droits d'accès par utilisateur ou par groupe, puis formons vos équipes à l'usage du logiciel de gestion.",
+    solutionWhy: "Un accès maîtrisé réduit les risques d'intrusion et de vol, tandis qu'un badgeage fiable met fin aux contestations sur les horaires et simplifie la gestion RH.",
+
+    transformations: [
+      { before: "Accès libre aux zones sensibles", after: "Accès restreint par badge ou biométrie selon les droits définis" },
+      { before: "Pointage manuel contestable", after: "Badgeage horodaté et centralisé dans un logiciel de gestion" },
+      { before: "Aucune traçabilité des passages", after: "Historique complet des accès consultable à tout moment" },
+      { before: "Gestion complexe des clés physiques", after: "Droits d'accès modifiables instantanément sans changer de serrure" },
+      { before: "Aucune alerte en cas de tentative suspecte", after: "Alertes configurées sur les accès anormaux ou refusés" },
+      { before: "Suivi des horaires fait à la main", after: "Rapports de présence générés automatiquement" },
+    ],
+
+    solutions: [
+      { name: "Contrôle d'accès par badge ou biométrie", description: "Installation de lecteurs sur vos accès sensibles avec gâches ou ventouses électriques.", benefits: "Seules les personnes autorisées accèdent aux zones concernées.", expectedResult: "Points d'accès sécurisés et opérationnels.", items: ["Étude des points d'accès", "Pose des lecteurs", "Installation des gâches/ventouses", "Câblage sécurisé", "Tests d'ouverture"] },
+      { name: "Gestion des droits & historique", description: "Paramétrage des droits d'accès par utilisateur, groupe ou plage horaire, avec historique consultable.", benefits: "Une maîtrise fine de qui accède à quoi et quand.", expectedResult: "Logiciel de gestion opérationnel avec droits configurés.", items: ["Paramétrage des profils", "Droits par zone et horaire", "Historique des accès", "Alertes configurées", "Export des rapports"] },
+      { name: "Badgeuse & suivi des horaires", description: "Déploiement d'un système de badgeage pour le suivi fiable des présences du personnel.", benefits: "Un suivi horaire fiable qui simplifie la gestion RH.", expectedResult: "Rapports de présence générés automatiquement.", items: ["Installation de la badgeuse", "Import des employés", "Règles d'horaires", "Rapports automatiques", "Formation RH"] },
+    ],
+
+    features: [
+      { name: "Gestion des droits par zone", advantage: "Chaque utilisateur n'accède qu'aux zones qui le concernent réellement", clientBenefit: "Une sécurité fine sans complexité de gestion au quotidien." },
+      { name: "Historique complet des accès", advantage: "Chaque passage est horodaté et consultable à tout moment", clientBenefit: "Vous retrouvez rapidement l'information en cas d'incident ou de litige." },
+      { name: "Rapports de présence automatisés", advantage: "Génération automatique des rapports d'horaires pour la gestion RH", clientBenefit: "Fini les feuilles de présence à vérifier et contester manuellement." },
+    ],
+
+    businessBenefits: [
+      { category: "Sécurité", description: "Accès restreint aux zones sensibles, réduisant les risques d'intrusion et de vol." },
+      { category: "Fiabilité RH", description: "Suivi des horaires objectif qui met fin aux contestations et erreurs de pointage." },
+      { category: "Traçabilité", description: "Historique exploitable en cas d'incident ou de contrôle interne." },
+      { category: "Gain de temps", description: "Rapports de présence générés automatiquement, sans saisie manuelle." },
+      { category: "Flexibilité", description: "Droits d'accès modifiables instantanément, sans intervention physique sur les serrures." },
+      { category: "Image professionnelle", description: "Un site sécurisé et organisé qui rassure clients, partenaires et employés." },
+    ],
+
+    useCases: [
+      { target: "Entreprises & bureaux", description: "Contrôle des accès aux étages sensibles et badgeuse pour le suivi des horaires du personnel." },
+      { target: "Industries & entrepôts", description: "Restriction des zones de production ou de stockage aux seules personnes autorisées." },
+      { target: "Banques & institutions financières", description: "Contrôle strict des accès aux zones à haute sécurité avec historique complet." },
+      { target: "Résidences & immeubles", description: "Sécurisation des accès communs avec gestion simplifiée des droits des résidents." },
+      { target: "Écoles & centres de formation", description: "Suivi des entrées et sorties des élèves et du personnel pour plus de sécurité." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Analyse des besoins & visite de site", objective: "Identifier les zones à sécuriser et vos contraintes.", actions: ["Visite du site", "Identification des points d'accès sensibles"], deliverable: "Note de cadrage du projet." },
+      { step: 2, title: "Plan d'implantation", objective: "Définir l'emplacement de chaque équipement.", actions: ["Cartographie des points d'accès", "Choix des technologies (badge/biométrie)"], deliverable: "Plan d'implantation validé." },
+      { step: 3, title: "Devis & validation", objective: "Vous proposer un chiffrage transparent.", actions: ["Sélection des équipements", "Établissement du devis"], deliverable: "Devis signé." },
+      { step: 4, title: "Installation des équipements", objective: "Poser lecteurs, gâches et câblage.", actions: ["Installation des lecteurs et gâches", "Câblage et raccordement"], deliverable: "Équipements installés." },
+      { step: 5, title: "Paramétrage & tests", objective: "Configurer les droits d'accès et valider le fonctionnement.", actions: ["Paramétrage des profils et droits", "Tests d'ouverture et de badgeage"], deliverable: "Système configuré et testé." },
+      { step: 6, title: "Formation & documentation", objective: "Vous rendre autonome sur la gestion du système.", actions: ["Formation des administrateurs", "Remise de la documentation"], deliverable: "Dossier technique et utilisateurs formés." },
+    ],
+
+    faqs: [
+      { question: "Quelle est la différence entre badge et biométrie ?", answer: "Le badge est rapide à déployer et à remplacer en cas de perte. La biométrie (empreinte, visage) supprime le risque de badge prêté ou volé, pour une sécurité renforcée." },
+      { question: "Puis-je gérer les droits d'accès moi-même après l'installation ?", answer: "Oui, nous vous formons à l'utilisation du logiciel de gestion pour que vous puissiez ajouter, modifier ou retirer des droits d'accès en toute autonomie." },
+      { question: "Le système fonctionne-t-il en cas de coupure d'électricité ?", answer: "Nous dimensionnons systématiquement une solution de secours (batterie ou onduleur) pour que les accès restent fonctionnels ou sécurisés en cas de coupure." },
+      { question: "Peut-on coupler le contrôle d'accès avec la vidéosurveillance ?", answer: "Oui, nous pouvons intégrer votre système de contrôle d'accès avec votre installation de vidéosurveillance existante pour une sécurité globale cohérente." },
+      { question: "La badgeuse s'intègre-t-elle avec notre logiciel de paie ?", answer: "Selon votre logiciel de paie, nous pouvons configurer un export compatible des données de présence pour simplifier votre gestion RH." },
+    ],
+
+    ctaTitle: "Vos accès et vos horaires méritent d'être maîtrisés, pas approximatifs.",
+    ctaSubtitle: "Décrivez-nous votre site et vos zones sensibles. Nous revenons avec un plan d'implantation clair et un devis transparent.",
+    ctaReassurance: "Visite technique gratuite — Devis sous 48h.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 11. SONORISATION
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "sonorisation",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "6j/7", label: "disponibilité technique" },
+      { value: "100%", label: "installations testées sur site" },
+    ],
+    tools: [
+      "Enceintes & haut-parleurs plafond",
+      "Amplificateurs multi-zones",
+      "Micros & pupitres d'annonce",
+      "Câblage audio blindé",
+      "Diffuseurs de musique d'ambiance",
+      "Testeur de niveau sonore",
+    ],
+    title: "Sonorisation",
+    shortTitle: "Sonorisation",
+    tagline: "Diffusion sonore et annonces professionnelles pour vos espaces.",
+    description:
+      "Nous installons des systèmes de sonorisation pour la musique d'ambiance, les annonces publiques et les alertes, avec une couverture homogène de chaque espace.",
+    image: "/images/63966.jpg",
+    icon: Volume2,
+    highlights: [
+      "Couverture sonore homogène",
+      "Annonces multi-zones",
+      "Musique d'ambiance",
+      "Intégration alerte incendie",
+    ],
+    deliverables: [
+      "Étude acoustique",
+      "Plan d'implantation des enceintes",
+      "Installation testée",
+      "Formation à l'usage",
+    ],
+    projects: [
+      {
+        title: "Sonorisation d'espace commercial",
+        location: "Douala, Cameroun",
+        description:
+          "Installation d'enceintes plafond pour une diffusion homogène de musique d'ambiance et d'annonces.",
+        image: "/images/63966.jpg",
+      },
+      {
+        title: "Système d'annonce multi-zones",
+        location: "Cameroun",
+        description:
+          "Déploiement d'un système d'annonce permettant de cibler des zones spécifiques d'un site.",
+        image: "/images/2.JPG",
+      },
+    ],
+
+    metaTitle: "Sonorisation professionnelle & diffusion sonore à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Installation de systèmes de sonorisation pour annonces, musique d'ambiance et alertes à Douala. Winall Tech Sarl assure une couverture sonore homogène de vos espaces.",
+    keywords: ["sonorisation professionnelle Douala", "diffusion sonore entreprise Cameroun", "système d'annonce public", "musique d'ambiance commerce"],
+    ogTitle: "Une diffusion sonore homogène et professionnelle pour tous vos espaces",
+    ogDescription: "Zones mal couvertes, annonces inaudibles : notre équipe conçoit et installe un système de sonorisation adapté à l'acoustique réelle de votre site.",
+
+    heroTitle: "Une diffusion sonore claire et homogène, de la musique d'ambiance aux annonces critiques",
+    heroSubtitle: "Étude acoustique, enceintes bien positionnées et système multi-zones pour que chaque message soit entendu clairement, partout où il le faut.",
+
+    problemIntro: "Une sonorisation mal étudiée laisse des zones mortes, rend les annonces inaudibles et dégrade l'expérience de vos clients ou usagers.",
+    problems: [
+      { label: "Zones sans couverture sonore", description: "Des espaces où la musique ou les annonces ne portent pas, créant une expérience incohérente." },
+      { label: "Annonces inaudibles ou déformées", description: "Un matériel mal dimensionné ou mal positionné qui rend les messages difficiles à comprendre." },
+      { label: "Absence de zonage", description: "Impossible de diffuser un message ciblé sans déranger l'ensemble du site." },
+      { label: "Non-intégration avec l'alerte incendie", description: "Un système de sonorisation qui ne peut pas relayer une alerte de sécurité en cas d'urgence." },
+    ],
+
+    solutionTitle: "Un système de sonorisation étudié pour l'acoustique réelle de votre site",
+    solutionDescription: "Nous réalisons une étude acoustique de votre espace, dimensionnons le nombre et la puissance des enceintes nécessaires, et installons un système multi-zones piloté simplement.",
+    solutionHow: "Notre technicien étudie l'acoustique de chaque zone, positionne les enceintes pour une couverture homogène, installe l'amplification et configure le zonage selon vos besoins d'usage.",
+    solutionWhy: "Une sonorisation bien étudiée améliore l'expérience client, garantit que vos annonces sont comprises, et peut relayer clairement une alerte de sécurité en cas de besoin.",
+
+    transformations: [
+      { before: "Zones mortes sans diffusion sonore", after: "Couverture sonore homogène sur l'ensemble du site" },
+      { before: "Annonces inaudibles ou déformées", after: "Diffusion claire grâce à un dimensionnement acoustique précis" },
+      { before: "Un seul canal de diffusion pour tout le site", after: "Zonage permettant des annonces ciblées par espace" },
+      { before: "Sonorisation déconnectée de la sécurité", after: "Intégration possible avec l'alerte incendie et les annonces d'urgence" },
+      { before: "Câblage audio non documenté", after: "Schéma de câblage et configuration remis en fin de chantier" },
+      { before: "Aucun test en conditions réelles", after: "Système testé sur site avant validation finale" },
+    ],
+
+    solutions: [
+      { name: "Étude acoustique & dimensionnement", description: "Analyse de l'espace pour déterminer le nombre, la puissance et le positionnement des enceintes.", benefits: "Une couverture sonore homogène sans zone morte.", expectedResult: "Plan d'implantation acoustique validé.", items: ["Relevé acoustique du site", "Calcul de couverture", "Choix des enceintes", "Plan d'implantation", "Simulation de diffusion"] },
+      { name: "Installation de sonorisation", description: "Pose des enceintes, amplificateurs et câblage audio selon le plan validé.", benefits: "Une diffusion sonore claire et fiable au quotidien.", expectedResult: "Système installé et opérationnel.", items: ["Pose des enceintes", "Installation des amplificateurs", "Câblage audio blindé", "Raccordement des sources", "Tests de diffusion"] },
+      { name: "Zonage & intégration sécurité", description: "Configuration de zones de diffusion indépendantes et intégration avec l'alerte incendie si nécessaire.", benefits: "Des annonces ciblées et une sécurité renforcée en cas d'urgence.", expectedResult: "Zonage fonctionnel avec priorité d'alerte configurée.", items: ["Configuration des zones", "Priorité aux annonces d'urgence", "Intégration alerte incendie", "Tests de bascule", "Formation à l'usage"] },
+    ],
+
+    features: [
+      { name: "Étude acoustique préalable", advantage: "Dimensionnement basé sur la géométrie réelle et les matériaux de votre espace", clientBenefit: "Zéro zone morte et une diffusion homogène dès la mise en service." },
+      { name: "Zonage indépendant", advantage: "Chaque zone peut recevoir un contenu sonore différent ou une annonce ciblée", clientBenefit: "Vous communiquez le bon message, au bon endroit, sans déranger le reste du site." },
+      { name: "Intégration avec l'alerte incendie", advantage: "Priorité automatique donnée aux annonces d'urgence sur toute autre diffusion", clientBenefit: "Une sonorisation qui protège vos occupants en cas de besoin critique." },
+    ],
+
+    businessBenefits: [
+      { category: "Expérience client", description: "Une ambiance sonore homogène qui valorise votre espace commercial ou d'accueil." },
+      { category: "Communication interne", description: "Des annonces professionnelles claires pour informer vos équipes ou vos visiteurs." },
+      { category: "Sécurité", description: "Une diffusion d'alerte fiable et prioritaire en cas de situation d'urgence." },
+      { category: "Flexibilité", description: "Un zonage qui permet d'adapter la diffusion à chaque usage du site." },
+      { category: "Image professionnelle", description: "Une sonorisation soignée qui reflète le sérieux de votre organisation." },
+      { category: "Durabilité", description: "Des équipements professionnels dimensionnés pour un usage intensif et durable." },
+    ],
+
+    useCases: [
+      { target: "Commerces & centres commerciaux", description: "Musique d'ambiance et annonces promotionnelles diffusées de façon homogène sur l'ensemble du site." },
+      { target: "Hôtels & restaurants", description: "Ambiance sonore soignée dans les espaces communs et annonces discrètes pour le personnel." },
+      { target: "Bureaux & sièges d'entreprise", description: "Système d'annonce pour les communications internes et l'accueil des visiteurs." },
+      { target: "Établissements scolaires", description: "Diffusion des annonces et sonneries avec zonage par bâtiment ou par niveau." },
+      { target: "Sites industriels", description: "Système d'annonce robuste intégré aux procédures de sécurité et d'évacuation." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Visite & étude acoustique", objective: "Comprendre l'espace et vos besoins de diffusion.", actions: ["Relevé acoustique du site", "Identification des zones et usages"], deliverable: "Étude acoustique préliminaire." },
+      { step: 2, title: "Plan d'implantation & devis", objective: "Vous proposer une solution chiffrée et dimensionnée.", actions: ["Élaboration du plan d'implantation", "Chiffrage détaillé des équipements"], deliverable: "Devis technique signé." },
+      { step: 3, title: "Installation des équipements", objective: "Poser enceintes, amplificateurs et câblage.", actions: ["Pose des enceintes", "Installation de l'amplification et du câblage"], deliverable: "Système installé." },
+      { step: 4, title: "Configuration du zonage", objective: "Paramétrer les zones et les priorités de diffusion.", actions: ["Configuration des zones sonores", "Intégration éventuelle de l'alerte incendie"], deliverable: "Zonage fonctionnel." },
+      { step: 5, title: "Tests en conditions réelles", objective: "Valider la couverture et la clarté de la diffusion.", actions: ["Tests de niveau sonore par zone", "Ajustements de calibrage"], deliverable: "Rapport de tests de diffusion." },
+      { step: 6, title: "Formation & documentation", objective: "Vous rendre autonome sur l'usage quotidien.", actions: ["Formation à l'utilisation du système", "Remise de la documentation technique"], deliverable: "Dossier technique complet." },
+    ],
+
+    faqs: [
+      { question: "Pouvez-vous sonoriser un espace déjà aménagé sans gros travaux ?", answer: "Oui, nous adaptons l'installation aux contraintes existantes, avec des solutions de câblage apparent ou sans fil selon la configuration de votre site." },
+      { question: "Le système permet-il de diffuser des annonces ciblées par zone ?", answer: "Oui, notre installation intègre un zonage qui permet de diffuser un message spécifique dans une zone sans déranger le reste du site." },
+      { question: "Peut-on intégrer la sonorisation avec notre système d'alerte incendie ?", answer: "Oui, nous pouvons configurer une priorité automatique donnant la main aux annonces d'urgence sur toute autre diffusion en cours." },
+      { question: "Quelle est la durée de vie d'un système de sonorisation professionnel ?", answer: "Avec un entretien adapté, les équipements professionnels que nous installons ont une durée de vie de 10 à 15 ans en usage normal." },
+      { question: "Proposez-vous un contrat de maintenance pour la sonorisation ?", answer: "Oui, nous proposons des contrats de maintenance préventive incluant le contrôle des enceintes, amplificateurs et câblages." },
+    ],
+
+    ctaTitle: "Votre espace mérite une diffusion sonore claire, pas approximative.",
+    ctaSubtitle: "Décrivez-nous votre site et vos besoins de diffusion. Nous revenons avec un plan d'implantation et un devis transparent.",
+    ctaReassurance: "Visite technique gratuite — Devis sous 48h.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 12. DOMOTIQUE
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "domotique",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "6j/7", label: "disponibilité technique" },
+      { value: "100%", label: "installations testées à la remise" },
+    ],
+    tools: [
+      "Modules domotiques connectés",
+      "Capteurs de présence & luminosité",
+      "Interrupteurs et prises connectés",
+      "Passerelle domotique centralisée",
+      "Volets & stores motorisés",
+      "Application de pilotage mobile",
+    ],
+    title: "Domotique",
+    shortTitle: "Domotique",
+    tagline: "Automatisez l'éclairage, les volets et le confort de vos espaces.",
+    description:
+      "Nous installons des solutions domotiques pour automatiser l'éclairage, le chauffage, les volets et la sécurité de votre logement ou de votre site professionnel.",
+    image: "/images/2.JPG",
+    icon: Home,
+    highlights: [
+      "Pilotage centralisé",
+      "Automatisation de l'éclairage",
+      "Scénarios personnalisés",
+      "Contrôle à distance",
+    ],
+    deliverables: [
+      "Étude des besoins",
+      "Plan d'installation",
+      "Configuration des scénarios",
+      "Formation à l'usage",
+    ],
+    projects: [
+      {
+        title: "Domotique résidentielle",
+        location: "Douala, Cameroun",
+        description:
+          "Automatisation de l'éclairage et des volets avec pilotage centralisé depuis smartphone.",
+        image: "/images/2.JPG",
+      },
+      {
+        title: "Automatisation de bureaux",
+        location: "Cameroun",
+        description:
+          "Mise en place de scénarios d'éclairage et de gestion énergétique pour un plateau de bureaux.",
+        image: "/images/image-choix.png",
+      },
+    ],
+
+    metaTitle: "Installation domotique résidentielle & professionnelle à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Automatisation de l'éclairage, des volets et du confort à Douala. Winall Tech Sarl installe des solutions domotiques pilotables à distance pour logements et bureaux.",
+    keywords: ["domotique Douala", "maison connectée Cameroun", "automatisation éclairage entreprise", "pilotage à distance domotique"],
+    ogTitle: "Automatisez le confort et l'énergie de votre espace avec une solution domotique sur-mesure",
+    ogDescription: "Éclairage oublié allumé, volets à gérer manuellement, confort non optimisé : la domotique automatise ces tâches et réduit votre consommation énergétique.",
+
+    heroTitle: "Pilotez l'éclairage, les volets et le confort de votre espace depuis votre téléphone",
+    heroSubtitle: "Scénarios personnalisés, automatisation intelligente et contrôle à distance pour un espace plus confortable et plus économe en énergie.",
+
+    problemIntro: "Éclairage oublié allumé, volets gérés manuellement, confort non optimisé : sans domotique, vous perdez en confort et en énergie au quotidien.",
+    problems: [
+      { label: "Éclairage et équipements oubliés allumés", description: "Une consommation énergétique inutile faute d'automatisation ou de contrôle centralisé." },
+      { label: "Confort non adapté aux usages réels", description: "Chauffage, éclairage et volets gérés manuellement sans tenir compte de l'occupation réelle des pièces." },
+      { label: "Absence de pilotage à distance", description: "Impossible de vérifier ou d'ajuster l'état de votre espace en votre absence." },
+      { label: "Systèmes non centralisés", description: "Chaque équipement piloté séparément, sans scénario ni automatisation cohérente." },
+    ],
+
+    solutionTitle: "Une domotique centralisée qui automatise le confort et réduit la consommation énergétique",
+    solutionDescription: "Nous installons des modules connectés pour l'éclairage, les volets et le chauffage, centralisés dans une application unique avec des scénarios adaptés à votre usage.",
+    solutionHow: "Nous identifions vos besoins de confort et d'automatisation, installons les modules et capteurs nécessaires, configurons des scénarios personnalisés, puis vous formons au pilotage via l'application mobile.",
+    solutionWhy: "Une domotique bien configurée réduit la consommation énergétique inutile, améliore le confort au quotidien et vous donne un contrôle total sur votre espace, même à distance.",
+
+    transformations: [
+      { before: "Éclairage géré manuellement pièce par pièce", after: "Automatisation selon présence et luminosité réelle" },
+      { before: "Volets à ouvrir et fermer manuellement", after: "Volets programmés ou pilotés à distance" },
+      { before: "Aucune visibilité sur l'état de l'espace à distance", after: "Contrôle et supervision depuis une application mobile" },
+      { before: "Équipements pilotés séparément et sans cohérence", after: "Scénarios centralisés combinant plusieurs équipements" },
+      { before: "Consommation énergétique non maîtrisée", after: "Automatisation réduisant les gaspillages énergétiques" },
+      { before: "Installation domotique non testée à la livraison", after: "Scénarios testés et validés avant remise" },
+    ],
+
+    solutions: [
+      { name: "Automatisation de l'éclairage", description: "Installation de modules et capteurs pour un éclairage qui s'adapte à la présence et à la luminosité.", benefits: "Un confort optimisé et une réduction de la consommation électrique.", expectedResult: "Éclairage automatisé pièce par pièce.", items: ["Capteurs de présence", "Capteurs de luminosité", "Modules d'éclairage connectés", "Scénarios lumineux", "Pilotage mobile"] },
+      { name: "Volets & confort connecté", description: "Motorisation et pilotage des volets, stores et équipements de confort.", benefits: "Un confort géré automatiquement selon l'heure ou la météo.", expectedResult: "Volets et équipements pilotables à distance.", items: ["Motorisation des volets", "Programmation horaire", "Scénarios météo", "Intégration au pilotage central", "Tests de fonctionnement"] },
+      { name: "Pilotage centralisé & scénarios", description: "Configuration d'une application unique pour piloter l'ensemble des équipements connectés.", benefits: "Une gestion simple et centralisée de tout votre espace.", expectedResult: "Application configurée avec scénarios personnalisés.", items: ["Passerelle domotique", "Scénarios personnalisés", "Application mobile", "Accès multi-utilisateurs", "Formation à l'usage"] },
+    ],
+
+    features: [
+      { name: "Scénarios personnalisés", advantage: "Combinaison de plusieurs équipements en une seule action ou automatisation programmée", clientBenefit: "Un espace qui s'adapte à votre rythme de vie sans intervention manuelle." },
+      { name: "Pilotage à distance sécurisé", advantage: "Contrôle et supervision de votre espace depuis une application mobile où que vous soyez", clientBenefit: "Vous gardez la main sur votre espace, même en votre absence." },
+      { name: "Automatisation énergétique", advantage: "Extinction et ajustement automatique selon la présence réelle et les conditions ambiantes", clientBenefit: "Une réduction mesurable de votre consommation énergétique inutile." },
+    ],
+
+    businessBenefits: [
+      { category: "Confort", description: "Un espace qui s'adapte automatiquement à vos usages et à vos habitudes." },
+      { category: "Réduction des coûts", description: "Moins de gaspillage énergétique grâce à l'automatisation de l'éclairage et du chauffage." },
+      { category: "Contrôle à distance", description: "Supervision et pilotage de votre espace depuis n'importe où." },
+      { category: "Valeur immobilière", description: "Un logement ou bureau connecté valorisé à la revente ou à la location." },
+      { category: "Sécurité perçue", description: "Simulation de présence et pilotage à distance qui dissuadent les intrusions." },
+      { category: "Évolutivité", description: "Un système domotique qui s'étend facilement à de nouveaux équipements." },
+    ],
+
+    useCases: [
+      { target: "Villas & résidences", description: "Automatisation complète de l'éclairage, des volets et du confort avec pilotage mobile." },
+      { target: "Bureaux & sièges d'entreprise", description: "Gestion énergétique automatisée de l'éclairage selon l'occupation réelle des espaces." },
+      { target: "Hôtels & résidences meublées", description: "Scénarios de confort activés automatiquement à l'arrivée des clients." },
+      { target: "Commerces & vitrines", description: "Automatisation de l'éclairage de vitrine selon les horaires d'ouverture." },
+      { target: "Propriétaires bailleurs", description: "Supervision à distance de biens loués pour un meilleur contrôle et une meilleure réactivité." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Analyse des besoins & visite", objective: "Comprendre vos habitudes et vos priorités de confort.", actions: ["Visite du site", "Identification des équipements à automatiser"], deliverable: "Note de cadrage du projet." },
+      { step: 2, title: "Conception des scénarios", objective: "Définir les automatisations les plus pertinentes pour vous.", actions: ["Élaboration des scénarios types", "Choix des équipements connectés"], deliverable: "Plan d'installation et devis." },
+      { step: 3, title: "Installation des modules", objective: "Poser capteurs, modules et passerelle domotique.", actions: ["Installation des modules et capteurs", "Mise en place de la passerelle centrale"], deliverable: "Équipements installés." },
+      { step: 4, title: "Configuration des scénarios", objective: "Paramétrer les automatisations validées avec vous.", actions: ["Configuration de l'application mobile", "Paramétrage des scénarios"], deliverable: "Scénarios opérationnels." },
+      { step: 5, title: "Tests & ajustements", objective: "Valider le bon fonctionnement dans les conditions réelles.", actions: ["Tests des automatisations", "Ajustements selon vos retours"], deliverable: "Rapport de validation." },
+      { step: 6, title: "Formation & documentation", objective: "Vous rendre autonome sur le pilotage au quotidien.", actions: ["Formation à l'application mobile", "Remise de la documentation"], deliverable: "Dossier technique et utilisateurs formés." },
+    ],
+
+    faqs: [
+      { question: "Puis-je automatiser seulement une partie de mon espace pour commencer ?", answer: "Oui, nous concevons des installations évolutives : vous pouvez démarrer avec l'éclairage ou les volets et étendre le système progressivement." },
+      { question: "La domotique fonctionne-t-elle en cas de coupure internet ?", answer: "Les automatisations locales (présence, horaires) continuent de fonctionner sans internet. Seul le pilotage à distance nécessite une connexion active." },
+      { question: "Puis-je piloter plusieurs sites depuis une seule application ?", answer: "Oui, notre configuration permet de gérer plusieurs sites ou biens depuis une application unique avec des profils d'accès séparés." },
+      { question: "Est-il possible d'intégrer la domotique avec l'alarme ou la vidéosurveillance ?", answer: "Oui, nous pouvons intégrer votre installation domotique avec vos systèmes de sécurité existants pour des scénarios combinés (simulation de présence, alertes)." },
+      { question: "Combien de temps prend une installation domotique standard ?", answer: "Pour un logement ou un plateau de bureaux standard, comptez 2 à 5 jours d'installation selon le nombre d'équipements à automatiser." },
+    ],
+
+    ctaTitle: "Votre espace mérite plus de confort et moins de gaspillage énergétique.",
+    ctaSubtitle: "Décrivez-nous vos habitudes et vos priorités. Nous revenons avec des scénarios adaptés et un devis transparent.",
+    ctaReassurance: "Visite technique gratuite — Devis sous 48h.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 13. SYSTÈME INTELLIGENT
+  // ─────────────────────────────────────────────────────────────
+  {
+    slug: "systeme-intelligent",
+    keyStats: [
+      { value: "14", label: "familles de services" },
+      { value: "48h", label: "délai de réponse" },
+      { value: "6j/7", label: "disponibilité technique" },
+      { value: "100%", label: "systèmes supervisés à distance" },
+    ],
+    tools: [
+      "Capteurs IoT connectés",
+      "Passerelles & supervision cloud",
+      "Automates programmables",
+      "Tableaux de bord temps réel",
+      "Alertes intelligentes",
+      "Intégration multi-systèmes",
+    ],
+    title: "Système intelligent",
+    shortTitle: "Système intelligent",
+    tagline: "Automatisation et supervision intelligente de vos équipements techniques.",
+    description:
+      "Nous concevons des systèmes intelligents qui connectent, supervisent et automatisent vos équipements techniques pour une exploitation plus fluide et plus anticipée.",
+    image: "/images/about-available.jpg",
+    icon: BrainCircuit,
+    highlights: [
+      "Supervision centralisée",
+      "Alertes anticipées",
+      "Automatisation multi-systèmes",
+      "Tableaux de bord temps réel",
+    ],
+    deliverables: [
+      "Étude d'intégration",
+      "Architecture du système",
+      "Mise en service supervisée",
+      "Tableau de bord opérationnel",
+    ],
+    projects: [
+      {
+        title: "Supervision technique centralisée",
+        location: "Douala, Cameroun",
+        description:
+          "Mise en place d'un tableau de bord unique regroupant plusieurs systèmes techniques d'un site.",
+        image: "/images/about-available.jpg",
+      },
+      {
+        title: "Automatisation multi-équipements",
+        location: "Cameroun",
+        description:
+          "Intégration de capteurs et automates pour anticiper les anomalies avant qu'elles ne deviennent critiques.",
+        image: "/images/63966.jpg",
+      },
+    ],
+
+    metaTitle: "Systèmes intelligents & supervision technique à Douala | Winall Tech Sarl",
+    metaDescription:
+      "Automatisation et supervision intelligente de vos équipements techniques à Douala. Winall Tech Sarl connecte vos systèmes pour une exploitation anticipée et centralisée.",
+    keywords: ["système intelligent Douala", "supervision technique Cameroun", "automatisation IoT entreprise", "tableau de bord technique"],
+    ogTitle: "Connectez et supervisez vos systèmes techniques depuis un tableau de bord unique",
+    ogDescription: "Systèmes techniques cloisonnés, anomalies détectées trop tard : nos ingénieurs connectent vos équipements pour une supervision intelligente et anticipée.",
+
+    heroTitle: "Connectez vos équipements techniques dans un système intelligent et anticipez chaque anomalie",
+    heroSubtitle: "Supervision centralisée, alertes intelligentes et automatisation multi-systèmes pour une exploitation plus fluide et plus fiable de vos installations.",
+
+    problemIntro: "Des systèmes techniques cloisonnés qui ne communiquent pas entre eux rendent la supervision impossible et les anomalies ne sont détectées qu'une fois le problème installé.",
+    problems: [
+      { label: "Systèmes techniques cloisonnés", description: "Chaque équipement fonctionne isolément, sans vue d'ensemble ni communication entre systèmes." },
+      { label: "Anomalies détectées trop tard", description: "Sans supervision centralisée, les signaux faibles d'un dysfonctionnement passent inaperçus." },
+      { label: "Absence de tableau de bord unique", description: "Impossible d'avoir une vision globale et instantanée de l'état de vos installations." },
+      { label: "Automatisation limitée ou inexistante", description: "Des tâches répétitives gérées manuellement alors qu'elles pourraient être automatisées entre systèmes." },
+    ],
+
+    solutionTitle: "Une architecture intelligente qui connecte vos systèmes et anticipe les anomalies",
+    solutionDescription: "Nous connectons vos équipements techniques via des capteurs et passerelles IoT, centralisons leur supervision dans un tableau de bord unique, et configurons des alertes anticipées.",
+    solutionHow: "Notre équipe cartographie vos systèmes existants, définit l'architecture d'intégration la plus adaptée, déploie les capteurs et passerelles nécessaires, puis configure le tableau de bord et les alertes avec vous.",
+    solutionWhy: "Un système intelligent transforme des données techniques dispersées en informations exploitables, permettant d'anticiper les pannes plutôt que de les subir.",
+
+    transformations: [
+      { before: "Systèmes techniques cloisonnés et déconnectés", after: "Architecture intégrée avec communication entre systèmes" },
+      { before: "Anomalies découvertes après incident", after: "Alertes anticipées dès l'apparition des premiers signaux" },
+      { before: "Aucune vue d'ensemble de l'exploitation", after: "Tableau de bord unique et centralisé" },
+      { before: "Tâches répétitives gérées manuellement", after: "Automatisation des actions récurrentes entre systèmes" },
+      { before: "Décisions basées sur des impressions terrain", after: "Décisions appuyées sur des données réelles et historisées" },
+      { before: "Supervision limitée aux heures de présence", after: "Supervision continue, 24h/24, avec alertes à distance" },
+    ],
+
+    solutions: [
+      { name: "Cartographie & architecture d'intégration", description: "Analyse de vos systèmes existants pour définir l'architecture d'intégration optimale.", benefits: "Une solution pensée pour vos systèmes réels, sans complexité inutile.", expectedResult: "Architecture d'intégration validée et documentée.", items: ["Cartographie des systèmes existants", "Étude de compatibilité", "Architecture d'intégration", "Choix des protocoles", "Plan de déploiement"] },
+      { name: "Déploiement de capteurs & supervision", description: "Installation de capteurs IoT et passerelles pour centraliser la remontée d'information.", benefits: "Une visibilité totale sur l'état de vos installations en temps réel.", expectedResult: "Tableau de bord opérationnel avec données en temps réel.", items: ["Pose des capteurs IoT", "Installation des passerelles", "Configuration du tableau de bord", "Historisation des données", "Tests de remontée"] },
+      { name: "Automatisation & alertes intelligentes", description: "Configuration de règles d'automatisation et d'alertes anticipées entre vos systèmes.", benefits: "Des anomalies détectées avant qu'elles ne deviennent critiques.", expectedResult: "Alertes et automatisations opérationnelles.", items: ["Règles d'automatisation", "Seuils d'alerte personnalisés", "Notifications à distance", "Scénarios inter-systèmes", "Formation à l'usage"] },
+    ],
+
+    features: [
+      { name: "Tableau de bord unique", advantage: "Regroupement de tous vos systèmes techniques dans une interface centralisée et lisible", clientBenefit: "Une vision d'ensemble instantanée, sans avoir à consulter chaque système séparément." },
+      { name: "Alertes anticipées configurables", advantage: "Détection des signaux faibles avant qu'un dysfonctionnement ne devienne critique", clientBenefit: "Vous intervenez avant la panne, pas après." },
+      { name: "Automatisation inter-systèmes", advantage: "Des équipements différents qui communiquent et déclenchent des actions coordonnées", clientBenefit: "Moins de tâches manuelles répétitives pour vos équipes techniques." },
+    ],
+
+    businessBenefits: [
+      { category: "Anticipation", description: "Détection des anomalies avant qu'elles n'affectent réellement votre exploitation." },
+      { category: "Visibilité", description: "Une vue d'ensemble centralisée de l'état de vos installations techniques." },
+      { category: "Productivité", description: "Automatisation des tâches répétitives entre systèmes, libérant du temps pour vos équipes." },
+      { category: "Continuité d'activité", description: "Supervision continue qui réduit le risque de panne non détectée." },
+      { category: "Aide à la décision", description: "Des données historisées qui appuient vos décisions techniques et budgétaires." },
+      { category: "Évolutivité", description: "Une architecture capable d'intégrer de nouveaux systèmes au fil de votre croissance." },
+    ],
+
+    useCases: [
+      { target: "Industries & usines", description: "Supervision centralisée des lignes de production et des équipements critiques." },
+      { target: "Immeubles tertiaires", description: "Intégration de la gestion technique du bâtiment dans un tableau de bord unique." },
+      { target: "Sites multi-équipements", description: "Connexion de systèmes hétérogènes (électrique, réseau, sécurité) dans une supervision commune." },
+      { target: "Groupes multi-sites", description: "Supervision centralisée de plusieurs sites depuis un tableau de bord unique." },
+      { target: "Gestionnaires techniques", description: "Aide à la décision basée sur des données réelles plutôt que sur des remontées terrain approximatives." },
+    ],
+
+    processSteps: [
+      { step: 1, title: "Cartographie des systèmes existants", objective: "Comprendre vos équipements techniques actuels et leurs contraintes.", actions: ["Recensement des systèmes en place", "Identification des besoins de supervision"], deliverable: "Cartographie technique du site." },
+      { step: 2, title: "Conception de l'architecture", objective: "Définir la solution d'intégration la plus adaptée.", actions: ["Étude de compatibilité des systèmes", "Élaboration de l'architecture d'intégration"], deliverable: "Architecture d'intégration validée." },
+      { step: 3, title: "Devis & validation", objective: "Vous proposer une solution chiffrée et claire.", actions: ["Sélection des capteurs et passerelles", "Établissement du devis détaillé"], deliverable: "Devis signé." },
+      { step: 4, title: "Déploiement des capteurs", objective: "Installer les équipements de collecte et de communication.", actions: ["Pose des capteurs IoT", "Installation des passerelles"], deliverable: "Infrastructure de supervision déployée." },
+      { step: 5, title: "Configuration du tableau de bord", objective: "Mettre en place la supervision et les alertes.", actions: ["Paramétrage du tableau de bord", "Configuration des alertes et automatisations"], deliverable: "Système opérationnel." },
+      { step: 6, title: "Formation & documentation", objective: "Vous rendre autonome sur la supervision quotidienne.", actions: ["Formation des équipes techniques", "Remise de la documentation complète"], deliverable: "Dossier technique et utilisateurs formés." },
+    ],
+
+    faqs: [
+      { question: "Le système peut-il intégrer des équipements de marques différentes ?", answer: "Oui, notre architecture est conçue pour intégrer des équipements hétérogènes via des protocoles standards ou des passerelles dédiées." },
+      { question: "Puis-je accéder à la supervision depuis mon téléphone ?", answer: "Oui, le tableau de bord est accessible depuis une application mobile ou un navigateur, avec des alertes envoyées directement sur votre téléphone." },
+      { question: "Le système fonctionne-t-il sans connexion internet permanente ?", answer: "Les automatisations locales continuent de fonctionner sans internet. La supervision à distance et les alertes nécessitent cependant une connexion active." },
+      { question: "Est-il possible d'ajouter de nouveaux systèmes après l'installation initiale ?", answer: "Oui, l'architecture est pensée pour être évolutive : de nouveaux capteurs ou systèmes peuvent être intégrés progressivement selon vos besoins." },
+      { question: "Quel type d'entreprise a réellement besoin d'un système intelligent ?", answer: "Toute organisation avec plusieurs systèmes techniques à superviser (électrique, réseau, sécurité, production) gagne en visibilité et en réactivité grâce à cette solution." },
+    ],
+
+    ctaTitle: "Vos systèmes techniques méritent d'être connectés, pas cloisonnés.",
+    ctaSubtitle: "Décrivez-nous vos équipements existants et vos objectifs de supervision. Nous revenons avec une architecture claire et un devis transparent.",
+    ctaReassurance: "Étude de faisabilité gratuite — Architecture pensée pour évoluer avec vous.",
+  },
+
+  // ─────────────────────────────────────────────────────────────
+  // 14. AUTRES
   // ─────────────────────────────────────────────────────────────
   {
     slug: "autres",
     keyStats: [
-      { value: "8", label: "familles de services" },
+      { value: "14", label: "familles de services" },
       { value: "48h", label: "délai de réponse" },
       { value: "6j/7", label: "disponibilité technique" },
       { value: "100%", label: "projets cadrés sur mesure" },
