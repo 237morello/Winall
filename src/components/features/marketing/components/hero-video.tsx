@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowRight, Pause, Play } from "lucide-react";
 import { buttonVariants } from "@/components/ui/button";
@@ -8,6 +8,18 @@ import { buttonVariants } from "@/components/ui/button";
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [isPlaying, setIsPlaying] = useState(true);
+
+  // React ne pose pas toujours l'attribut `muted` dans le HTML rendu par le
+  // serveur (seulement la propriété DOM après hydratation) : en prod, le
+  // navigateur peut évaluer la politique d'autoplay avant l'hydratation et
+  // bloquer la lecture d'une vidéo vue comme non muette. On force la
+  // propriété et le lancement dès le montage.
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
+    video.muted = true;
+    video.play().catch(() => setIsPlaying(false));
+  }, []);
 
   function togglePlayback() {
     const video = videoRef.current;
