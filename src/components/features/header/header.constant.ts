@@ -1,3 +1,4 @@
+import { MARKETING_SERVICES } from "@/components/features/marketing/marketing.constants";
 import type {
   LogoProps,
   NavHeaderProps,
@@ -147,48 +148,13 @@ export const PAGE_NAV_HEADERS: NavHeaderProps = [
     id: 1,
     libelle: "Services",
     href: "/services",
-    itemsLists: [
-      {
-        id: 1,
-        libelle: "Électronique",
-        href: "/services/electronique",
-      },
-      {
-        id: 2,
-        libelle: "Génie civil",
-        href: "/services/genie-civil",
-      },
-      {
-        id: 3,
-        libelle: "BTP",
-        href: "/services/btp",
-      },
-      {
-        id: 4,
-        libelle: "Maintenance",
-        href: "/services/maintenance",
-      },
-      {
-        id: 5,
-        libelle: "Infographie",
-        href: "/services/infographie",
-      },
-      {
-        id: 6,
-        libelle: "Sécurité incendie",
-        href: "/services/securite-incendie",
-      },
-      {
-        id: 7,
-        libelle: "Réseaux",
-        href: "/services/reseaux",
-      },
-      {
-        id: 8,
-        libelle: "Autres",
-        href: "/services/autres",
-      },
-    ],
+    itemsLists: MARKETING_SERVICES.filter(
+      (service) => service.slug !== "autres",
+    ).map((service, index) => ({
+      id: index + 1,
+      libelle: service.title,
+      href: `/services/${service.slug}`,
+    })),
   },
   {
     id: 2,

@@ -35,11 +35,11 @@ export function toMarketingProject(
 }
 
 /**
- * Projets publiés placés dans une zone globale (HERO ou PROJETS_GLOBAL),
+ * Projets publiés placés dans la zone globale PROJETS_GLOBAL,
  * ordonnés par `ordre`. Ne retourne que les projets réellement publiés.
  */
 export async function getPublishedProjectsByZone(
-  zone: Extract<PlacementZone, "HERO" | "PROJETS_GLOBAL">,
+  zone: Extract<PlacementZone, "PROJETS_GLOBAL">,
   limit?: number,
 ): Promise<MarketingProjectWithService[]> {
   try {
@@ -108,39 +108,4 @@ export function groupProjectsByService(
     title: service.title,
     projects: projects.filter((project) => project.serviceSlug === service.slug),
   })).filter((group) => group.projects.length > 0);
-}
-
-export interface HeroSlide {
-  key: string;
-  image: string;
-  title: string;
-  tagline: string;
-  href: string;
-}
-
-/**
- * Slides du carrousel Hero à partir des projets publiés placés en zone HERO.
- * Retourne un tableau vide si aucun projet n'est placé (le composant Hero
- * bascule alors sur un fallback statique).
- */
-export async function getHeroSlides(): Promise<HeroSlide[]> {
-  try {
-    const placements = await prisma.projectPlacement.findMany({
-      where: { zone: PlacementZone.HERO, project: { isPublished: true } },
-      orderBy: { ordre: "asc" },
-      include: { project: true },
-    });
-
-    return placements.map(({ project }) => ({
-      key: project.id,
-      image: resolveImage(project),
-      title: project.titre,
-      tagline: project.description.slice(0, 160),
-      href: `/services/${domaineToSlug(project.domaine)}`,
-    }));
-  } catch (error) {
-    // Le carrousel Hero bascule sur son fallback statique (services).
-    console.error("getHeroSlides a échoué :", error);
-    return [];
-  }
 }

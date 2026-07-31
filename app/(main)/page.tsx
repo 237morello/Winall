@@ -9,12 +9,9 @@ import {
   MARKETING_SERVICES,
   getFeaturedProjects,
 } from "@/components/features/marketing/marketing.constants";
-import {
-  getHeroSlides,
-  getPublishedProjectsByZone,
-} from "@/lib/public-projects";
+import { getPublishedProjectsByZone } from "@/lib/public-projects";
 import { ContactCta } from "@/components/features/marketing/components/contact-cta";
-import { HeroCubeCarousel } from "@/components/features/marketing/components/hero-cube-carousel";
+import { HeroVideo } from "@/components/features/marketing/components/hero-video";
 import { ProjectsShowcase } from "@/components/features/marketing/components/projects-showcase";
 import { ServiceCard } from "@/components/features/marketing/components/service-card";
 import { Card } from "@/components/ui/card";
@@ -118,10 +115,7 @@ const WORK_METHOD_STEPS = [
 ];
 
 export default async function Home() {
-  const [heroSlides, placedProjects] = await Promise.all([
-    getHeroSlides(),
-    getPublishedProjectsByZone("PROJETS_GLOBAL", 6),
-  ]);
+  const placedProjects = await getPublishedProjectsByZone("PROJETS_GLOBAL", 6);
   // Fallback vers les projets statiques tant qu'aucun projet n'est placé.
   const featuredProjects =
     placedProjects.length > 0 ? placedProjects : getFeaturedProjects(6);
@@ -132,7 +126,7 @@ export default async function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(LOCAL_BUSINESS_JSON_LD) }}
       />
-      <HeroCubeCarousel slides={heroSlides} />
+      <HeroVideo />
 
       <section id="Apercu" className="space-y-3 py-20 sm:py-24">
         <Container size="8xl">

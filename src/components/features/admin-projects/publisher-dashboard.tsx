@@ -16,7 +16,6 @@ import {
   MapPin,
   Plus,
   Search,
-  Sparkles,
   Trash2,
 } from "lucide-react";
 import { PlacementZone, ProjectStatut } from "@prisma/client";
@@ -70,7 +69,6 @@ const PAGE_SIZE = 10;
 
 function summarizePlacements(placements: ProjectPlacementSummary[]) {
   return {
-    hero: placements.some((p) => p.zone === PlacementZone.HERO),
     projets: placements.some((p) => p.zone === PlacementZone.PROJETS_GLOBAL),
     sousServices: placements.filter(
       (p) => p.zone === PlacementZone.SOUS_SERVICE,
@@ -84,16 +82,11 @@ function PlacementBadges({
   placements: ProjectPlacementSummary[];
 }) {
   const summary = summarizePlacements(placements);
-  if (!summary.hero && !summary.projets && summary.sousServices === 0) {
+  if (!summary.projets && summary.sousServices === 0) {
     return <span className="text-xs text-muted-foreground">—</span>;
   }
   return (
     <div className="flex flex-wrap gap-1">
-      {summary.hero && (
-        <Badge variant="success" className="gap-1 px-1.5 py-0 text-[10px]">
-          <Sparkles className="size-2.5" /> Hero
-        </Badge>
-      )}
       {summary.projets && (
         <Badge variant="secondary" className="gap-1 px-1.5 py-0 text-[10px]">
           <LayoutGrid className="size-2.5" /> Projets

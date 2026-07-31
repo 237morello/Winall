@@ -5,7 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Container } from "@/components/features/container";
 import { Eyebrow, Heading, Lead, Text } from "@/components/ui/typography";
 import { ContactCta } from "@/components/features/marketing/components/contact-cta";
-import { HeroCubeCarousel } from "@/components/features/marketing/components/hero-cube-carousel";
+import { HeroVideo } from "@/components/features/marketing/components/hero-video";
 import { FaqAbout } from "@/components/features/marketing/components/abouts/faqAbout";
 import {
   ABOUT_LEADERS,
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-white">
-      <HeroCubeCarousel />
+      <HeroVideo />
 
       <section id="presentation" className="py-20 sm:py-24">
         <Container size="8xl">

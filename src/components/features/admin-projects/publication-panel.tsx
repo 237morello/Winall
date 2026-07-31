@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { AlertTriangle, Globe2, LayoutGrid, Sparkles } from "lucide-react";
+import { AlertTriangle, Globe2, LayoutGrid } from "lucide-react";
 import { PlacementZone } from "@prisma/client";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Switch } from "@/components/ui/switch";
@@ -137,14 +137,6 @@ export function PublicationPanel({
           <CardTitle className="text-base">Zones d&apos;affichage</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          <PlacementRow
-            icon={<Sparkles className="size-4 text-primary" />}
-            titre="Carrousel Hero (accueil)"
-            description="Le projet apparaît dans le grand carrousel de la page d'accueil."
-            state={getState(PlacementZone.HERO, null)}
-            disabled={isPending}
-            onChange={(next) => commitPlacement(PlacementZone.HERO, null, next)}
-          />
           <PlacementRow
             icon={<LayoutGrid className="size-4 text-primary" />}
             titre="Projets (réalisations)"

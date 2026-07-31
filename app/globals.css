@@ -172,6 +172,7 @@
     --animate-accordion-down: accordion-down 0.2s ease-out;
     --animate-accordion-up: accordion-up 0.2s ease-out;
     --animate-loading: loading 1.5s linear infinite;
+    --animate-marquee-left: marquee-left 28s linear infinite;
 
     @keyframes accordion-down {
         from {
@@ -195,6 +196,14 @@
         }
         100% {
             transform: translateX(100%);
+        }
+    }
+    @keyframes marquee-left {
+        from {
+            transform: translateX(0);
+        }
+        to {
+            transform: translateX(-50%);
         }
     }
 
@@ -295,92 +304,3 @@ body {
     }
 }
 
-.hero-cube {
-    perspective: 1200px;
-}
-
-.hero-cube-slide {
-    backface-visibility: hidden;
-    opacity: 0;
-    transform: rotateX(90deg) translate3d(0, 18%, -120px);
-    transform-origin: center center;
-    transform-style: preserve-3d;
-    transition:
-        opacity 750ms ease,
-        transform 750ms ease,
-        visibility 750ms ease;
-    visibility: hidden;
-}
-
-.hero-cube-slide[data-state="active"] {
-    opacity: 1;
-    transform: rotateX(0deg) translate3d(0, 0, 0);
-    visibility: visible;
-    z-index: 3;
-}
-
-.hero-cube-slide[data-state="next"] {
-    opacity: 0.35;
-    transform: rotateX(-78deg) translate3d(0, 18%, -120px);
-    visibility: visible;
-    z-index: 2;
-}
-
-.hero-cube-slide[data-state="previous"] {
-    opacity: 0.25;
-    transform: rotateX(78deg) translate3d(0, -18%, -120px);
-    visibility: visible;
-    z-index: 1;
-}
-
-.hero-cube-slide[data-state="idle"] {
-    opacity: 0;
-    transform: rotateX(110deg) translate3d(0, 0, -180px);
-    visibility: hidden;
-}
-
-.hero-cube-progress,
-.hero-cube-progress-vertical {
-    animation-duration: 5200ms;
-    animation-fill-mode: forwards;
-    animation-timing-function: linear;
-}
-
-.hero-cube-progress {
-    animation-name: hero-cube-progress;
-    transform-origin: left center;
-}
-
-.hero-cube-progress-vertical {
-    animation-name: hero-cube-progress-vertical;
-    transform-origin: center top;
-}
-
-@keyframes hero-cube-progress {
-    from {
-        transform: scaleX(0);
-    }
-
-    to {
-        transform: scaleX(1);
-    }
-}
-
-@keyframes hero-cube-progress-vertical {
-    from {
-        transform: scaleY(0);
-    }
-
-    to {
-        transform: scaleY(1);
-    }
-}
-
-@media (prefers-reduced-motion: reduce) {
-    .hero-cube-slide,
-    .hero-cube-progress,
-    .hero-cube-progress-vertical {
-        animation: none;
-        transition: none;
-    }
-}
