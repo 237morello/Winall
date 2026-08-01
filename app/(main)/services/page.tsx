@@ -135,7 +135,7 @@ export default async function ServicesPage() {
                   animationFillMode: "backwards",
                 }}
               >
-                <ServiceCard service={service} />
+                <ServiceCard slug={service.slug} />
               </div>
             ))}
           </div>

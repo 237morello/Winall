@@ -14,6 +14,7 @@ import { ContactCta } from "@/components/features/marketing/components/contact-c
 import { HeroVideo } from "@/components/features/marketing/components/hero-video";
 import { ProjectsShowcase } from "@/components/features/marketing/components/projects-showcase";
 import { ServiceCard } from "@/components/features/marketing/components/service-card";
+import { ServicesCarousel } from "@/components/features/marketing/components/services-carousel";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
@@ -297,17 +298,22 @@ export default async function Home() {
     </div>
 
     {MARKETING_SERVICES.length > 0 ? (
-      <ul className="mt-12 grid list-none gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {MARKETING_SERVICES.map((service, index) => (
-          <li
-            key={service.slug}
-            className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2"
-            style={{ animationDelay: `${index * 60}ms`, animationFillMode: "backwards" }}
-          >
-            <ServiceCard service={service} />
-          </li>
-        ))}
-      </ul>
+      <>
+        <ul className="mt-12 hidden list-none gap-5 md:grid md:grid-cols-2 lg:grid-cols-3">
+          {MARKETING_SERVICES.map((service, index) => (
+            <li
+              key={service.slug}
+              className="motion-safe:animate-in motion-safe:fade-in motion-safe:slide-in-from-bottom-2"
+              style={{ animationDelay: `${index * 60}ms`, animationFillMode: "backwards" }}
+            >
+              <ServiceCard slug={service.slug} />
+            </li>
+          ))}
+        </ul>
+        <div className="mt-12 md:hidden">
+          <ServicesCarousel slugs={MARKETING_SERVICES.map((service) => service.slug)} />
+        </div>
+      </>
     ) : (
       <div className="mt-12 rounded-lg border border-dashed border-[#e4e4e7] p-12 text-center">
         <Text className="text-[#a1a1aa]">
