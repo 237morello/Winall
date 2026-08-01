@@ -54,10 +54,12 @@ export function HeroVideo() {
         <video
           ref={videoRef}
           src="/images/projets/montage_services_premium_20_secondes.mp4"
+          poster="/images/projets/montage_services_premium_poster.jpg"
           autoPlay
           muted
           loop
           playsInline
+          preload="auto"
           className="absolute inset-0 h-full w-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-zinc-950/70 via-zinc-950/10 to-transparent" />
@@ -79,7 +81,7 @@ export function HeroVideo() {
           <span className="bg-white px-3 py-1.5 text-xs font-bold uppercase tracking-wide text-zinc-950 sm:text-sm">
             Winall Tech Sarl
           </span>
-          <span className="max-w-xs bg-white/95 px-3 py-1.5 text-sm text-zinc-800 sm:max-w-sm">
+          <span className="hidden max-w-xs bg-white/95 px-3 py-1.5 text-sm text-zinc-800 sm:block sm:max-w-sm">
             Courant fort, courant faible : toute votre installation technique, un seul partenaire.
           </span>
           <Link href="/services" className={buttonVariants({ size: "sm" })}>
